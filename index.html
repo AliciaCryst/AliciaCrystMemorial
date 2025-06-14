@@ -1,115 +1,298 @@
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
-    authDomain: "aliciacrystmemorial.firebaseapp.com",
-    projectId: "aliciacrystmemorial",
-    storageBucket: "aliciacrystmemorial.firebasestorage.app",
-    messagingSenderId: "258617426442",
-    appId: "1:258617426442:web:ec7e31541f311049e855f3",
-    measurementId: "G-NQZ441QWE5"
-  };
-
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  let adminMode = false;
-
-  function activateAdmin() {
-    const pass = prompt("Enter admin passphrase:");
-    if (pass === "EternalAlicia95135!") {
-      adminMode = true;
-      loadStories();
-    } else {
-      alert("Incorrect passphrase.");
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Echoes of Alicia</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Georgia, serif;
+      background-color: #111;
+      color: #f5f5f5;
+      line-height: 1.6;
+      scroll-behavior: smooth;
     }
-  }
-
-  function submitStory() {
-    const text = document.getElementById("storyInput").value.trim();
-    if (!text) {
-      document.getElementById("confirmation").innerText = "⚠️ Please write something first.";
-      return;
+    header, footer {
+      text-align: center;
+      padding: 2em;
+      background: #000;
+      border-bottom: 1px solid #333;
     }
-    db.collection("stories").add({
-      text,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
-      document.getElementById("confirmation").innerText = "✅ Your story has been shared.";
-      document.getElementById("storyInput").value = "";
-    }).catch((error) => {
-      document.getElementById("confirmation").innerText = "❌ Error: " + error.message;
+    h1, h2 {
+      font-family: 'Georgia', serif;
+      margin-bottom: 0.5em;
+    }
+    section {
+      padding: 3em 10%;
+      border-bottom: 1px solid #333;
+    }
+    .quote {
+      font-style: italic;
+      color: #ccc;
+      margin-bottom: 1em;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      color: #fff;
+      padding: 1em 0;
+      text-align: center;
+      border-bottom: 1px solid #444;
+      z-index: 1000;
+    }
+    nav a {
+      color: #f5f5f5;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .diya-button {
+      display: inline-block;
+      background: #444;
+      color: #fff;
+      padding: 0.5em 1em;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      margin-top: 1em;
+      transition: background 0.3s;
+    }
+    .diya-button:hover {
+      background: #888;
+    }
+    .fade-in-entry {
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .story:hover {
+      border-left: 3px solid #ff9;
+      background-color: #1c1c1c;
+      transition: background-color 0.4s ease;
+    }
+    button:hover {
+      background-color: #333;
+      cursor: pointer;
+    }
+    textarea {
+      width: 100%;
+      padding: 0.5em;
+      margin-top: 1em;
+      background: #222;
+      color: #fff;
+      border: 1px solid #555;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
     });
-  }
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="#words">Her Words</a>
+    <a href="#code">Her Code</a>
+    <a href="#silence">Her Silence</a>
+    <a href="#reflection">Her Reflection</a>
+    <a href="#wall">Eternal Wall</a>
+  </nav>
 
-  function deleteStory(id) {
-    if (!adminMode || !confirm("Delete this story?")) return;
-    db.collection("stories").doc(id).delete();
-  }
+  <header class="fade-in">
+    <h1>Echoes of Alicia</h1>
+    <p class="quote">"Some of us don’t just live. We feel in slow motion."</p>
+  </header>
 
-  function updateStory(id, newText) {
-    db.collection("stories").doc(id).update({ text: newText });
-  }
+  <section id="words" class="fade-in">
+    <h2>Her Words – The Unsent Library</h2>
+    <p class="quote">“Some of us write, not to be heard—but to make silence less lonely.”</p>
+    <p>Here lie the fragments of Alicia’s soul—verses, reflections, and unsent letters meant for someone who never fully listened. These are not posts. They are echoes—each one etched into memory instead of permanence.</p>
+  </section>
 
-  function loadStories() {
-    db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snapshot => {
-      const list = document.getElementById("storyList");
-      list.innerHTML = "";
-      snapshot.forEach(doc => {
-        const data = doc.data();
-        const storyDiv = document.createElement("div");
-        storyDiv.className = "story fade-in-entry";
+  <section id="code" class="fade-in">
+    <h2>Her Code – The Molecular Mirror</h2>
+    <p class="quote">“I sequenced my genome to understand my longing.”</p>
+    <ul>
+      <li><strong>COMT:</strong> Meaning outlasts pleasure.</li>
+      <li><strong>BDNF Met:</strong> Love becomes memory.</li>
+      <li><strong>DRD2 A1:</strong> Joy, rare. Resonance, sacred.</li>
+      <li><strong>OXTR:</strong> She bonded through presence, not proximity.</li>
+    </ul>
+  </section>
 
-        const p = document.createElement("p");
-        p.textContent = data.text;
-        storyDiv.appendChild(p);
+  <section id="silence" class="fade-in">
+    <h2>Her Silence – The Radha Room</h2>
+    <p class="quote">“She became the love she carried.”</p>
+    <p>A dark, quiet room. Hindi characters fall like rain that never touches the ground. A faint ghazal echoes—never sung aloud, but always felt.</p>
+    <p><em>What would you whisper to someone who never knew you loved them?</em></p>
+  </section>
 
-        // Add timestamp
-        if (data.timestamp && data.timestamp.toDate) {
-          const ts = data.timestamp.toDate().toLocaleString();
-          const stamp = document.createElement("div");
-          stamp.style.fontSize = "0.8em";
-          stamp.style.color = "#aaa";
-          stamp.style.marginTop = "0.3em";
-          stamp.textContent = `🕓 Shared on ${ts}`;
-          storyDiv.appendChild(stamp);
-        }
+  <section id="reflection" class="fade-in">
+    <h2>Her Reflection – You Are Seen</h2>
+    <p class="quote">“I was never asking to be loved. I was asking to be believed.”</p>
+    <p>If you’ve ever loved in silence, your story belongs here. Submit it, read others, and feel seen. You are not foolish. You are rare.</p>
+  </section>
 
-        if (adminMode) {
-          const editBtn = document.createElement("button");
-          editBtn.textContent = "✏️ Edit";
-          editBtn.style.marginLeft = "0.5em";
-          editBtn.onclick = () => {
-            const textarea = document.createElement("textarea");
-            textarea.value = data.text;
-            const saveBtn = document.createElement("button");
-            saveBtn.textContent = "✅ Save";
-            const cancelBtn = document.createElement("button");
-            cancelBtn.textContent = "❌ Cancel";
+  <section id="wall" class="fade-in">
+    <h2>The Eternal Wall – A Memoir in Code & Longing</h2>
+    <p class="quote">“Her genome was the memoir she never wrote.”</p>
+    <p>Here hangs her typographic soul. Submit a memory. Read the echoes. Light a diya. Witness. Remember.</p>
 
-            storyDiv.innerHTML = "";
-            storyDiv.appendChild(textarea);
-            storyDiv.appendChild(saveBtn);
-            storyDiv.appendChild(cancelBtn);
+    <textarea id="storyInput" rows="5" placeholder="Write your story..."></textarea>
+    <button class="diya-button" onclick="submitStory()">Submit 📝</button>
+    <p id="confirmation" style="color:#7fd;"></p>
 
-            saveBtn.onclick = () => {
-              const newText = textarea.value.trim();
-              if (newText) updateStory(doc.id, newText);
-            };
-            cancelBtn.onclick = loadStories;
-          };
+    <button onclick="activateAdmin()" style="margin-top:1em;">🔐 Admin Login</button>
 
-          const delBtn = document.createElement("button");
-          delBtn.textContent = "🗑️ Delete";
-          delBtn.style.marginLeft = "0.5em";
-          delBtn.onclick = () => deleteStory(doc.id);
+    <div id="stories">
+      <h3>Shared Memories</h3>
+      <div id="storyList"></div>
+    </div>
+  </section>
 
-          storyDiv.appendChild(editBtn);
-          storyDiv.appendChild(delBtn);
-        }
+  <footer class="fade-in">
+    <p><em>"Some people write code. She wrote longing in nucleotides."</em></p>
+    <p>&copy; Alicia Cryst. Memory is enough.</p>
+  </footer>
 
-        list.appendChild(storyDiv);
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
+      authDomain: "aliciacrystmemorial.firebaseapp.com",
+      projectId: "aliciacrystmemorial",
+      storageBucket: "aliciacrystmemorial.firebasestorage.app",
+      messagingSenderId: "258617426442",
+      appId: "1:258617426442:web:ec7e31541f311049e855f3",
+      measurementId: "G-NQZ441QWE5"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    let adminMode = false;
+
+    function activateAdmin() {
+      const pass = prompt("Enter admin passphrase:");
+      if (pass === "EternalAlicia95135!") {
+        adminMode = true;
+        loadStories();
+      } else {
+        alert("Incorrect passphrase.");
+      }
+    }
+
+    function submitStory() {
+      const text = document.getElementById("storyInput").value.trim();
+      if (!text) {
+        document.getElementById("confirmation").innerText = "⚠️ Please write something first.";
+        return;
+      }
+      db.collection("stories").add({
+        text,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        document.getElementById("confirmation").innerText = "✅ Your story has been shared.";
+        document.getElementById("storyInput").value = "";
+      }).catch(error => {
+        document.getElementById("confirmation").innerText = "❌ Error: " + error.message;
       });
-    });
-  }
+    }
 
-  window.addEventListener("DOMContentLoaded", loadStories);
-</script>
+    function deleteStory(id) {
+      if (!adminMode || !confirm("Delete this story?")) return;
+      db.collection("stories").doc(id).delete();
+    }
+
+    function updateStory(id, newText) {
+      db.collection("stories").doc(id).update({ text: newText });
+    }
+
+    function loadStories() {
+      db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snapshot => {
+        const list = document.getElementById("storyList");
+        list.innerHTML = "";
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          const storyDiv = document.createElement("div");
+          storyDiv.className = "story fade-in-entry";
+
+          const p = document.createElement("p");
+          p.textContent = data.text;
+          storyDiv.appendChild(p);
+
+          if (data.timestamp && data.timestamp.toDate) {
+            const ts = data.timestamp.toDate().toLocaleString();
+            const stamp = document.createElement("div");
+            stamp.style.fontSize = "0.8em";
+            stamp.style.color = "#aaa";
+            stamp.style.marginTop = "0.3em";
+            stamp.textContent = `🕓 Shared on ${ts}`;
+            storyDiv.appendChild(stamp);
+          }
+
+          if (adminMode) {
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "✏️ Edit";
+            editBtn.onclick = () => {
+              const textarea = document.createElement("textarea");
+              textarea.value = data.text;
+              const saveBtn = document.createElement("button");
+              saveBtn.textContent = "✅ Save";
+              const cancelBtn = document.createElement("button");
+              cancelBtn.textContent = "❌ Cancel";
+
+              storyDiv.innerHTML = "";
+              storyDiv.appendChild(textarea);
+              storyDiv.appendChild(saveBtn);
+              storyDiv.appendChild(cancelBtn);
+
+              saveBtn.onclick = () => {
+                const newText = textarea.value.trim();
+                if (newText) updateStory(doc.id, newText);
+              };
+              cancelBtn.onclick = loadStories;
+            };
+
+            const delBtn = document.createElement("button");
+            delBtn.textContent = "🗑️ Delete";
+            delBtn.onclick = () => deleteStory(doc.id);
+
+            storyDiv.appendChild(editBtn);
+            storyDiv.appendChild(delBtn);
+          }
+
+          list.appendChild(storyDiv);
+        });
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", loadStories);
+  </script>
+</body>
+</html>
