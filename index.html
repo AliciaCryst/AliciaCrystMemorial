@@ -412,38 +412,27 @@
     firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged(user => {
       const loginStatus = document.getElementById("loginStatus");
+      const loginBtn = document.getElementById("loginBtn");
+      const logoutBtn = document.getElementById("logoutBtn");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+    
       if (user) {
         loginStatus.innerText = `✅ Logged in as ${user.email}`;
-        document.getElementById("email").disabled = true;
-        document.getElementById("password").disabled = true;
+        emailInput.disabled = true;
+        passwordInput.disabled = true;
+        loginBtn.disabled = true;
+        logoutBtn.disabled = false;
       } else {
         loginStatus.innerText = "🔓 Logged out.";
-        document.getElementById("email").disabled = false;
-        document.getElementById("password").disabled = false;
+        emailInput.disabled = false;
+        passwordInput.disabled = false;
+        loginBtn.disabled = false;
+        logoutBtn.disabled = true;
       }
-      firebase.auth().onAuthStateChanged(user => {
-        const loginStatus = document.getElementById("loginStatus");
-        const loginBtn = document.getElementById("loginBtn");
-        const logoutBtn = document.getElementById("logoutBtn");
-        const emailInput = document.getElementById("email");
-        const passwordInput = document.getElementById("password");
-      
-        if (user) {
-          loginStatus.innerText = `✅ Logged in as ${user.email}`;
-          emailInput.disabled = true;
-          passwordInput.disabled = true;
-          loginBtn.disabled = true;
-          logoutBtn.disabled = false;
-        } else {
-          loginStatus.innerText = "🔓 Logged out.";
-          emailInput.disabled = false;
-          passwordInput.disabled = false;
-          loginBtn.disabled = false;
-          logoutBtn.disabled = true;
-        }
-      });
+    });
 
-      
+    
     });
     
     const db = firebase.firestore();
