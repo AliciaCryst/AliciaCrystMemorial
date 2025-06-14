@@ -172,6 +172,16 @@
     border-left: 4px solid var(--accent);
     padding-left: 1em;
   }
+  .fade-in-image {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1.5s ease-out, transform 1.5s ease-out;
+  }
+  
+  .fade-in-image.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   </style>
 </head>
@@ -225,6 +235,11 @@
   <section id="words">
     <h2>Her Words – The Unsent Library</h2>
   
+    <div style="text-align: center; margin-bottom: 2em;">
+      <img src="images/echoes_of_alicia.png" alt="Echoes of Alicia" class="fade-in-image" style="max-width: 100%; height: auto; border: 1px solid var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.2);">
+      <p style="font-style: italic; color: var(--accent); margin-top: 0.5em;">Echoes of Alicia — Literary reflections of a soul like mine</p>
+    </div>
+
     <p>
       Love is not always a shared journey. Sometimes, it is a solitary walk through memory, imagination, and longing.
     </p>
@@ -472,5 +487,23 @@
       loadDiyas();
     });
   </script>
+  <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll(".fade-in-image").forEach(el => observer.observe(el));
+
+    // already included
+    loadStories();
+    loadDiyas();
+  });
+</script>
+
 </body>
 </html>
