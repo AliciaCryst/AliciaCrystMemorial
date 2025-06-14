@@ -1,68 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Echoes of Alicia</title>
-  <style>
-    body {
-      background-color: #111;
-      color: #f0f0f0;
-      font-family: 'Georgia', serif;
-      padding: 2em;
-      line-height: 1.6;
-    }
-    h2, h3 {
-      color: #f9c;
-    }
-    textarea {
-      width: 100%;
-      background-color: #222;
-      color: #fff;
-      padding: 1em;
-      margin-top: 1em;
-    }
-    button {
-      padding: 0.5em 1em;
-      margin-top: 0.5em;
-      background: #444;
-      color: #fff;
-      border: none;
-    }
-    .story {
-      background: #1a1a1a;
-      padding: 1em;
-      margin-top: 1em;
-      border-left: 3px solid #555;
-    }
-    .fade-in-entry {
-      animation: fadeIn 1s ease forwards;
-      opacity: 0;
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-  </style>
-</head>
-<body>
-
-<h2>The Eternal Wall – A Memoir in Code & Longing</h2>
-<p class="quote">“Her genome was the memoir she never wrote.”</p>
-<p>Here hangs her typographic soul. Submit a memory. Read the echoes. Light a diya. Witness. Remember.</p>
-
-<textarea id="storyInput" rows="5" placeholder="Write your story..."></textarea>
-<br>
-<button onclick="submitStory()">Submit 📝</button>
-<button onclick="activateAdmin()">🔐 Admin Login</button>
-<p id="confirmation" style="color:#7fd;"></p>
-
-<div id="stories">
-  <h3>Shared Memories</h3>
-  <div id="storyList"></div>
-</div>
-
-<!-- Firebase Scripts -->
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
   const firebaseConfig = {
     apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
@@ -90,20 +25,24 @@
 
   function submitStory() {
     const text = document.getElementById("storyInput").value.trim();
-    if (!text) return;
+    if (!text) {
+      document.getElementById("confirmation").innerText = "⚠️ Please write something first.";
+      return;
+    }
     db.collection("stories").add({
       text,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
+      document.getElementById("confirmation").innerText = "✅ Your story has been shared.";
       document.getElementById("storyInput").value = "";
-      document.getElementById("confirmation").textContent = "✅ Story shared.";
+    }).catch((error) => {
+      document.getElementById("confirmation").innerText = "❌ Error: " + error.message;
     });
   }
 
   function deleteStory(id) {
-    if (adminMode && confirm("Delete this story?")) {
-      db.collection("stories").doc(id).delete();
-    }
+    if (!adminMode || !confirm("Delete this story?")) return;
+    db.collection("stories").doc(id).delete();
   }
 
   function updateStory(id, newText) {
@@ -119,22 +58,25 @@
         const storyDiv = document.createElement("div");
         storyDiv.className = "story fade-in-entry";
 
-        const contentP = document.createElement("p");
-        contentP.textContent = data.text;
-        storyDiv.appendChild(contentP);
+        const p = document.createElement("p");
+        p.textContent = data.text;
+        storyDiv.appendChild(p);
 
+        // Add timestamp
         if (data.timestamp && data.timestamp.toDate) {
           const ts = data.timestamp.toDate().toLocaleString();
-          const tsDiv = document.createElement("div");
-          tsDiv.style.fontSize = "0.8em";
-          tsDiv.style.color = "#aaa";
-          tsDiv.textContent = `🕓 Shared on ${ts}`;
-          storyDiv.appendChild(tsDiv);
+          const stamp = document.createElement("div");
+          stamp.style.fontSize = "0.8em";
+          stamp.style.color = "#aaa";
+          stamp.style.marginTop = "0.3em";
+          stamp.textContent = `🕓 Shared on ${ts}`;
+          storyDiv.appendChild(stamp);
         }
 
         if (adminMode) {
           const editBtn = document.createElement("button");
           editBtn.textContent = "✏️ Edit";
+          editBtn.style.marginLeft = "0.5em";
           editBtn.onclick = () => {
             const textarea = document.createElement("textarea");
             textarea.value = data.text;
@@ -143,7 +85,6 @@
             const cancelBtn = document.createElement("button");
             cancelBtn.textContent = "❌ Cancel";
 
-            // Clear and replace
             storyDiv.innerHTML = "";
             storyDiv.appendChild(textarea);
             storyDiv.appendChild(saveBtn);
@@ -151,17 +92,17 @@
 
             saveBtn.onclick = () => {
               const newText = textarea.value.trim();
-              if (newText) {
-                updateStory(doc.id, newText);
-              }
+              if (newText) updateStory(doc.id, newText);
             };
             cancelBtn.onclick = loadStories;
           };
-          storyDiv.appendChild(editBtn);
 
           const delBtn = document.createElement("button");
           delBtn.textContent = "🗑️ Delete";
+          delBtn.style.marginLeft = "0.5em";
           delBtn.onclick = () => deleteStory(doc.id);
+
+          storyDiv.appendChild(editBtn);
           storyDiv.appendChild(delBtn);
         }
 
@@ -172,5 +113,3 @@
 
   window.addEventListener("DOMContentLoaded", loadStories);
 </script>
-</body>
-</html>
