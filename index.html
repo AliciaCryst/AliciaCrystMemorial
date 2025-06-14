@@ -182,6 +182,18 @@
     opacity: 1;
     transform: translateY(0);
   }
+  .poem {
+    font-style: italic;
+    margin: 1.5em 0;
+    line-height: 1.8;
+    text-align: left;
+    color: var(--text);
+    padding-left: 1em;
+    border-left: 3px solid var(--accent);
+  }
+  .poem p {
+    margin: 0.5em 0;
+  }
 
   </style>
 </head>
@@ -306,15 +318,24 @@
   
   <section id="poems">
     <h2>Selected Poem</h2>
-    <blockquote>
-      I would find you again in a thousand lives,<br>
-      Knowing the ending, I would still pay the price.<br><br>
-      For loving you, though it shattered my soul,<br>
-      Was the only time my heart felt whole. 💔
-    </blockquote>
+    <div class="poem">
+      <p>I would find you again in a thousand lives,</p>
+      <p>Knowing the ending, I would still pay the price.</p>
+      <p>For loving you, though it shattered my soul,</p>
+      <p>Was the only time my heart felt whole. 💔</p>
+    </div>
     <p style="text-align: right; font-style: italic; color: var(--accent); margin-top: -0.5em; margin-right: 1em;">
       — Alicia Cryst
     </p>
+    <blockquote>“You weren’t a hallucination. You were a tab I kept open too long.”</blockquote>
+
+    <div style="text-align: center; margin-top: 2em;">
+      <img src="images/FleetingThoughts.png" alt="Fleeting Thoughts by Alicia Cryst"
+        class="fade-in-image" style="max-width: 100%; height: auto; border: 1px solid var(--accent); box-shadow: 0 0 12px rgba(255,255,255,0.2); margin-top: 1em;">
+      <p style="font-style: italic; font-size: 0.95em; color: var(--accent); margin-top: 0.5em;">
+        The experience of love is the gift... proof I lived. — Alicia Cryst
+      </p>
+    </div>
   </section>
 
 
