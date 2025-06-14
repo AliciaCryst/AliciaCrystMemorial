@@ -360,6 +360,15 @@
     <button onclick="lightDiya()">🪔 Light Diya</button>
     <canvas id="diyaCanvas" width="600" height="300"></canvas>
   </section>
+  
+  <section id="login" style="text-align:center; margin-top:2em;">
+    <h2>🔐 Login</h2>
+    <input type="email" id="email" placeholder="Email" style="margin:0.5em;"><br>
+    <input type="password" id="password" placeholder="Password" style="margin:0.5em;"><br>
+    <button onclick="login()">Login</button>
+    <button onclick="logout()" style="margin-left:1em;">Logout</button>
+    <p id="loginStatus" style="color:var(--accent); margin-top:1em;"></p>
+  </section>
 
   <footer>
     <p><em>"Some people write code. She wrote longing in nucleotides."</em></p>
@@ -370,6 +379,26 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
+    const auth = firebase.auth();
+    
+    function login() {
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+          document.getElementById("loginStatus").innerText = "✅ Logged in.";
+        })
+        .catch(error => {
+          document.getElementById("loginStatus").innerText = "❌ " + error.message;
+        });
+    }
+    
+    function logout() {
+      auth.signOut().then(() => {
+        document.getElementById("loginStatus").innerText = "🔓 Logged out.";
+      });
+    }
+    
     const firebaseConfig = {
       apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
       authDomain: "aliciacrystmemorial.firebaseapp.com",
@@ -399,7 +428,14 @@
     function submitStory() {
       const text = document.getElementById("storyInput").value.trim();
       const dedication = document.getElementById("dedication").value.trim();
+    
       if (!text) return;
+    
+      if (!firebase.auth().currentUser) {
+        document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
+        return;
+      }
+    
       db.collection("stories").add({
         text, dedication,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
