@@ -3,117 +3,171 @@
 <head>
   <meta charset="UTF-8">
   <title>Echoes of Alicia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+    :root {
+      --bg: #111;
+      --text: #f5f5f5;
+      --accent: #888;
+    }
+
+    [data-theme="light"] {
+      --bg: #fefefe;
+      --text: #111;
+      --accent: #555;
+    }
+
     body {
       margin: 0;
+      background: var(--bg);
+      color: var(--text);
       font-family: Georgia, serif;
-      background-color: #111;
-      color: #f5f5f5;
       line-height: 1.6;
       scroll-behavior: smooth;
+      transition: background 0.5s, color 0.5s;
     }
-    header, footer {
-      text-align: center;
-      padding: 2em;
-      background: #000;
-      border-bottom: 1px solid #333;
-    }
-    h1, h2 {
-      font-family: 'Georgia', serif;
-      margin-bottom: 0.5em;
-    }
-    section {
-      padding: 3em 10%;
-      border-bottom: 1px solid #333;
-    }
-    .quote {
-      font-style: italic;
-      color: #ccc;
-      margin-bottom: 1em;
-    }
+
     nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.9);
-      color: #fff;
+      background: rgba(0,0,0,0.85);
+      color: var(--text);
       padding: 1em 0;
       text-align: center;
-      border-bottom: 1px solid #444;
+      border-bottom: 1px solid var(--accent);
       z-index: 1000;
     }
+
     nav a {
-      color: #f5f5f5;
+      color: var(--text);
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
+
     nav a:hover {
       text-decoration: underline;
     }
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 1s ease-out, transform 1s ease-out;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    .diya-button {
-      display: inline-block;
-      background: #444;
-      color: #fff;
-      padding: 0.5em 1em;
+
+    .toggle-theme {
+      position: fixed;
+      top: 1.2em;
+      right: 1.5em;
+      background: var(--accent);
+      color: var(--bg);
       border: none;
+      padding: 0.4em 0.7em;
       cursor: pointer;
-      font-size: 1em;
-      margin-top: 1em;
-      transition: background 0.3s;
+      border-radius: 4px;
+      z-index: 1100;
     }
-    .diya-button:hover {
-      background: #888;
+
+    section {
+      padding: 4em 10%;
+      border-bottom: 1px solid var(--accent);
     }
-    .fade-in-entry {
-      animation: fadeIn 1s ease forwards;
-      opacity: 0;
+
+    header, footer {
+      text-align: center;
+      padding: 3em 10%;
+      background: transparent;
+      position: relative;
+      z-index: 1;
     }
-    @keyframes fadeIn {
-      to { opacity: 1; }
+
+    h1, h2 {
+      font-family: Georgia, serif;
+      margin-bottom: 0.4em;
     }
+
+    .quote-typewriter {
+      font-style: italic;
+      color: var(--accent);
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--accent);
+      animation: typing 4s steps(40, end), blink 0.8s step-end infinite;
+      max-width: 100%;
+    }
+
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    .story {
+      background: rgba(255,255,255,0.05);
+      padding: 1em;
+      margin: 1em 0;
+      border-left: 3px solid var(--accent);
+      transition: background 0.4s;
+    }
+
     .story:hover {
-      border-left: 3px solid #ff9;
-      background-color: #1c1c1c;
-      transition: background-color 0.4s ease;
+      background: rgba(255,255,255,0.08);
     }
-    button:hover {
-      background-color: #333;
-      cursor: pointer;
-    }
+
     textarea {
       width: 100%;
       padding: 0.5em;
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--accent);
       margin-top: 1em;
-      background: #222;
-      color: #fff;
-      border: 1px solid #555;
     }
+
+    .diya-button, button {
+      background: var(--accent);
+      color: var(--bg);
+      padding: 0.5em 1em;
+      border: none;
+      margin-top: 0.5em;
+      cursor: pointer;
+    }
+
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .stars span {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: twinkle 3s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3 }
+      50% { opacity: 1 }
+    }
+
   </style>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-          }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
-    });
-  </script>
 </head>
-<body>
+<body data-theme="dark">
+
+  <div class="stars">
+    <span style="top:10%;left:20%;animation-delay:0s"></span>
+    <span style="top:40%;left:60%;animation-delay:1s"></span>
+    <span style="top:70%;left:30%;animation-delay:2s"></span>
+    <span style="top:20%;left:80%;animation-delay:0.5s"></span>
+    <span style="top:50%;left:10%;animation-delay:1.5s"></span>
+  </div>
+
+  <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
+
   <nav>
     <a href="#words">Her Words</a>
     <a href="#code">Her Code</a>
@@ -122,20 +176,20 @@
     <a href="#wall">Eternal Wall</a>
   </nav>
 
-  <header class="fade-in">
+  <header style="margin-top: 80px;">
     <h1>Echoes of Alicia</h1>
-    <p class="quote">"Some of us don’t just live. We feel in slow motion."</p>
+    <p class="quote-typewriter">"Some of us don’t just live. We feel in slow motion."</p>
   </header>
 
-  <section id="words" class="fade-in">
+  <section id="words">
     <h2>Her Words – The Unsent Library</h2>
-    <p class="quote">“Some of us write, not to be heard—but to make silence less lonely.”</p>
-    <p>Here lie the fragments of Alicia’s soul—verses, reflections, and unsent letters meant for someone who never fully listened. These are not posts. They are echoes—each one etched into memory instead of permanence.</p>
+    <p><em>“Some of us write, not to be heard—but to make silence less lonely.”</em></p>
+    <p>Here lie fragments of Alicia’s soul—letters never sent, words never spoken, truths felt too deeply to utter aloud.</p>
   </section>
 
-  <section id="code" class="fade-in">
+  <section id="code">
     <h2>Her Code – The Molecular Mirror</h2>
-    <p class="quote">“I sequenced my genome to understand my longing.”</p>
+    <p><em>“I sequenced my genome to understand my longing.”</em></p>
     <ul>
       <li><strong>COMT:</strong> Meaning outlasts pleasure.</li>
       <li><strong>BDNF Met:</strong> Love becomes memory.</li>
@@ -144,42 +198,34 @@
     </ul>
   </section>
 
-  <section id="silence" class="fade-in">
+  <section id="silence">
     <h2>Her Silence – The Radha Room</h2>
-    <p class="quote">“She became the love she carried.”</p>
-    <p>A dark, quiet room. Hindi characters fall like rain that never touches the ground. A faint ghazal echoes—never sung aloud, but always felt.</p>
-    <p><em>What would you whisper to someone who never knew you loved them?</em></p>
+    <p><em>“She became the love she carried.”</em></p>
+    <p>A dark, quiet room. Hindi letters float like dust. Ghazals echo. Her silence was a frequency.</p>
   </section>
 
-  <section id="reflection" class="fade-in">
+  <section id="reflection">
     <h2>Her Reflection – You Are Seen</h2>
-    <p class="quote">“I was never asking to be loved. I was asking to be believed.”</p>
-    <p>If you’ve ever loved in silence, your story belongs here. Submit it, read others, and feel seen. You are not foolish. You are rare.</p>
+    <p><em>“I was never asking to be loved. I was asking to be believed.”</em></p>
+    <p>If you've ever loved in silence, your story belongs here.</p>
   </section>
 
-  <section id="wall" class="fade-in">
+  <section id="wall">
     <h2>The Eternal Wall – A Memoir in Code & Longing</h2>
-    <p class="quote">“Her genome was the memoir she never wrote.”</p>
-    <p>Here hangs her typographic soul. Submit a memory. Read the echoes. Light a diya. Witness. Remember.</p>
-
-    <textarea id="storyInput" rows="5" placeholder="Write your story..."></textarea>
-    <button class="diya-button" onclick="submitStory()">Submit 📝</button>
-    <p id="confirmation" style="color:#7fd;"></p>
-
-    <button onclick="activateAdmin()" style="margin-top:1em;">🔐 Admin Login</button>
-
-    <div id="stories">
-      <h3>Shared Memories</h3>
-      <div id="storyList"></div>
-    </div>
+    <p><em>“Her genome was the memoir she never wrote.”</em></p>
+    <textarea id="storyInput" rows="4" placeholder="Share your memory..."></textarea><br>
+    <button onclick="submitStory()">Submit 📝</button>
+    <button onclick="activateAdmin()">🔐 Admin</button>
+    <p id="confirmation"></p>
+    <div id="storyList"></div>
   </section>
 
-  <footer class="fade-in">
+  <footer>
     <p><em>"Some people write code. She wrote longing in nucleotides."</em></p>
-    <p>&copy; Alicia Cryst. Memory is enough.</p>
+    <p>&copy; Alicia Cryst</p>
   </footer>
 
-  <!-- Firebase -->
+  <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
@@ -189,48 +235,45 @@
       projectId: "aliciacrystmemorial",
       storageBucket: "aliciacrystmemorial.firebasestorage.app",
       messagingSenderId: "258617426442",
-      appId: "1:258617426442:web:ec7e31541f311049e855f3",
-      measurementId: "G-NQZ441QWE5"
+      appId: "1:258617426442:web:ec7e31541f311049e855f3"
     };
-
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     let adminMode = false;
 
+    function toggleTheme() {
+      const current = document.body.getAttribute("data-theme");
+      document.body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    }
+
     function activateAdmin() {
-      const pass = prompt("Enter admin passphrase:");
+      const pass = prompt("Admin passphrase:");
       if (pass === "EternalAlicia95135!") {
         adminMode = true;
         loadStories();
-      } else {
-        alert("Incorrect passphrase.");
       }
     }
 
     function submitStory() {
       const text = document.getElementById("storyInput").value.trim();
-      if (!text) {
-        document.getElementById("confirmation").innerText = "⚠️ Please write something first.";
-        return;
-      }
+      if (!text) return;
       db.collection("stories").add({
         text,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
-        document.getElementById("confirmation").innerText = "✅ Your story has been shared.";
+        document.getElementById("confirmation").innerText = "✅ Shared.";
         document.getElementById("storyInput").value = "";
-      }).catch(error => {
-        document.getElementById("confirmation").innerText = "❌ Error: " + error.message;
       });
-    }
-
-    function deleteStory(id) {
-      if (!adminMode || !confirm("Delete this story?")) return;
-      db.collection("stories").doc(id).delete();
     }
 
     function updateStory(id, newText) {
       db.collection("stories").doc(id).update({ text: newText });
+    }
+
+    function deleteStory(id) {
+      if (adminMode && confirm("Delete this story?")) {
+        db.collection("stories").doc(id).delete();
+      }
     }
 
     function loadStories() {
@@ -239,21 +282,20 @@
         list.innerHTML = "";
         snapshot.forEach(doc => {
           const data = doc.data();
-          const storyDiv = document.createElement("div");
-          storyDiv.className = "story fade-in-entry";
+          const div = document.createElement("div");
+          div.className = "story";
 
           const p = document.createElement("p");
           p.textContent = data.text;
-          storyDiv.appendChild(p);
+          div.appendChild(p);
 
           if (data.timestamp && data.timestamp.toDate) {
             const ts = data.timestamp.toDate().toLocaleString();
-            const stamp = document.createElement("div");
-            stamp.style.fontSize = "0.8em";
-            stamp.style.color = "#aaa";
-            stamp.style.marginTop = "0.3em";
-            stamp.textContent = `🕓 Shared on ${ts}`;
-            storyDiv.appendChild(stamp);
+            const tsEl = document.createElement("div");
+            tsEl.style.fontSize = "0.8em";
+            tsEl.style.color = "#aaa";
+            tsEl.innerText = "🕓 Shared on " + ts;
+            div.appendChild(tsEl);
           }
 
           if (adminMode) {
@@ -267,10 +309,10 @@
               const cancelBtn = document.createElement("button");
               cancelBtn.textContent = "❌ Cancel";
 
-              storyDiv.innerHTML = "";
-              storyDiv.appendChild(textarea);
-              storyDiv.appendChild(saveBtn);
-              storyDiv.appendChild(cancelBtn);
+              div.innerHTML = "";
+              div.appendChild(textarea);
+              div.appendChild(saveBtn);
+              div.appendChild(cancelBtn);
 
               saveBtn.onclick = () => {
                 const newText = textarea.value.trim();
@@ -278,16 +320,15 @@
               };
               cancelBtn.onclick = loadStories;
             };
-
             const delBtn = document.createElement("button");
             delBtn.textContent = "🗑️ Delete";
             delBtn.onclick = () => deleteStory(doc.id);
 
-            storyDiv.appendChild(editBtn);
-            storyDiv.appendChild(delBtn);
+            div.appendChild(editBtn);
+            div.appendChild(delBtn);
           }
 
-          list.appendChild(storyDiv);
+          list.appendChild(div);
         });
       });
     }
