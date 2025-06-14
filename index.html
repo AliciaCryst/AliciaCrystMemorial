@@ -1,169 +1,66 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Echoes of Alicia</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Georgia, serif;
-            background-color: #111;
-            color: #f5f5f5;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-        header, footer {
-            text-align: center;
-            padding: 2em;
-            background: #000;
-            border-bottom: 1px solid #333;
-        }
-        h1, h2 {
-            font-family: 'Georgia', serif;
-            margin-bottom: 0.5em;
-        }
-        section {
-            padding: 3em 10%;
-            border-bottom: 1px solid #333;
-        }
-        .quote {
-            font-style: italic;
-            color: #ccc;
-            margin-bottom: 1em;
-        }
-        nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            color: #fff;
-            padding: 1em 0;
-            text-align: center;
-            border-bottom: 1px solid #444;
-            z-index: 1000;
-        }
-        nav a {
-            color: #f5f5f5;
-            margin: 0 15px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .diya-button {
-            display: inline-block;
-            background: #444;
-            color: #fff;
-            padding: 0.5em 1em;
-            border: none;
-            cursor: pointer;
-            font-size: 1em;
-            margin-top: 1em;
-            transition: background 0.3s;
-        }
-        .diya-button:hover {
-            background: #888;
-        }
-    </style>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const observer = new IntersectionObserver(entries => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll(".fade-in").forEach(el => observer.observe(el));
-        });
-
-        function lightDiya() {
-            const btn = document.getElementById("diya-btn");
-            btn.innerText = "🪔 A diya is lit in Alicia’s memory";
-            btn.disabled = true;
-            btn.style.background = "#666";
-        }
-    </script>
+  <meta charset="UTF-8">
+  <title>Echoes of Alicia</title>
+  <style>
+    body {
+      background-color: #111;
+      color: #f0f0f0;
+      font-family: 'Georgia', serif;
+      padding: 2em;
+      line-height: 1.6;
+    }
+    h2, h3 {
+      color: #f9c;
+    }
+    textarea {
+      width: 100%;
+      background-color: #222;
+      color: #fff;
+      padding: 1em;
+      margin-top: 1em;
+    }
+    button {
+      padding: 0.5em 1em;
+      margin-top: 0.5em;
+      background: #444;
+      color: #fff;
+      border: none;
+    }
+    .story {
+      background: #1a1a1a;
+      padding: 1em;
+      margin-top: 1em;
+      border-left: 3px solid #555;
+    }
+    .fade-in-entry {
+      animation: fadeIn 1s ease forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <a href="#words">Her Words</a>
-        <a href="#code">Her Code</a>
-        <a href="#silence">Her Silence</a>
-        <a href="#reflection">Her Reflection</a>
-        <a href="#wall">Eternal Wall</a>
-    </nav>
 
-    <header class="fade-in">
-        <h1>Echoes of Alicia</h1>
-        <p class="quote">"Some of us don’t just live. We feel in slow motion."</p>
-    </header>
-
-    <section id="words" class="fade-in">
-        <h2>Her Words – The Unsent Library</h2>
-        <p class="quote">“Some of us write, not to be heard—but to make silence less lonely.”</p>
-        <p>Here lie the fragments of Alicia’s soul—verses, reflections, and unsent letters meant for someone who never fully listened. These are not posts. They are echoes—each one etched into memory instead of permanence.</p>
-    </section>
-
-    <section id="code" class="fade-in">
-        <h2>Her Code – The Molecular Mirror</h2>
-        <p class="quote">“I sequenced my genome to understand my longing.”</p>
-        <ul>
-            <li><strong>COMT:</strong> Meaning outlasts pleasure.</li>
-            <li><strong>BDNF Met:</strong> Love becomes memory.</li>
-            <li><strong>DRD2 A1:</strong> Joy, rare. Resonance, sacred.</li>
-            <li><strong>OXTR:</strong> She bonded through presence, not proximity.</li>
-        </ul>
-    </section>
-
-    <section id="silence" class="fade-in">
-        <h2>Her Silence – The Radha Room</h2>
-        <p class="quote">“She became the love she carried.”</p>
-        <p>A dark, quiet room. Hindi characters fall like rain that never touches the ground. A faint ghazal echoes—never sung aloud, but always felt.</p>
-        <p><em>What would you whisper to someone who never knew you loved them?</em></p>
-    </section>
-
-    <section id="reflection" class="fade-in">
-        <h2>Her Reflection – You Are Seen</h2>
-        <p class="quote">“I was never asking to be loved. I was asking to be believed.”</p>
-        <p>If you’ve ever loved in silence, your story belongs here. Submit it, read others, and feel seen. You are not foolish. You are rare.</p>
-    </section>
-
-    <section id="wall" class="fade-in">
 <h2>The Eternal Wall – A Memoir in Code & Longing</h2>
 <p class="quote">“Her genome was the memoir she never wrote.”</p>
 <p>Here hangs her typographic soul. Submit a memory. Read the echoes. Light a diya. Witness. Remember.</p>
 
 <textarea id="storyInput" rows="5" placeholder="Write your story..."></textarea>
-<button class="diya-button" onclick="submitStory()">Submit 📝</button>
+<br>
+<button onclick="submitStory()">Submit 📝</button>
+<button onclick="activateAdmin()">🔐 Admin Login</button>
 <p id="confirmation" style="color:#7fd;"></p>
-
-<button onclick="activateAdmin()" style="margin-top:1em;">🔐 Admin Login</button>
 
 <div id="stories">
   <h3>Shared Memories</h3>
   <div id="storyList"></div>
 </div>
-</section>
 
-    <footer class="fade-in">
-        <p><em>"Some people write code. She wrote longing in nucleotides."</em></p>
-        <p>&copy; Alicia Cryst. Memory is enough.</p>
-    </footer>
-
+<!-- Firebase Scripts -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
@@ -193,90 +90,87 @@
 
   function submitStory() {
     const text = document.getElementById("storyInput").value.trim();
-    if (text.length === 0) {
-      document.getElementById("confirmation").innerText = "⚠️ Please write something first.";
-      return;
-    }
-
+    if (!text) return;
     db.collection("stories").add({
-      text: text,
+      text,
       timestamp: firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
-      document.getElementById("confirmation").innerText = "✅ Your story has been shared.";
       document.getElementById("storyInput").value = "";
-    }).catch((error) => {
-      document.getElementById("confirmation").innerText = "❌ Error: " + error.message;
+      document.getElementById("confirmation").textContent = "✅ Story shared.";
     });
   }
 
   function deleteStory(id) {
-    if (!adminMode) return;
-    if (!confirm("Delete this story?")) return;
-    db.collection("stories").doc(id).delete();
+    if (adminMode && confirm("Delete this story?")) {
+      db.collection("stories").doc(id).delete();
+    }
   }
 
-  
+  function updateStory(id, newText) {
+    db.collection("stories").doc(id).update({ text: newText });
+  }
+
   function loadStories() {
     db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snapshot => {
       const list = document.getElementById("storyList");
       list.innerHTML = "";
       snapshot.forEach(doc => {
         const data = doc.data();
-        const div = document.createElement("div");
-        div.className = "story fade-in-entry";
+        const storyDiv = document.createElement("div");
+        storyDiv.className = "story fade-in-entry";
 
-        // Story content
-        const storyText = document.createElement("p");
-        storyText.textContent = data.text;
-        div.appendChild(storyText);
+        const contentP = document.createElement("p");
+        contentP.textContent = data.text;
+        storyDiv.appendChild(contentP);
 
-        // Timestamp display
         if (data.timestamp && data.timestamp.toDate) {
-          const ts = data.timestamp.toDate();
-          const tsText = ts.toLocaleString();
-          const stamp = document.createElement("div");
-          stamp.style.fontSize = "0.8em";
-          stamp.style.color = "#aaa";
-          stamp.style.marginTop = "0.3em";
-          stamp.textContent = `🕓 Shared on ${tsText}`;
-          div.appendChild(stamp);
+          const ts = data.timestamp.toDate().toLocaleString();
+          const tsDiv = document.createElement("div");
+          tsDiv.style.fontSize = "0.8em";
+          tsDiv.style.color = "#aaa";
+          tsDiv.textContent = `🕓 Shared on ${ts}`;
+          storyDiv.appendChild(tsDiv);
         }
 
-        // Admin delete button
         if (adminMode) {
-          const del = document.createElement("button");
-          del.textContent = "🗑️";
-          del.onclick = () => deleteStory(doc.id);
-          del.style.marginLeft = "1em";
-          div.appendChild(del);
+          const editBtn = document.createElement("button");
+          editBtn.textContent = "✏️ Edit";
+          editBtn.onclick = () => {
+            const textarea = document.createElement("textarea");
+            textarea.value = data.text;
+            const saveBtn = document.createElement("button");
+            saveBtn.textContent = "✅ Save";
+            const cancelBtn = document.createElement("button");
+            cancelBtn.textContent = "❌ Cancel";
+
+            // Clear and replace
+            storyDiv.innerHTML = "";
+            storyDiv.appendChild(textarea);
+            storyDiv.appendChild(saveBtn);
+            storyDiv.appendChild(cancelBtn);
+
+            saveBtn.onclick = () => {
+              const newText = textarea.value.trim();
+              if (newText) {
+                updateStory(doc.id, newText);
+              }
+            };
+            cancelBtn.onclick = loadStories;
+          };
+          storyDiv.appendChild(editBtn);
+
+          const delBtn = document.createElement("button");
+          delBtn.textContent = "🗑️ Delete";
+          delBtn.onclick = () => deleteStory(doc.id);
+          storyDiv.appendChild(delBtn);
         }
 
-        list.appendChild(div);
+        list.appendChild(storyDiv);
       });
     });
   }
 
-
   window.addEventListener("DOMContentLoaded", loadStories);
 </script>
-<style>
-.fade-in-entry {
-  animation: fadeIn 1s ease forwards;
-  opacity: 0;
-}
-@keyframes fadeIn {
-  to { opacity: 1; }
-}
-.story:hover {
-  border-left: 3px solid #ff9;
-  background-color: #1c1c1c;
-  transition: background-color 0.4s ease;
-}
-button:hover {
-  background-color: #333;
-  cursor: pointer;
-}
-</style>
-
 </body>
 </html>
