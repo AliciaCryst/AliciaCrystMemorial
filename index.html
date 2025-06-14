@@ -410,6 +410,19 @@
       appId: "1:258617426442:web:ec7e31541f311049e855f3"
     };
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged(user => {
+      const loginStatus = document.getElementById("loginStatus");
+      if (user) {
+        loginStatus.innerText = `✅ Logged in as ${user.email}`;
+        document.getElementById("email").disabled = true;
+        document.getElementById("password").disabled = true;
+      } else {
+        loginStatus.innerText = "🔓 Logged out.";
+        document.getElementById("email").disabled = false;
+        document.getElementById("password").disabled = false;
+      }
+    });
+    
     const db = firebase.firestore();
     let adminMode = false;
 
