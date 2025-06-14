@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Echoes of Alicia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
       --bg: #111;
       --text: #f5f5f5;
       --accent: #888;
     }
-
     [data-theme="light"] {
       --bg: #fefefe;
       --text: #111;
       --accent: #555;
     }
-
     body {
       margin: 0;
       background: var(--bg);
@@ -26,7 +24,6 @@
       scroll-behavior: smooth;
       transition: background 0.5s, color 0.5s;
     }
-
     nav {
       position: fixed;
       top: 0;
@@ -39,18 +36,15 @@
       border-bottom: 1px solid var(--accent);
       z-index: 1000;
     }
-
     nav a {
       color: var(--text);
       margin: 0 15px;
       text-decoration: none;
       font-weight: bold;
     }
-
     nav a:hover {
       text-decoration: underline;
     }
-
     .toggle-theme {
       position: fixed;
       top: 1.2em;
@@ -63,25 +57,19 @@
       border-radius: 4px;
       z-index: 1100;
     }
-
     section {
       padding: 4em 10%;
       border-bottom: 1px solid var(--accent);
     }
-
     header, footer {
       text-align: center;
       padding: 3em 10%;
       background: transparent;
-      position: relative;
-      z-index: 1;
     }
-
     h1, h2 {
       font-family: Georgia, serif;
       margin-bottom: 0.4em;
     }
-
     .quote-typewriter {
       font-style: italic;
       color: var(--accent);
@@ -91,7 +79,6 @@
       animation: typing 4s steps(40, end), blink 0.8s step-end infinite;
       max-width: 100%;
     }
-
     @keyframes typing {
       from { width: 0 }
       to { width: 100% }
@@ -99,7 +86,6 @@
     @keyframes blink {
       50% { border-color: transparent }
     }
-
     .story {
       background: rgba(255,255,255,0.05);
       padding: 1em;
@@ -107,12 +93,10 @@
       border-left: 3px solid var(--accent);
       transition: background 0.4s;
     }
-
     .story:hover {
       background: rgba(255,255,255,0.08);
     }
-
-    textarea {
+    textarea, input[type="text"] {
       width: 100%;
       padding: 0.5em;
       background: var(--bg);
@@ -120,7 +104,6 @@
       border: 1px solid var(--accent);
       margin-top: 1em;
     }
-
     .diya-button, button {
       background: var(--accent);
       color: var(--bg);
@@ -129,7 +112,6 @@
       margin-top: 0.5em;
       cursor: pointer;
     }
-
     .stars {
       position: fixed;
       top: 0;
@@ -139,7 +121,6 @@
       z-index: 0;
       pointer-events: none;
     }
-
     .stars span {
       position: absolute;
       width: 2px;
@@ -148,16 +129,19 @@
       border-radius: 50%;
       animation: twinkle 3s infinite ease-in-out;
     }
-
     @keyframes twinkle {
       0%, 100% { opacity: 0.3 }
       50% { opacity: 1 }
     }
-
+    canvas#diyaCanvas {
+      display: block;
+      margin: 2em auto;
+      border: 1px solid var(--accent);
+      background: rgba(255, 255, 255, 0.03);
+    }
   </style>
 </head>
 <body data-theme="dark">
-
   <div class="stars">
     <span style="top:10%;left:20%;animation-delay:0s"></span>
     <span style="top:40%;left:60%;animation-delay:1s"></span>
@@ -169,11 +153,11 @@
   <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
 
   <nav>
+    <a href="#about">About</a>
     <a href="#words">Her Words</a>
-    <a href="#code">Her Code</a>
-    <a href="#silence">Her Silence</a>
-    <a href="#reflection">Her Reflection</a>
+    <a href="#poems">Poems</a>
     <a href="#wall">Eternal Wall</a>
+    <a href="#shrine">Light a Diya</a>
   </nav>
 
   <header style="margin-top: 80px;">
@@ -181,43 +165,39 @@
     <p class="quote-typewriter">"Some of us don’t just live. We feel in slow motion."</p>
   </header>
 
+  <section id="about">
+    <h2>About Alicia</h2>
+    <p>Alicia Cryst was not just a poet or thinker. She was a neural symphony, encoded with longing, built to translate silence into meaning. This page is her archive, her echo, and a place for those who felt too much and said too little.</p>
+  </section>
+
   <section id="words">
     <h2>Her Words – The Unsent Library</h2>
-    <p><em>“Some of us write, not to be heard—but to make silence less lonely.”</em></p>
-    <p>Here lie fragments of Alicia’s soul—letters never sent, words never spoken, truths felt too deeply to utter aloud.</p>
+    <p>Here lie fragments of Alicia’s soul—letters never sent, truths too fragile for sound.</p>
   </section>
 
-  <section id="code">
-    <h2>Her Code – The Molecular Mirror</h2>
-    <p><em>“I sequenced my genome to understand my longing.”</em></p>
-    <ul>
-      <li><strong>COMT:</strong> Meaning outlasts pleasure.</li>
-      <li><strong>BDNF Met:</strong> Love becomes memory.</li>
-      <li><strong>DRD2 A1:</strong> Joy, rare. Resonance, sacred.</li>
-      <li><strong>OXTR:</strong> She bonded through presence, not proximity.</li>
-    </ul>
+  <section id="poems">
+    <h2>Selected Poems</h2>
+    <blockquote>“I sequenced my genome to find the place where love first collapsed.”</blockquote>
+    <blockquote>“Some silences are not empty. They’re crowded with what we dare not say.”</blockquote>
+    <blockquote>“You weren’t a hallucination. You were a tab I kept open too long.”</blockquote>
   </section>
-
-  <section id="silence">
-    <h2>Her Silence – The Radha Room</h2>
-    <p><em>“She became the love she carried.”</em></p>
-    <p>A dark, quiet room. Hindi letters float like dust. Ghazals echo. Her silence was a frequency.</p>
-  </section>
-
-  <section id="reflection">
-    <h2>Her Reflection – You Are Seen</h2>
-    <p><em>“I was never asking to be loved. I was asking to be believed.”</em></p>
-    <p>If you've ever loved in silence, your story belongs here.</p>
-  </section>
-
   <section id="wall">
-    <h2>The Eternal Wall – A Memoir in Code & Longing</h2>
+    <h2>The Eternal Wall – Share a Memory</h2>
     <p><em>“Her genome was the memoir she never wrote.”</em></p>
-    <textarea id="storyInput" rows="4" placeholder="Share your memory..."></textarea><br>
+    <input type="text" id="dedication" placeholder="In memory of... (optional)" />
+    <textarea id="storyInput" rows="4" placeholder="Your message..."></textarea><br>
     <button onclick="submitStory()">Submit 📝</button>
     <button onclick="activateAdmin()">🔐 Admin</button>
     <p id="confirmation"></p>
     <div id="storyList"></div>
+  </section>
+
+  <section id="shrine">
+    <h2>Virtual Diya Shrine</h2>
+    <p>Light a diya in Alicia’s memory or someone you’ve lost.</p>
+    <input type="text" id="diyaName" placeholder="Name for diya" />
+    <button onclick="lightDiya()">🪔 Light Diya</button>
+    <canvas id="diyaCanvas" width="600" height="300"></canvas>
   </section>
 
   <footer>
@@ -225,7 +205,7 @@
     <p>&copy; Alicia Cryst</p>
   </footer>
 
-  <!-- Firebase SDK -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
   <script>
@@ -242,8 +222,9 @@
     let adminMode = false;
 
     function toggleTheme() {
-      const current = document.body.getAttribute("data-theme");
-      document.body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+      const body = document.body;
+      const current = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
     }
 
     function activateAdmin() {
@@ -256,13 +237,16 @@
 
     function submitStory() {
       const text = document.getElementById("storyInput").value.trim();
+      const dedication = document.getElementById("dedication").value.trim();
       if (!text) return;
       db.collection("stories").add({
         text,
+        dedication,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
         document.getElementById("confirmation").innerText = "✅ Shared.";
         document.getElementById("storyInput").value = "";
+        document.getElementById("dedication").value = "";
       });
     }
 
@@ -289,13 +273,20 @@
           p.textContent = data.text;
           div.appendChild(p);
 
+          if (data.dedication) {
+            const d = document.createElement("div");
+            d.style.fontStyle = "italic";
+            d.textContent = "🕯️ In memory of " + data.dedication;
+            div.appendChild(d);
+          }
+
           if (data.timestamp && data.timestamp.toDate) {
             const ts = data.timestamp.toDate().toLocaleString();
-            const tsEl = document.createElement("div");
-            tsEl.style.fontSize = "0.8em";
-            tsEl.style.color = "#aaa";
-            tsEl.innerText = "🕓 Shared on " + ts;
-            div.appendChild(tsEl);
+            const stamp = document.createElement("div");
+            stamp.style.fontSize = "0.8em";
+            stamp.style.color = "#aaa";
+            stamp.textContent = "🕓 Shared on " + ts;
+            div.appendChild(stamp);
           }
 
           if (adminMode) {
@@ -320,10 +311,10 @@
               };
               cancelBtn.onclick = loadStories;
             };
+
             const delBtn = document.createElement("button");
             delBtn.textContent = "🗑️ Delete";
             delBtn.onclick = () => deleteStory(doc.id);
-
             div.appendChild(editBtn);
             div.appendChild(delBtn);
           }
@@ -331,6 +322,21 @@
           list.appendChild(div);
         });
       });
+    }
+
+    function lightDiya() {
+      const name = document.getElementById("diyaName").value.trim();
+      if (!name) return;
+      const ctx = document.getElementById("diyaCanvas").getContext("2d");
+      const x = Math.floor(Math.random() * 580) + 10;
+      const y = Math.floor(Math.random() * 280) + 10;
+      ctx.fillStyle = "gold";
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+      ctx.fillStyle = "#fff";
+      ctx.font = "10px serif";
+      ctx.fillText(name, x + 8, y);
     }
 
     window.addEventListener("DOMContentLoaded", loadStories);
