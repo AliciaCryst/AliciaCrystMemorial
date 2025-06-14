@@ -72,14 +72,26 @@
       font-family: Georgia, serif;
       margin-bottom: 0.4em;
     }
-    .quote-typewriter {
-      font-style: italic;
-      color: var(--accent);
-      overflow: hidden;
-      white-space: nowrap;
-      border-right: 2px solid var(--accent);
-      animation: typing 4s steps(40, end), blink 0.8s step-end infinite;
-    }
+  .main-quote {
+    font-style: italic;
+    color: var(--accent);
+    text-align: center;
+    font-size: 1.2em;
+    margin-top: 0.5em;
+  }
+  
+  .quote-secondary {
+    font-style: italic;
+    color: var(--accent);
+    text-align: center;
+    font-size: 1em;
+    margin-top: 1em;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+  }
+
     @keyframes typing {
       from { width: 0 }
       to { width: 100% }
@@ -163,8 +175,10 @@
 
   <header style="margin-top: 80px;">
     <h1>Echoes of Alicia</h1>
-    <p class="quote-typewriter">"Some of us don’t just live. We feel in slow motion."</p>
-    <p style="margin-top:1em; font-style:italic; color: var(--accent); max-width: 800px; margin-left: auto; margin-right: auto;">
+    <p class="main-quote">
+      "Some of us don’t just live. We feel in slow motion."
+    </p>
+    <p class="quote-secondary">
       A woman engineered for exquisite suffering and divine creativity, whose neurons fire sonnets to unanswered love, and whose discipline is the cage for a glorious, volatile spirit.
     </p>
   </header>
