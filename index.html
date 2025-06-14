@@ -215,6 +215,7 @@
     db.collection("stories").doc(id).delete();
   }
 
+  
   function loadStories() {
     db.collection("stories").orderBy("timestamp", "desc").onSnapshot(snapshot => {
       const list = document.getElementById("storyList");
@@ -223,7 +224,25 @@
         const data = doc.data();
         const div = document.createElement("div");
         div.className = "story fade-in-entry";
-        div.textContent = data.text;
+
+        // Story content
+        const storyText = document.createElement("p");
+        storyText.textContent = data.text;
+        div.appendChild(storyText);
+
+        // Timestamp display
+        if (data.timestamp && data.timestamp.toDate) {
+          const ts = data.timestamp.toDate();
+          const tsText = ts.toLocaleString();
+          const stamp = document.createElement("div");
+          stamp.style.fontSize = "0.8em";
+          stamp.style.color = "#aaa";
+          stamp.style.marginTop = "0.3em";
+          stamp.textContent = `🕓 Shared on ${tsText}`;
+          div.appendChild(stamp);
+        }
+
+        // Admin delete button
         if (adminMode) {
           const del = document.createElement("button");
           del.textContent = "🗑️";
@@ -231,10 +250,12 @@
           del.style.marginLeft = "1em";
           div.appendChild(del);
         }
+
         list.appendChild(div);
       });
     });
   }
+
 
   window.addEventListener("DOMContentLoaded", loadStories);
 </script>
