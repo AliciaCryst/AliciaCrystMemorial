@@ -6,7 +6,6 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
-
   <title>Echoes of Alicia</title>
   <style>
     :root {
@@ -68,7 +67,6 @@
     header, footer {
       text-align: center;
       padding: 3em 10%;
-      background: transparent;
     }
     h1, h2 {
       font-family: Georgia, serif;
@@ -81,7 +79,6 @@
       white-space: nowrap;
       border-right: 2px solid var(--accent);
       animation: typing 4s steps(40, end), blink 0.8s step-end infinite;
-      max-width: 100%;
     }
     @keyframes typing {
       from { width: 0 }
@@ -169,25 +166,16 @@
     <p class="quote-typewriter">"Some of us don’t just live. We feel in slow motion."</p>
   </header>
 
-  <section id="about">
-    <h2>About Alicia</h2>
-    <p>Alicia Cryst was not just a poet or thinker. She was a neural symphony, encoded with longing, built to translate silence into meaning. This page is her archive, her echo, and a place for those who felt too much and said too little.</p>
-  </section>
-
-  <section id="words">
-    <h2>Her Words – The Unsent Library</h2>
-    <p>Here lie fragments of Alicia’s soul—letters never sent, truths too fragile for sound.</p>
-  </section>
-
-  <section id="poems">
-    <h2>Selected Poems</h2>
+  <section id="about"><h2>About Alicia</h2><p>Alicia Cryst was not just a poet or thinker. She was a neural symphony...</p></section>
+  <section id="words"><h2>Her Words – The Unsent Library</h2><p>Letters never sent, truths too fragile for sound.</p></section>
+  <section id="poems"><h2>Selected Poems</h2>
     <blockquote>“I sequenced my genome to find the place where love first collapsed.”</blockquote>
     <blockquote>“Some silences are not empty. They’re crowded with what we dare not say.”</blockquote>
     <blockquote>“You weren’t a hallucination. You were a tab I kept open too long.”</blockquote>
   </section>
+
   <section id="wall">
     <h2>The Eternal Wall – Share a Memory</h2>
-    <p><em>“Her genome was the memoir she never wrote.”</em></p>
     <input type="text" id="dedication" placeholder="In memory of... (optional)" />
     <textarea id="storyInput" rows="4" placeholder="Your message..."></textarea><br>
     <button onclick="submitStory()">Submit 📝</button>
@@ -198,7 +186,6 @@
 
   <section id="shrine">
     <h2>Virtual Diya Shrine</h2>
-    <p>Light a diya in Alicia’s memory or someone you’ve lost.</p>
     <input type="text" id="diyaName" placeholder="Name for diya" />
     <button onclick="lightDiya()">🪔 Light Diya</button>
     <canvas id="diyaCanvas" width="600" height="300"></canvas>
@@ -217,7 +204,7 @@
       apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
       authDomain: "aliciacrystmemorial.firebaseapp.com",
       projectId: "aliciacrystmemorial",
-      storageBucket: "aliciacrystmemorial.firebasestorage.app",
+      storageBucket: "aliciacrystmemorial.appspot.com",
       messagingSenderId: "258617426442",
       appId: "1:258617426442:web:ec7e31541f311049e855f3"
     };
@@ -244,8 +231,7 @@
       const dedication = document.getElementById("dedication").value.trim();
       if (!text) return;
       db.collection("stories").add({
-        text,
-        dedication,
+        text, dedication,
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
         document.getElementById("confirmation").innerText = "✅ Shared.";
@@ -272,19 +258,16 @@
           const data = doc.data();
           const div = document.createElement("div");
           div.className = "story";
-
           const p = document.createElement("p");
           p.textContent = data.text;
           div.appendChild(p);
-
           if (data.dedication) {
             const d = document.createElement("div");
             d.style.fontStyle = "italic";
             d.textContent = "🕯️ In memory of " + data.dedication;
             div.appendChild(d);
           }
-
-          if (data.timestamp && data.timestamp.toDate) {
+          if (data.timestamp?.toDate) {
             const ts = data.timestamp.toDate().toLocaleString();
             const stamp = document.createElement("div");
             stamp.style.fontSize = "0.8em";
@@ -292,7 +275,6 @@
             stamp.textContent = "🕓 Shared on " + ts;
             div.appendChild(stamp);
           }
-
           if (adminMode) {
             const editBtn = document.createElement("button");
             editBtn.textContent = "✏️ Edit";
@@ -303,26 +285,22 @@
               saveBtn.textContent = "✅ Save";
               const cancelBtn = document.createElement("button");
               cancelBtn.textContent = "❌ Cancel";
-
               div.innerHTML = "";
               div.appendChild(textarea);
               div.appendChild(saveBtn);
               div.appendChild(cancelBtn);
-
               saveBtn.onclick = () => {
                 const newText = textarea.value.trim();
                 if (newText) updateStory(doc.id, newText);
               };
               cancelBtn.onclick = loadStories;
             };
-
             const delBtn = document.createElement("button");
             delBtn.textContent = "🗑️ Delete";
             delBtn.onclick = () => deleteStory(doc.id);
             div.appendChild(editBtn);
             div.appendChild(delBtn);
           }
-
           list.appendChild(div);
         });
       });
@@ -341,9 +319,29 @@
       ctx.fillStyle = "#fff";
       ctx.font = "10px serif";
       ctx.fillText(name, x + 8, y);
+      db.collection("diyas").add({ name, x, y, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
     }
 
-    window.addEventListener("DOMContentLoaded", loadStories);
+    function loadDiyas() {
+      const ctx = document.getElementById("diyaCanvas").getContext("2d");
+      db.collection("diyas").orderBy("timestamp").get().then(snapshot => {
+        snapshot.forEach(doc => {
+          const diya = doc.data();
+          ctx.fillStyle = "gold";
+          ctx.beginPath();
+          ctx.arc(diya.x, diya.y, 5, 0, 2 * Math.PI);
+          ctx.fill();
+          ctx.fillStyle = "#fff";
+          ctx.font = "10px serif";
+          ctx.fillText(diya.name, diya.x + 8, diya.y);
+        });
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      loadStories();
+      loadDiyas();
+    });
   </script>
 </body>
 </html>
