@@ -388,6 +388,15 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
   <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
+      authDomain: "aliciacrystmemorial.firebaseapp.com",
+      projectId: "aliciacrystmemorial",
+      storageBucket: "aliciacrystmemorial.appspot.com",
+      messagingSenderId: "258617426442",
+      appId: "1:258617426442:web:ec7e31541f311049e855f3"
+    };
+    firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     
     function login() {
@@ -408,15 +417,6 @@
       });
     }
     
-    const firebaseConfig = {
-      apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
-      authDomain: "aliciacrystmemorial.firebaseapp.com",
-      projectId: "aliciacrystmemorial",
-      storageBucket: "aliciacrystmemorial.appspot.com",
-      messagingSenderId: "258617426442",
-      appId: "1:258617426442:web:ec7e31541f311049e855f3"
-    };
-    firebase.initializeApp(firebaseConfig);
     firebase.auth().onAuthStateChanged(user => {
       const loginStatus = document.getElementById("loginStatus");
       const loginBtn = document.getElementById("loginBtn");
