@@ -200,6 +200,21 @@
     color: var(--accent);
     margin-top: -0.5em;
   }
+  #dynamicGreeting {
+    font-size: 1.8em;
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 0.3em;
+  }
+  
+  .subtitle-secondary {
+    font-size: 1.1em;
+    color: var(--text);
+    font-family: Georgia, serif;
+    opacity: 0.85;
+    margin-top: -0.5em;
+    margin-bottom: 1.5em;
+  }
 
   </style>
 </head>
@@ -223,10 +238,11 @@
   </nav>
 
   <header style="margin-top: 80px;">
-    <h1>Echoes of Alicia</h1>
-    <p class="main-quote">
-      "Some of us don’t just live. We feel in slow motion."
-    </p>
+  <h1 id="dynamicGreeting">Echoes of Alicia</h1>
+  <p id="subtitleLine" class="subtitle-secondary">A digital shrine for Alicia Cryst</p>
+  <p class="main-quote">
+    "Some of us don’t just live. We feel in slow motion."
+  </p>  
     <p class="quote-secondary">
       A woman engineered for exquisite suffering and divine creativity, whose neurons fire sonnets to unanswered love, and whose discipline is the cage for a glorious, volatile spirit.
     </p>
@@ -603,6 +619,20 @@
     // already included
     loadStories();
     loadDiyas();
+  });
+</script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const h1 = document.getElementById("dynamicGreeting");
+    const hour = new Date().getHours();
+    const greeting =
+      hour < 5 ? "Hello, night wanderer." :
+      hour < 12 ? "Good morning." :
+      hour < 17 ? "Good afternoon." :
+      hour < 21 ? "Good evening." :
+      "The stars are watching with you.";
+
+    h1.textContent = `${greeting} Welcome to Echoes of Alicia.`;
   });
 </script>
 
