@@ -589,6 +589,7 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
   <script>
+    const diyas = []; // Global array to track all lit diyas    
     const firebaseConfig = {
       apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
       authDomain: "aliciacrystmemorial.firebaseapp.com",
@@ -648,6 +649,7 @@
       const body = document.body;
       const current = body.getAttribute("data-theme");
       body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+      redrawDiyas(); // re-render with updated --text 
     }
 
     function activateAdmin() {
@@ -755,17 +757,11 @@
       const x = Math.floor(Math.random() * 580) + 10;
       const y = Math.floor(Math.random() * 280) + 10;
     
-      // Draw the diya flame
-      ctx.fillStyle = "gold";
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, 2 * Math.PI);
-      ctx.fill();
+      // Store diya in memory
+      diyas.push({ name, x, y });
     
-      // Set text color from current theme
-      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-      ctx.fillStyle = textColor;
-      ctx.font = "10px serif";
-      ctx.fillText(name, x + 8, y);
+      // Draw diya
+      drawDiya(name, x, y);
     
       // Save to Firestore
       db.collection("diyas").add({
@@ -775,19 +771,42 @@
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
     }
+    function drawDiya(name, x, y) {
+      const canvas = document.getElementById("diyaCanvas");
+      const ctx = canvas.getContext("2d");
+    
+      ctx.fillStyle = "gold";
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.fill();
+    
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      ctx.fillStyle = textColor;
+      ctx.font = "10px serif";
+      ctx.fillText(name, x + 8, y);
+    }
+    function redrawDiyas() {
+      const canvas = document.getElementById("diyaCanvas");
+      const ctx = canvas.getContext("2d");
+    
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+      // Redraw all diyas from memory
+      diyas.forEach(({ name, x, y }) => {
+        drawDiya(name, x, y);
+      });
+    }
 
     function loadDiyas() {
-      const ctx = document.getElementById("diyaCanvas").getContext("2d");
+      const canvas = document.getElementById("diyaCanvas");
+      const ctx = canvas.getContext("2d");
+    
       db.collection("diyas").orderBy("timestamp").get().then(snapshot => {
         snapshot.forEach(doc => {
           const diya = doc.data();
-          ctx.fillStyle = "gold";
-          ctx.beginPath();
-          ctx.arc(diya.x, diya.y, 5, 0, 2 * Math.PI);
-          ctx.fill();
-          ctx.fillStyle = "#fff";
-          ctx.font = "10px serif";
-          ctx.fillText(diya.name, diya.x + 8, diya.y);
+          diyas.push({ name: diya.name, x: diya.x, y: diya.y }); // <== the fix
+          drawDiya(diya.name, diya.x, diya.y);
         });
       });
     }
