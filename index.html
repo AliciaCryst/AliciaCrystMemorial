@@ -28,19 +28,32 @@
       --text: #111;
       --accent: #555;
     }
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
+      padding: 0;
       background: var(--bg);
       color: var(--text);
       font-family: Georgia, serif;
       line-height: 1.6;
       scroll-behavior: smooth;
       transition: background 0.5s, color 0.5s;
+      overflow: hidden; /* prevent full-page scroll */
+    }
+    #scrollable-content {
+      height: calc(100% - 70px); /* adjust based on nav height */
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
     nav {
-      background-color: var(--bg-secondary); /* adapt based on theme */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg);
       padding: 1em;
       text-align: center;
+      z-index: 1000;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
     
@@ -256,7 +269,7 @@
     <a href="#wall">Eternal Wall</a>
     <a href="#shrine">Light a Diya</a>
   </nav>
-
+<main id="scrollable-content" style="overflow-y: auto;">
   <header style="margin-top: 80px;">
   <h1 id="dynamicGreeting">Echoes of Alicia</h1>
   <p id="subtitleLine" class="subtitle-secondary">A digital shrine for Alicia Cryst</p>
@@ -567,6 +580,7 @@
     <p><em>"Some people write code. She wrote longing in nucleotides."</em></p>
     <p>&copy; Alicia Cryst</p>
   </footer>
+  </main>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
