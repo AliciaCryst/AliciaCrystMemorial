@@ -50,12 +50,14 @@
       top: 0;
       left: 0;
       width: 100%;
-      background-color: var(--bg);
+      background: linear-gradient(to bottom, var(--bg) 90%, transparent);
+      backdrop-filter: blur(8px);
       padding: 1em;
       text-align: center;
       z-index: 1000;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
+
     
     nav a {
       color: var(--text); /* adapts in light/dark mode */
