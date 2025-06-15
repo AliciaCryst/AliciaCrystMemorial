@@ -28,26 +28,24 @@
       transition: background 0.5s, color 0.5s;
     }
     nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: rgba(0,0,0,0.85);
-      color: var(--text);
-      padding: 1em 0;
+      background-color: var(--bg-secondary); /* adapt based on theme */
+      padding: 1em;
       text-align: center;
-      border-bottom: 1px solid var(--accent);
-      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
+    
     nav a {
-      color: var(--text);
-      margin: 0 15px;
+      color: var(--text); /* adapts in light/dark mode */
+      margin: 0 1em;
       text-decoration: none;
       font-weight: bold;
+      transition: color 0.3s ease;
     }
+    
     nav a:hover {
       text-decoration: underline;
     }
+
     .toggle-theme {
       position: fixed;
       top: 1.2em;
