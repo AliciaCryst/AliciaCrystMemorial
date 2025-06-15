@@ -274,6 +274,15 @@
 </head>
 <body data-theme="dark">
   <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
+  <p id="visitorCount" style="
+    text-align: center;
+    font-style: italic;
+    margin-top: 2em;
+    color: var(--accent);
+    font-size: 1.05em;
+  ">
+    Loading visitor count...
+  </p>
 
   <nav>
     <a href="#about">About</a>
@@ -857,6 +866,36 @@
     loadDiyas();
   });
 </script>
+<script>
+  const counterRef = firebase.firestore().collection("stats").doc("visits");
+
+  async function updateVisitorCount() {
+    try {
+      await firebase.firestore().runTransaction(async (transaction) => {
+        const doc = await transaction.get(counterRef);
+        if (!doc.exists) {
+          transaction.set(counterRef, { count: 1 });
+        } else {
+          const newCount = doc.data().count + 1;
+          transaction.update(counterRef, { count: newCount });
+        }
+      });
+
+      // Fetch again to display
+      const snapshot = await counterRef.get();
+      const count = snapshot.data().count;
+      document.getElementById("visitorCount").textContent =
+        `You are visitor #${count.toLocaleString()} to Alicia’s shrine.`;
+    } catch (error) {
+      console.error("Error updating visitor count:", error);
+      document.getElementById("visitorCount").textContent =
+        "Visitor count unavailable.";
+    }
+  }
+
+  document.addEventListener("DOMContentLoaded", updateVisitorCount);
+</script>
+  
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     const h1 = document.getElementById("dynamicGreeting");
