@@ -748,17 +748,32 @@
     function lightDiya() {
       const name = document.getElementById("diyaName").value.trim();
       if (!name) return;
-      const ctx = document.getElementById("diyaCanvas").getContext("2d");
+    
+      const canvas = document.getElementById("diyaCanvas");
+      const ctx = canvas.getContext("2d");
+    
       const x = Math.floor(Math.random() * 580) + 10;
       const y = Math.floor(Math.random() * 280) + 10;
+    
+      // Draw the diya flame
       ctx.fillStyle = "gold";
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, 2 * Math.PI);
       ctx.fill();
-      ctx.fillStyle = "#fff";
+    
+      // Set text color from current theme
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      ctx.fillStyle = textColor;
       ctx.font = "10px serif";
       ctx.fillText(name, x + 8, y);
-      db.collection("diyas").add({ name, x, y, timestamp: firebase.firestore.FieldValue.serverTimestamp() });
+    
+      // Save to Firestore
+      db.collection("diyas").add({
+        name,
+        x,
+        y,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
     }
 
     function loadDiyas() {
