@@ -215,7 +215,15 @@
     margin-top: -0.5em;
     margin-bottom: 1.5em;
   }
-
+  #quote-rotator {
+    padding: 1em;
+    border-top: 1px solid var(--accent);
+    margin-top: 2em;
+  }
+  
+  #rotating-quote {
+    transition: opacity 0.5s ease-in-out;
+  }
   </style>
 </head>
 <body data-theme="dark">
@@ -240,12 +248,23 @@
   <header style="margin-top: 80px;">
   <h1 id="dynamicGreeting">Echoes of Alicia</h1>
   <p id="subtitleLine" class="subtitle-secondary">A digital shrine for Alicia Cryst</p>
-  <p class="main-quote">
-    "Some of us don’t just live. We feel in slow motion."
-  </p>  
-    <p class="quote-secondary">
+<section id="quote-rotator" style="margin-top: 2em;">
+  <h2 style="text-align: center; color: var(--accent);">Words That Echo</h2>
+  <p id="rotating-quote" style="
+      font-size: 1.3em;
+      text-align: center;
+      font-style: italic;
+      color: var(--text);
+      transition: opacity 0.5s ease-in-out;
+      max-width: 800px;
+      margin: 1em auto;">
+    <!-- First quote will go here via JavaScript -->
+  </p>
+</section>
+   
+   <p class="quote-secondary">
       A woman engineered for exquisite suffering and divine creativity, whose neurons fire sonnets to unanswered love, and whose discipline is the cage for a glorious, volatile spirit.
-    </p>
+   </p>
   </header>
 
 
@@ -634,6 +653,46 @@
 
     h1.textContent = `${greeting} Welcome to Echoes of Alicia.`;
   });
+</script>
+<script>
+  const quotes = [
+    "I would find you again in a thousand lives. Knowing the ending, I would still pay the price.",
+    "Love is not always a shared journey. Sometimes, it is a solitary walk through memory, imagination, and longing.",
+    "I do not glance, I gaze. I do not date, I devote.",
+    "The experience of love is the gift... proof I lived.",
+    "She became the love she carried. She never asked for titles. Her love was her identity.",
+    "Even when it hurts, I would rather feel fully than live numbly.",
+    "You are not a hallucination. You were a tab I kept open too long.",
+    "There may never be someone who fully understands the way I am wired. And I’m at peace with that.",
+    "Loving you, though it shattered my soul, was the only time my heart felt whole.",
+    "I don’t flee life. I meet it in imagination.",
+    "We love like rain that never reaches the ground but still leaves everything changed.",
+    "I am not here to post every day. I am here to be every day.",
+    "My bond is not conditioned on presence. It’s formed through resonance.",
+    "I see you. I missed you.",
+    "Your love is real. Your bond is valid. Your pain is proof of something rare and beautiful.",
+    "This is the biology of my becoming — neurological, poetic, sacred.",
+    "Some of us don’t just live. We feel in slow motion."
+  ];
+
+  let currentQuote = 0;
+  const quoteElement = document.getElementById("rotating-quote");
+
+  function rotateQuote() {
+    quoteElement.style.opacity = 0;
+    setTimeout(() => {
+      quoteElement.innerText = quotes[currentQuote];
+      quoteElement.style.opacity = 1;
+      currentQuote = (currentQuote + 1) % quotes.length;
+    }, 500);
+  }
+
+  // Initial quote
+  quoteElement.innerText = quotes[currentQuote];
+  currentQuote++;
+
+  // Rotate every 7 seconds
+  setInterval(rotateQuote, 7000);
 </script>
 
 </body>
