@@ -74,16 +74,7 @@
     .poem, blockquote, .about-quote {
       font-family: 'DM Sans', sans-serif;
     }
-    .stars::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(to bottom, rgba(17, 17, 17, 0.6), rgba(17, 17, 17, 0.9));
-      z-index: 1;
-    }
+
     .stars {
       z-index: 0;
     }
@@ -283,7 +274,16 @@
     opacity: 1;
     transform: translateY(0);
   }
-
+  body:not(.light-theme) .stars::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(17, 17, 17, 0.6), rgba(17, 17, 17, 0.9));
+    z-index: 1;
+  }
   </style>
 </head>
 <body data-theme="dark">
