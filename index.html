@@ -64,10 +64,12 @@
       overflow: hidden; /* prevent full-page scroll */
     }
     #scrollable-content {
-      height: calc(100% - 70px); /* adjust based on nav height */
-      overflow-y: auto;
+      height: calc(100% - 70px);   /* Fits under 70px nav */
+      overflow-y: auto;            /* Enables vertical scrolling */
       scroll-behavior: smooth;
+      margin-top: 70px;            /* This is the missing piece */
     }
+
     nav {
       position: fixed;
       top: 0;
@@ -97,9 +99,18 @@
       text-decoration: underline;
     }
     
-    nav a:visited {
-      color: var(--text); /* Override default purple visited links */
+    nav a,
+    nav a:link,
+    nav a:visited,
+    nav a:active,
+    nav a:hover {
+      color: var(--text);
+      text-decoration: none;
     }
+    nav a:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }    
     .poem, blockquote, .about-quote {
       font-family: 'DM Sans', sans-serif;
     }
@@ -368,7 +379,7 @@
     Loading visitor count...
   </p>
 
-  <nav>
+  <nav role="navigation">
     <a href="#about">About 🧭</a>
     <a href="#letters">Letters 💌</a>
     <a href="#words">Her Words ✍️</a>
@@ -1119,12 +1130,7 @@
   // Rotate every 7 seconds
   setInterval(rotateQuote, 7000);
 </script>
-<section id="letters" style="margin-top: 40px; text-align: center;">
-  <h2>💌 Letters from Alicia</h2>
-  <p>Feeling lost or unseen? Let Alicia write you a letter.</p>
-  <button onclick="generateLetter()" class="letter-button">Receive a Letter</button>
-  <div id="letterOutput" class="letter-box"></div>
-</section>
+
 <script>
   async function generateLetter() {
     const outputDiv = document.getElementById('letterOutput');
