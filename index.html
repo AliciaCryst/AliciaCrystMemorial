@@ -1134,13 +1134,15 @@
       const randomDoc = docs[Math.floor(Math.random() * docs.length)];
       const text = randomDoc.data().text || "This letter has no content.";
 
-      outputDiv.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+      // Fix alignment
+      outputDiv.innerHTML = `<div style="text-align: left;"><p>${text.replace(/\n/g, '<br>')}</p></div>`;
     } catch (err) {
       console.error('Error fetching letter from Firestore:', err);
       outputDiv.innerHTML = "Alicia is unreachable right now. Please try again later.";
     }
   }
 </script>
+
 
 </body>
 </html>
