@@ -294,7 +294,27 @@
 .like-button:hover {
     transform: scale(1.2);
   }
+ .letter-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border: 1px solid #aaa;
+    background-color: #fdfdfd;
+    border-radius: 10px;
+    margin-top: 10px;
+  }
   
+  .letter-box {
+    margin-top: 20px;
+    padding: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: pre-wrap;
+    font-style: italic;
+    border-left: 3px solid #aaa;
+    color: #444;
+  } 
   </style>
 </head>
 <body data-theme="dark">
@@ -599,6 +619,13 @@
     <blockquote>“You weren’t a hallucination. You were a tab I kept open too long.”</blockquote>
   </section>
 
+  <section id="letters" style="margin-top: 40px; text-align: center;">
+    <h2>💌 Letters from Alicia</h2>
+    <p>Feeling lost or unseen? Let Alicia write you a letter.</p>
+    <button onclick="generateLetter()" class="letter-button">Receive a Letter</button>
+    <div id="letterOutput" class="letter-box"></div>
+  </section>
+  
   <section id="wall">
     <h2>The Eternal Wall – Share a Memory</h2>
     <input type="text" id="dedication" placeholder="In memory of... (optional)" />
