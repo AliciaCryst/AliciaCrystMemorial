@@ -1060,6 +1060,24 @@
   // Rotate every 7 seconds
   setInterval(rotateQuote, 7000);
 </script>
+<script>
+  async function generateLetter() {
+    const outputDiv = document.getElementById("letterOutput");
+    outputDiv.innerHTML = "<em>⏳ Alicia is writing a letter for you...</em>";
+
+    try {
+      const response = await fetch("https://alicia-letter-server.alicia-cryst.workers.dev/", {
+        method: "POST"
+      });
+
+      const text = await response.text();
+      outputDiv.innerHTML = `<pre style="white-space: pre-wrap; text-align: left; padding: 1em;">${text}</pre>`;
+    } catch (err) {
+      console.error("Error fetching letter:", err);
+      outputDiv.innerHTML = "<strong>⚠️ Alicia is quiet right now. Please try again later.</strong>";
+    }
+  }
+</script>
 
 </body>
 </html>
