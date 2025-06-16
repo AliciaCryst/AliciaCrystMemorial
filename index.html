@@ -160,6 +160,15 @@
     .story:hover {
       background: rgba(255,255,255,0.08);
     }
+    .story button {
+      background: none;
+      border: none;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+    .story button:hover {
+      transform: scale(1.1);
+    }
     textarea, input[type="text"] {
       width: 100%;
       padding: 0.5em;
@@ -269,7 +278,16 @@
     text-shadow: 0 0 3px rgba(0,0,0,0.3);
     font-weight: 500;
   }
-   
+  .like-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+  }
+  .like-button:hover {
+    transform: scale(1.2);
+  }
+
   </style>
 </head>
 <body data-theme="dark">
@@ -749,6 +767,36 @@
             stamp.textContent = "🕓 Shared on " + ts;
             div.appendChild(stamp);
           }
+                    // ❤️ Like Button
+          const likeWrapper = document.createElement("div");
+          likeWrapper.style.marginTop = "6px";
+          
+          const likeBtn = document.createElement("button");
+          likeBtn.textContent = "❤️";
+          likeBtn.className = "like-button";
+          likeBtn.style.marginRight = "5px";
+          
+          const likeCount = document.createElement("span");
+          likeCount.id = `like-count-${doc.id}`;
+          likeCount.textContent = data.likes || 0;
+          
+          likeBtn.onclick = () => {
+            const countEl = document.getElementById(`like-count-${doc.id}`);
+            const current = parseInt(countEl.textContent || "0");
+            countEl.textContent = current + 1; // Optimistic update
+          
+            db.collection("stories").doc(doc.id).update({
+              likes: firebase.firestore.FieldValue.increment(1)
+            }).catch((err) => {
+              console.error("Failed to like:", err);
+              countEl.textContent = current; // Revert
+            });
+          };
+          
+          likeWrapper.appendChild(likeBtn);
+          likeWrapper.appendChild(likeCount);
+          div.appendChild(likeWrapper);
+
           if (adminMode) {
             const editBtn = document.createElement("button");
             editBtn.textContent = "✏️ Edit";
