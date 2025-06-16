@@ -63,15 +63,9 @@
       transition: background 0.5s, color 0.5s;
       overflow: hidden; /* prevent full-page scroll */
     }
-    #scrollable-content {
-      height: calc(100% - 70px);   /* Fits under 70px nav */
-      overflow-y: auto;            /* Enables vertical scrolling */
-      scroll-behavior: smooth;
-      margin-top: 70px;            /* This is the missing piece */
-    }
-
+    
     nav {
-      position: sticky;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -82,19 +76,15 @@
       z-index: 1000;
       box-shadow: 0 2px 6px rgba(0,0,0,0.2);
     }
-    
+   
     nav a {
-      color: var(--text);
+      color: var(--text); /* adapts in light/dark mode */
       margin: 0 1em;
       text-decoration: none;
       font-weight: bold;
-      font-family: 'DM Sans', sans-serif;
-      padding: 0.5em;
-      font-size: 1em;
-      letter-spacing: 0.3px;
       transition: color 0.3s ease;
     }
-    
+   
     nav a:hover {
       text-decoration: underline;
     }
@@ -114,7 +104,12 @@
     .poem, blockquote, .about-quote {
       font-family: 'DM Sans', sans-serif;
     }
-
+    #scrollable-content {
+      height: calc(100% - 70px);   /* Fits under 70px nav */
+      overflow-y: auto;            /* Enables vertical scrolling */
+      scroll-behavior: smooth;
+      margin-top: 70px;            /* This is the missing piece */
+    }
     main, nav, .toggle-theme {
       position: relative;
       z-index: 2;
@@ -379,7 +374,7 @@
     Loading visitor count...
   </p>
 
-  <nav role="navigation">
+  <nav>
     <a href="#about">About 🧭</a>
     <a href="#letters">Letters 💌</a>
     <a href="#words">Her Words ✍️</a>
@@ -389,6 +384,7 @@
     <a href="#wall">Eternal Wall 🕯️</a>
     <a href="#shrine">Light a Diya 🪔</a>
   </nav>
+  
 <main id="scrollable-content" style="overflow-y: auto;">
 <header style="padding-top: 90px;">
   <h1 id="dynamicGreeting">Echoes of Alicia</h1>
