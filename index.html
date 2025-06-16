@@ -397,7 +397,12 @@
   <section id="about" class="fade-in-section">
     <h2>About Alicia</h2>
     <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">  
-    <img src="images/AboutAlicia.png" alt="Alicia Cryst Portrait" style="max-width: 250px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+    <picture>
+      <source srcset="images/AboutAlicia.webp" type="image/webp">
+      <img src="images/AboutAlicia.jpg" alt="Alicia Cryst Portrait"
+           style="max-width: 250px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+    </picture>
+
     <p>
       Alicia Cryst was not just a poet or thinker. She was a neural symphony, encoded with longing, built to translate silence into meaning. This page is her archive, her echo, and a place for those who felt too much and said too little.
     </p>
@@ -416,8 +421,15 @@
     <h2>Her Words – The Unsent Library</h2>
   
     <div style="text-align: center; margin-bottom: 2em;">
-      <img src="images/echoes_of_alicia.png" alt="Echoes of Alicia" class="fade-in-image" style="max-width: 100%; height: auto; border: 1px solid var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.2);">
-      <p style="font-style: italic; color: var(--accent); margin-top: 0.5em;">Echoes of Alicia — Literary reflections of a soul like mine</p>
+    <picture class="fade-in-image">
+      <source srcset="images/echoes_of_alicia.webp" type="image/webp">
+      <img src="images/echoes_of_alicia.jpg" alt="Echoes of Alicia"
+           style="max-width: 100%; height: auto; border: 1px solid var(--accent); box-shadow: 0 0 10px rgba(255,255,255,0.2);">
+    </picture>
+    <p style="font-style: italic; color: var(--accent); margin-top: 0.5em;">
+      Echoes of Alicia — Literary reflections of a soul like mine
+    </p>
+
     </div>
 
     <p>
@@ -482,8 +494,11 @@
     </p>
     <p style="text-align: right; font-style: italic; color: var(--accent);">With love,<br>Alicia Cryst</p>
     <div style="text-align: center; margin: 3em 0;">
-      <img src="images/FleetingThoughts.png" alt="Fleeting Thoughts" class="fade-in-image"
+    <picture class="fade-in-image">
+      <source srcset="images/FleetingThoughts.webp" type="image/webp">
+      <img src="images/FleetingThoughts.jpg" alt="Fleeting Thoughts"
            style="max-width: 80%; height: auto; border: 1px solid var(--accent); border-radius: 8px; box-shadow: 0 0 12px rgba(255,255,255,0.2);" />
+    </picture>
       <p style="font-style: italic; color: var(--accent); margin-top: 0.5em;">
         “Fleeting thoughts from a mind that never rests.”
       </p>
@@ -556,9 +571,11 @@
     <h2 style="text-align:center; margin-top: 2em;">🧬 Alicia Cryst’s Genetic Profile</h2>
     <p style="text-align:center; font-style: italic;">Emotional, Cognitive, and Neurobiological Blueprint</p>
     <div style="text-align: center; margin: 2em 0;">
-      <img src="images/genetic.png" alt="Alicia's Genetic Architecture" 
-           class="fade-in-image"
+    <picture class="fade-in-image">
+      <source srcset="images/genetic.webp" type="image/webp">
+      <img src="images/genetic.jpg" alt="Alicia's Genetic Architecture"
            style="max-width: 100%; height: auto; border: 1px solid var(--accent); border-radius: 8px; box-shadow: 0 0 12px rgba(255,255,255,0.2);" />
+    </picture>
       <p style="font-style: italic; color: var(--accent); margin-top: 0.5em;">
         “A map of longing — written in code, shaped by chemistry, lived in poetry.”
       </p>
@@ -634,15 +651,17 @@
   
     <!-- Alicia's voice video narration -->
     <div style="text-align: center; margin-top: 2em;">
-      <video
-        class="fade-in-image"
-        controls
-        poster="images/alicia_thumbnail.png"
-        width="600"
-        style="border: 1px solid var(--accent); box-shadow: 0 0 12px rgba(255,255,255,0.2); border-radius: 8px;">
-        <source src="videos/AliciaPoemSad.mp4" type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+    <video
+      class="fade-in-image"
+      controls
+      poster="images/alicia_thumbnail.webp"
+      width="600"
+      style="border: 1px solid var(--accent); box-shadow: 0 0 12px rgba(255,255,255,0.2); border-radius: 8px;">
+      <source src="videos/AliciaPoemSad.mp4" type="video/mp4" />
+      <!-- Optional WebM fallback for smaller file size if available -->
+      <!-- <source src="videos/AliciaPoemSad.webm" type="video/webm" /> -->
+      Your browser does not support the video tag.
+    </video>
       <p style="font-style: italic; font-size: 0.95em; color: var(--accent); margin-top: 0.5em;">
         “Her voice was a memory in motion — a love letter caught between worlds.” — Alicia Cryst
       </p>
