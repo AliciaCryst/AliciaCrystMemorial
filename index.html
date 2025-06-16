@@ -1123,42 +1123,21 @@
     outputDiv.innerHTML = '✍️ Alicia is writing...';
 
     try {
-      const response = await fetch('https://alicia-letter-server.alicia-cryst.workers.dev/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({})
-      });
+      const snapshot = await firebase.firestore().collection('letters').get();
+      const docs = snapshot.docs;
 
-      if (response.ok) {
-        const data = await response.json();
-        if (data && data.letter) {
-          outputDiv.innerHTML = `<p>${data.letter.replace(/\n/g, '<br>')}</p>`;
-          return;
-        }
+      if (!docs.length) {
+        outputDiv.innerHTML = "Alicia is silent right now. Please try again later.";
+        return;
       }
-      throw new Error("Cloudflare failed"); // fallback to Firebase
-    } catch (e) {
-      console.warn('Cloudflare failed, using fallback from Firestore:', e);
 
-      try {
-        const snapshot = await firebase.firestore().collection('letters').get();
-        const docs = snapshot.docs;
+      const randomDoc = docs[Math.floor(Math.random() * docs.length)];
+      const text = randomDoc.data().text || "This letter has no content.";
 
-        if (!docs.length) {
-          outputDiv.innerHTML = "Alicia is silent right now. Please try again later.";
-          return;
-        }
-
-        const randomDoc = docs[Math.floor(Math.random() * docs.length)];
-        const text = randomDoc.data().text;
-
-        outputDiv.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
-      } catch (err) {
-        console.error('Both Cloudflare and Firestore failed:', err);
-        outputDiv.innerHTML = "Alicia is unreachable right now. Please try again later.";
-      }
+      outputDiv.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+    } catch (err) {
+      console.error('Error fetching letter from Firestore:', err);
+      outputDiv.innerHTML = "Alicia is unreachable right now. Please try again later.";
     }
   }
 </script>
