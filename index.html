@@ -315,26 +315,26 @@
     border-left: 3px solid #aaa;
     color: #444;
   } 
-   .letter-button {
-    background-color: #f0f0f0;
-    color: #333; /* Dark text for visibility */
-    border: 1px solid #ccc;
+.letter-button {
+    background-color: #4CAF50; /* Green background */
+    color: white;              /* White text */
+    border: none;
     padding: 12px 24px;
     border-radius: 8px;
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease;
   }
-  
-  /* Optional: Dark mode support */
-  @media (prefers-color-scheme: dark) {
-    .letter-button {
-      background-color: #1e1e1e;
-      color: #f9f9f9; /* Light text for dark background */
-      border: 1px solid #555;
-    }
-  } 
+ .letters-section {
+  margin-top: 40px;
+  text-align: center;
+  }
+ 
+  .letter-button:hover {
+    background-color: #45a049; /* Slightly darker green on hover */
+  }
+
   </style>
 </head>
 <body data-theme="dark">
@@ -639,7 +639,7 @@
     <blockquote>“You weren’t a hallucination. You were a tab I kept open too long.”</blockquote>
   </section>
 
-  <section id="letters" style="margin-top: 40px; text-align: center;">
+  <section id="letters" class="letters-section">
     <h2>💌 Letters from Alicia</h2>
     <p>Feeling lost or unseen? Let Alicia write you a letter.</p>
     <button onclick="generateLetter()" class="letter-button">Receive a Letter</button>
