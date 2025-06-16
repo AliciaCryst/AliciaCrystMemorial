@@ -283,11 +283,18 @@
     border: none;
     font-size: 1.2em;
     cursor: pointer;
+    color: red; /* Heart always red */
   }
-  .like-button:hover {
+  
+  .like-button span {
+    color: black; /* Or dark gray for visibility in light mode */
+    margin-left: 4px;
+    font-weight: bold;
+  }
+.like-button:hover {
     transform: scale(1.2);
   }
-
+  
   </style>
 </head>
 <body data-theme="dark">
