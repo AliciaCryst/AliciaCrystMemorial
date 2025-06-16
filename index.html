@@ -315,6 +315,26 @@
     border-left: 3px solid #aaa;
     color: #444;
   } 
+   .letter-button {
+    background-color: #f0f0f0;
+    color: #333; /* Dark text for visibility */
+    border: 1px solid #ccc;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* Optional: Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .letter-button {
+      background-color: #1e1e1e;
+      color: #f9f9f9; /* Light text for dark background */
+      border: 1px solid #555;
+    }
+  } 
   </style>
 </head>
 <body data-theme="dark">
