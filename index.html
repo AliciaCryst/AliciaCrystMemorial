@@ -1116,15 +1116,14 @@
     <h2 style="text-align: center;">🔗 Follow Alicia on X</h2>
     <div style="text-align: center; margin: 2em 0;">
       <a class="twitter-timeline"
-         data-theme="dark"
          data-width="400"
          data-height="600"
+         data-theme="dark"
          href="https://twitter.com/realAliciaCryst?ref_src=twsrc%5Etfw">
         Tweets by @realAliciaCryst
       </a>
     </div>
   </section>
-  
 
     
      
@@ -1674,7 +1673,15 @@
   }
 </script>
   
+
 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script>
+  window.onload = function () {
+    if (window.twttr && twttr.widgets) {
+      twttr.widgets.load();
+    }
+  };
+</script>
   
 </body>
 </html>
