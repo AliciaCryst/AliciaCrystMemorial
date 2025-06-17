@@ -440,11 +440,7 @@
     to { opacity: 1; }
   }
 
-  .twitter-timeline {
-    display: block !important;
-  }
-
-  </style>
+</style>
 </head>
 <body data-theme="dark">
   <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
@@ -1113,16 +1109,24 @@
 </section>
     
 <section id="tweets">
-  <h2 style="text-align: center;">🕊️ Follow Alicia on X</h2>
-  <div style="text-align: center; margin: 2em 0;">
-    <a class="twitter-timeline"
-       data-width="400"
-       data-height="600"
-       data-theme="dark"
-       href="https://twitter.com/realAliciaCryst">
-      Tweets by @realAliciaCryst
-    </a>
+  <h2 style="text-align: center;">🕊️ Alicia Cryst’s Voice on X</h2>
+  <div style="text-align: center;">
+    <iframe 
+      src="https://twitframe.com/show?url=https://twitter.com/realAliciaCryst"
+      width="500"
+      height="700"
+      frameborder="0"
+      scrolling="yes"
+      style="border: 1px solid var(--accent); border-radius: 12px;">
+    </iframe>
   </div>
+  <p style="text-align: center; margin-top: 1em;">
+    <a href="https://twitter.com/realAliciaCryst" target="_blank" style="color: var(--accent);">
+      ➡️ View Alicia’s feed directly on X
+    </a>
+  </p>
+</section>
+
     
      
   <section id="wall" class="fade-in-section">
@@ -1672,14 +1676,5 @@
 </script>
   
 
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<script>
-  window.onload = function () {
-    if (window.twttr && twttr.widgets) {
-      twttr.widgets.load();
-    }
-  };
-</script>
-  
 </body>
 </html>
