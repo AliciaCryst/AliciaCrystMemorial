@@ -1420,7 +1420,14 @@
 <script>
   async function generateLetter() {
     const outputDiv = document.getElementById('letterOutput');
-    outputDiv.innerHTML = '✍️ Alicia is writing...';
+
+    // Set up the writing message and letter container
+    outputDiv.innerHTML = `
+      <p id="writingIndicator" style="font-style: italic; color: var(--accent); margin-bottom: 1em;">
+        ✍️ Alicia is writing...
+      </p>
+      <div style="text-align: left; line-height: 1.7;"><p id="typedText"></p></div>
+    `;
 
     try {
       const snapshot = await firebase.firestore().collection('letters').get();
@@ -1432,16 +1439,34 @@
       }
 
       const randomDoc = docs[Math.floor(Math.random() * docs.length)];
-      const text = randomDoc.data().text || "This letter has no content.";
+      let text = randomDoc.data().text || "This letter has no content.";
 
-      // Fix alignment
-      outputDiv.innerHTML = `<div style="text-align: left;"><p>${text.replace(/\n/g, '<br>')}</p></div>`;
+      // Replace em-dash with simple dash and newlines with <br>
+      text = text.replace(/—/g, '-').replace(/\n/g, '<br>');
+
+      let i = 0;
+      const typedText = document.getElementById('typedText');
+      const writingIndicator = document.getElementById('writingIndicator');
+
+      function typeWriter() {
+        if (i < text.length) {
+          typedText.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 12); // Adjust speed as needed
+        } else {
+          // Hide the writing indicator after typing completes
+          writingIndicator.style.opacity = 0;
+        }
+      }
+
+      typeWriter();
     } catch (err) {
       console.error('Error fetching letter from Firestore:', err);
       outputDiv.innerHTML = "Alicia is unreachable right now. Please try again later.";
     }
   }
 </script>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
