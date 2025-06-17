@@ -1441,8 +1441,8 @@
       const randomDoc = docs[Math.floor(Math.random() * docs.length)];
       let text = randomDoc.data().text || "This letter has no content.";
 
-      // Replace em-dash with simple dash and newlines with <br>
-      text = text.replace(/—/g, '-').replace(/\n/g, '<br>');
+      // Convert <br> to \n and replace em-dashes
+      text = text.replace(/<br\s*\/?>/gi, '\n').replace(/—/g, '-');
 
       let i = 0;
       const typedText = document.getElementById('typedText');
@@ -1450,22 +1450,19 @@
 
       function typeWriter() {
         if (i < text.length) {
-          if (text.substr(i, 4) === '<br>') {
+          if (text[i] === '\n') {
             typedText.innerHTML += '<br>';
-            i += 4;
           } else {
-            typedText.innerHTML += text.charAt(i);
-            i++;
+            typedText.innerHTML += text[i];
           }
+          i++;
           setTimeout(typeWriter, 12);
         } else {
           writingIndicator.style.opacity = 0;
         }
       }
 
-      }
-
-      typeWriter();
+      typeWriter(); // Call the typing function here
     } catch (err) {
       console.error('Error fetching letter from Firestore:', err);
       outputDiv.innerHTML = "Alicia is unreachable right now. Please try again later.";
@@ -1473,6 +1470,7 @@
   }
 </script>
 
+  
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
