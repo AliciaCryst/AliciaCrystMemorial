@@ -439,7 +439,17 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
-
+  .emoji-card {
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    padding: 1em;
+    background-color: rgba(255,255,255,0.03);
+    text-align: center;
+    font-size: 1.2em;
+  }
+  .emoji-card span {
+    cursor: help;
+  }
 </style>
 </head>
 <body data-theme="dark">
@@ -1177,51 +1187,53 @@
   
 
     <section id="emoji-language" class="fade-in-section" style="margin-top: 4em;">
-    <h2 style="text-align: center;">🖼️ The Language of Emojis – Alicia’s Emotional Palette</h2>
-  
-    <p style="max-width: 700px; margin: 2em auto; line-height: 1.7; font-size: 1.05em; color: var(--text); text-align: center;">
-      For Alicia Cryst, emojis aren’t decoration — they’re punctuation for the heart.  
-      As a Highly Sensitive Person (HSP), she experiences emotion in high resolution.  
-      Words often fall short. But a single 🌸 or 🫧 can whisper what paragraphs cannot.
-    </p>
-  
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5em; max-width: 800px; margin: 2em auto;">
-      
-      <div style="border: 1px solid var(--accent); border-radius: 10px; padding: 1em; background-color: rgba(255,255,255,0.03);">
-        <h3 style="font-size: 1.1em;">🌸 Soft Longing</h3>
-        <p style="font-style: italic; color: var(--accent);">Used for: love, memory, unspoken affection</p>
-        <p>🌸 🫧 💭 💌 🌙</p>
+      <h2 style="text-align: center;">🖼️ The Language of Emojis – Alicia’s Emotional Palette</h2>
+    
+      <p style="max-width: 700px; margin: 2em auto; line-height: 1.7; font-size: 1.05em; color: var(--text); text-align: center;">
+        For Alicia Cryst, emojis aren’t decoration — they’re punctuation for the heart.<br>
+        As a Highly Sensitive Person (HSP), she experiences emotion in high resolution.<br>
+        Words often fall short. But a single <span title="symbol of delicate longing">🌸</span> or <span title="fleeting emotion or memory">🫧</span> can whisper what paragraphs cannot.
+      </p>
+    
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5em; max-width: 800px; margin: 2em auto;">
+        <div class="emoji-card">
+          <h3>🌸 Soft Longing</h3>
+          <p><span title="gentle affection">🌸</span> <span title="evanescence">🫧</span> <span title="reflection or imagination">💭</span> <span title="intimate message">💌</span> <span title="dreamy or wistful mood">🌙</span></p>
+        </div>
+        <div class="emoji-card">
+          <h3>💔 Quiet Grief</h3>
+          <p><span title="heartache">💔</span> <span title="melancholy">😔</span> <span title="emotional rain">🌧️</span> <span title="sacred remembrance">🕯️</span> <span title="gentle farewell">🪶</span></p>
+        </div>
+        <div class="emoji-card">
+          <h3>🌞 Morning Clarity</h3>
+          <p><span title="hope">🌞</span> <span title="renewal">☕️</span> <span title="progress">📈</span> <span title="insight">💡</span> <span title="inspiration">✨</span></p>
+        </div>
+        <div class="emoji-card">
+          <h3>🎯 Precision & Wit</h3>
+          <p><span title="market drop">📉</span> <span title="focused insight">🧠</span> <span title="sharp aim">🎯</span> <span title="scrutiny">🔍</span> <span title="paperwork or receipts">🧾</span></p>
+        </div>
+        <div class="emoji-card">
+          <h3>🫶 Empathic Reach</h3>
+          <p><span title="emotional offering">🫶</span> <span title="pure connection">🤍</span> <span title="peace or release">🕊️</span> <span title="honest conversation">💬</span> <span title="angelic support">🪽</span></p>
+        </div>
       </div>
-  
-      <div style="border: 1px solid var(--accent); border-radius: 10px; padding: 1em; background-color: rgba(255,255,255,0.03);">
-        <h3 style="font-size: 1.1em;">💔 Quiet Grief</h3>
-        <p style="font-style: italic; color: var(--accent);">Used for: loss, fading connection, resilience</p>
-        <p>💔 😔 🌧️ 🕯️ 🪶</p>
+    
+      <blockquote style="max-width: 700px; margin: 2em auto; text-align: center; font-style: italic; color: var(--accent);">
+        “Emojis are emotional chords. Alicia plays them like a pianist plays silences — deliberately, and with feeling.”
+      </blockquote>
+    
+      <div style="text-align: center; margin-top: 3em;">
+        <h3>🎨 Compose Like Alicia</h3>
+        <p style="font-size: 0.95em; max-width: 650px; margin: 0 auto 1.5em auto;">
+          Want to express like Alicia? Try pairing each line of thought with an emoji tone.<br>
+          <strong>Example:</strong> "Missing you..." becomes <em>“Missing you <span title='heartache'>💔</span><span title='fleeting feeling'>🫧</span>”</em><br>
+          Don’t just write. <em>Feel through symbols.</em>
+        </p>
+    
+        <div id="sample-tweet" style="font-style: italic; font-size: 1.05em; margin-bottom: 1em;">“Sometimes I wake up missing people I never met 💭🫧🕯️”</div>
+        <button onclick="rotateSample()" style="padding: 0.6em 1.2em; background: var(--accent); color: var(--bg); border: none; border-radius: 8px; cursor: pointer;">🔄 Show Another</button>
       </div>
-  
-      <div style="border: 1px solid var(--accent); border-radius: 10px; padding: 1em; background-color: rgba(255,255,255,0.03);">
-        <h3 style="font-size: 1.1em;">🌞 Morning Clarity</h3>
-        <p style="font-style: italic; color: var(--accent);">Used for: hope, reset, fresh thoughts</p>
-        <p>🌞 ☕️ 📈 💡 ✨</p>
-      </div>
-  
-      <div style="border: 1px solid var(--accent); border-radius: 10px; padding: 1em; background-color: rgba(255,255,255,0.03);">
-        <h3 style="font-size: 1.1em;">🎯 Precision & Wit</h3>
-        <p style="font-style: italic; color: var(--accent);">Used for: analysis, sass, market insights</p>
-        <p>📉 🧠 🎯 🔍 🧾</p>
-      </div>
-  
-      <div style="border: 1px solid var(--accent); border-radius: 10px; padding: 1em; background-color: rgba(255,255,255,0.03);">
-        <h3 style="font-size: 1.1em;">🫶 Empathic Reach</h3>
-        <p style="font-style: italic; color: var(--accent);">Used for: offering comfort, mirroring feelings</p>
-        <p>🫶 🤍 🕊️ 💬 🪽</p>
-      </div>
-    </div>
-  
-    <p style="max-width: 700px; margin: 2em auto; text-align: center; font-style: italic; color: var(--accent);">
-      “Emojis are emotional chords. Alicia plays them like a pianist plays silences — deliberately, and with feeling.”
-    </p>
-  </section>
+    </section>
       
        
     <section id="wall" class="fade-in-section">
@@ -1769,6 +1781,21 @@
     document.getElementById('quantumModal').style.display = 'none';
   }
 </script>
+<script>
+const samples = [
+  "“Sometimes I wake up missing people I never met 💭🫧🕯️”",
+  "“I don’t need replies — just resonance. 🫶🌸📡”",
+  "“Truth isn’t always loud. Sometimes it’s a teardrop in a sentence. 💧✍️”",
+  "“The market is red, but my hope is green. 📉🌱📈”",
+  "“He didn’t break me. He just became my poetry. 💔🖋️🪶”"
+];
+let index = 0;
+function rotateSample() {
+  index = (index + 1) % samples.length;
+  document.getElementById("sample-tweet").innerText = samples[index];
+}
+</script>
+
   
 
 </body>
