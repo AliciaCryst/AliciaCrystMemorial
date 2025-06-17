@@ -437,16 +437,6 @@
 </head>
 <body data-theme="dark">
   <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
-  <p id="visitorCount" style="
-    text-align: center;
-    font-style: italic;
-    margin-top: 2em;
-    color: var(--accent);
-    font-size: 1.05em;
-  ">
-    Loading visitor count...
-  </p>
-
   <nav id="navbar">
     <div id="menu-toggle" onclick="toggleMenu()">☰ Menu</div>
     <div id="menu-links">
@@ -464,7 +454,15 @@
       <a href="#interview">🎤 Interview</a>
     </div>
   </nav>
-
+  <p id="visitorCount" style="
+    text-align: center;
+    font-style: italic;
+    margin-top: 2em;
+    color: var(--accent);
+    font-size: 1.05em;
+  ">
+    Loading visitor count...
+  </p>
   <main id="scrollable-content" style="overflow-y: auto;">
     <header style="padding-top: 90px;">
     <h1 id="dynamicGreeting">Echoes of Alicia</h1>
