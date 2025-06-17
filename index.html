@@ -1450,13 +1450,19 @@
 
       function typeWriter() {
         if (i < text.length) {
-          typedText.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(typeWriter, 12); // Adjust speed as needed
+          if (text.substr(i, 4) === '<br>') {
+            typedText.innerHTML += '<br>';
+            i += 4;
+          } else {
+            typedText.innerHTML += text.charAt(i);
+            i++;
+          }
+          setTimeout(typeWriter, 12);
         } else {
-          // Hide the writing indicator after typing completes
           writingIndicator.style.opacity = 0;
         }
+      }
+
       }
 
       typeWriter();
