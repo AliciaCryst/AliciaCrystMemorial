@@ -61,6 +61,7 @@
       line-height: 1.6;
       scroll-behavior: smooth;
       transition: background 0.5s, color 0.5s;
+      overflow-x: hidden;      
     }
     section {
       scroll-margin-top: 90px; /* height of your nav bar */
@@ -157,12 +158,12 @@
     font-style: italic;
     color: var(--accent);
     text-align: center;
-    font-size: 1em;
-    margin-top: 1em;
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.6;
+    font-size: 1.05em;
+    line-height: 1.7;
+    margin: 1.5em auto;
+    max-width: 90%;
+    width: 700px;
+    padding: 0 1em;
   }
 
     @keyframes typing {
@@ -212,17 +213,27 @@
       margin: 2em auto;
       border: 1px solid var(--accent);
       background: rgba(255, 255, 255, 0.03);
+      max-width: 100%;
+      height: auto;      
     }
-  blockquote {
-    font-style: italic;
-    color: var(--accent);
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin: 2em auto;
-    max-width: 700px;
-    border-left: 4px solid var(--accent);
-    padding-left: 1em;
-  }
+    canvas {
+      max-width: 100%;
+      height: auto;
+    }
+    
+    blockquote {
+      font-style: italic;
+      color: var(--accent);
+      font-size: 1.1em;
+      line-height: 1.7;
+      margin: 2em auto;
+      max-width: 90%;
+      width: 700px;
+      border-left: 4px solid var(--accent);
+      padding-left: 1em;
+      padding-right: 1em;
+      box-sizing: border-box;
+    }
   .fade-in-image {
     opacity: 0;
     transform: translateY(20px);
@@ -315,21 +326,21 @@
     border-radius: 10px;
     margin-top: 10px;
   }
-  
-.letter-box {
-  background-color: #1e1e1e; /* dark background */
-  color: #fef9e7; /* soft light cream text */
-  padding: 20px;
-  border-radius: 12px;
-  margin-top: 20px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-  font-family: 'Georgia', serif;
-}
+    
+  .letter-box {
+    background-color: #1e1e1e; /* dark background */
+    color: #fef9e7; /* soft light cream text */
+    padding: 1.5em 1.2em;
+    border-radius: 12px;
+    margin: 2em auto;
+    width: 100%;
+    max-width: 700px;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+    font-family: Georgia, serif;
+    box-sizing: border-box;
+  }
 
 .letter-button {
     background-color: #4CAF50; /* Green background */
@@ -455,21 +466,37 @@
     <section id="quote-rotator" style="margin-top: 2em;">
       <h2 style="text-align: center;">📣Words That Echo</h2>
       <p id="rotating-quote" style="
-          font-size: 1.3em;
-          text-align: center;
-          font-style: italic;
-          color: var(--text);
-          transition: opacity 0.5s ease-in-out;
-          max-width: 800px;
-          margin: 1em auto;">
+        font-size: 1.2em;
+        text-align: center;
+        font-style: italic;
+        color: var(--text);
+        transition: opacity 0.6s ease-in-out;
+        max-width: 90%;
+        width: 800px;
+        margin: 1.5em auto;
+        line-height: 1.7;
+      ">
         <!-- First quote will go here via JavaScript -->
       </p>
+
     </section>
 
-    <div style="max-width: 800px; margin: 2em auto; line-height: 1.8; color: var(--text); font-style: italic;">
-      <p style="text-align: center;">
+    <div style="
+      max-width: 90%;
+      width: 800px;
+      margin: 2em auto;
+      line-height: 1.8;
+      color: var(--text);
+      font-style: italic;
+      text-align: center;
+      padding: 0 1em;
+      box-sizing: border-box;
+    ">
+      <p>
         A woman engineered for exquisite suffering and divine creativity, whose neurons fire sonnets to unanswered love, and whose discipline is the cage for a glorious, volatile spirit.
       </p>
+    </div>
+
     </div>
   </header>
 
@@ -924,7 +951,9 @@
     <h2 style="text-align: center;">🪔Virtual Diya Shrine</h2>
     <input type="text" id="diyaName" placeholder="Name for diya" />
     <button onclick="lightDiya()">🪔 Light Diya</button>
-    <canvas id="diyaCanvas" width="600" height="300"></canvas>
+    <div style="overflow-x: auto; max-width: 100%;">
+      <canvas id="diyaCanvas" width="600" height="300"></canvas>
+    </div>
   </section>
   
   <section id="login" style="text-align:center; margin-top:2em;">
