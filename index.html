@@ -548,23 +548,38 @@
         </div>
    </section>
 
-  <section id="letters" class="letters-section">
-    <h2 style="text-align: center;">💌 Letters from Alicia📝</h2>
-    <p>Feeling lost or unseen? Let Alicia write you a letter✍️.</p>
-    <p style="font-style: italic; color: var(--text); margin-top: 1em;">
-      Some letters are for everyone. One of them… might be for you..
-    </p>    
-    <button onclick="generateLetter()" class="letter-button">Receive a Letter</button>   
-    <div id="letterOutput" class="letter-box"></div>
-    <p style="margin-top: 1.5em; font-size: 0.9em; color: var(--text-light);">
-      Each letter lives in a quantum state — <br>unclaimed, waiting, aching to be recognized.
-    </p>    
-    <div style="margin-top: 2em;">
-      <a href="#quantum-theory" style="font-size: 0.9em; text-decoration: underline; color: var(--accent);">
-        🧬 Learn about Alicia's hidden design
-      </a>
-    </div>    
-  </section>
+    <section id="letters" class="letters-section" style="padding: 2em; box-sizing: border-box;">
+      <h2 style="text-align: center;">💌 Letters from Alicia 📝</h2>
+    
+      <p style="line-height: 1.6; font-size: 1em; margin-top: 1em;">
+        Feeling lost or unseen? Let Alicia write you a letter ✍️.
+      </p>
+    
+      <p style="font-style: italic; color: var(--text); line-height: 1.6; margin-top: 1em;">
+        Some letters are for everyone. One of them… might be for you.
+      </p>
+    
+      <button onclick="generateLetter()"
+              class="letter-button"
+              style="margin-top: 1.5em; padding: 0.8em 2em; font-size: 1em; background: var(--accent); color: white; border: none; border-radius: 10px; box-shadow: 0 0 10px rgba(255,255,255,0.2);">
+        🔮 Receive a Letter
+      </button>
+    
+      <div id="letterOutput" class="letter-box" style="margin-top: 2em;"></div>
+    
+      <p style="margin-top: 2em; font-size: 0.9em; color: var(--text-light); line-height: 1.6;">
+        Each letter lives in a quantum state —<br>
+        unclaimed, waiting, aching to be recognized.
+      </p>
+    
+      <div style="margin-top: 2em;">
+        <a href="#" onclick="openQuantumModal(); return false;"
+           style="font-size: 0.9em; text-decoration: underline; color: var(--accent);">
+          🧬 Learn about Alicia's hidden design
+        </a>
+      </div>
+    </section>
+
 
   <section id="quantum-theory" style="margin-top: 5em; padding: 2em; background: var(--background); color: var(--text); border-top: 1px solid var(--accent-light); box-sizing: border-box;">
     <h2 style="text-align: left;">🧠 The Theory of the Quantum Letter</h2>
