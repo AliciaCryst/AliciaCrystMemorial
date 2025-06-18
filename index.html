@@ -462,35 +462,48 @@
     line-height: 1.7;
   }
     
-.letter-box {
-  position: relative;
-  width: 80%;
-  max-width: 800px;
-  margin: 3em auto;
-  overflow: hidden;
-  border-radius: 16px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+.letter-background {
+  display: flex;
+  justify-content: center;
+  margin-top: 3em;
+  padding: 1em;
 }
 
-.letter-background img {
+.letter-box {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+}
+
+.letter-box .letter-background {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   z-index: 0;
-  opacity: 0.2; /* adjustable for mood */
+}
+
+.letter-box .letter-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.15; /* adjust for more/less mood */
+  border-radius: 20px;
 }
 
 .letter-content {
   position: relative;
-  padding: 2em;
   z-index: 1;
-  background-color: rgba(255, 255, 255, 0.8); /* or rgba(0,0,0,0.6) for dark mode */
-  font-family: serif;
+  background-color: rgba(255, 255, 255, 0.85); /* soft frosted overlay */
+  padding: 2em;
+  border-radius: 20px;
+  font-family: Georgia, serif;
   line-height: 1.8;
-  color: #000; /* or #eee if using dark background */
+  color: #000; /* readable on soft background */
 }
 
     
@@ -1395,9 +1408,10 @@
 
 
   <section class="letter-background">
- <div class="letter-background">
-    <img src="images/radha_krishna_moonlit.jpg" alt="Background" />
-  </div>    
+  <div class="letter-box">
+    <div class="letter-background">
+      <img src="images/radha_krishna_moonlit.jpg" alt="Background" />
+    </div>     
   <div class="letter-content">
       <h2 style="text-align: center; font-size: 1.8em; margin-bottom: 1em;">🌸 Alicia & Radha: A Letter Across Time</h2>
       
