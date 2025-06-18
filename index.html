@@ -489,10 +489,11 @@
 
 .sticky-sidebar {
   position: fixed;
-  top: 100px; /* adjust as needed */
-  left: 0;
+  top: 100px;
+  left: -140px; /* hidden by default, only tab visible */
+  transition: left 0.3s ease;
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 1em;
+  padding: 1em 0.5em;
   border-right: 1px solid var(--accent);
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -527,7 +528,26 @@
 .sticky-sidebar a:hover {
   color: var(--accent);
 }
-    
+
+/* Show sidebar on hover */
+.sticky-sidebar:hover {
+  left: 0;
+}
+
+/* Optional: narrow visible tab when collapsed */
+.sticky-sidebar::before {
+  content: "📚";
+  position: absolute;
+  right: -1.8em;
+  top: 0;
+  background-color: var(--accent);
+  color: var(--bg);
+  padding: 0.5em;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  font-size: 1em;
+  cursor: pointer;
+}
 </style>
 </head>
 <body data-theme="dark">
