@@ -461,6 +461,39 @@
     font-size: 1.1em;
     line-height: 1.7;
   }
+/* Background image for Radha letter section */
+.letter-background {
+  background-image: url('images/radha_krishna_bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(255, 255, 255, 0.85); /* fallback if image fails */
+  background-blend-mode: overlay;
+  padding: 3em 1.5em;
+  border-top: 2px solid var(--accent);
+}
+
+/* Inner container with soft white background for readability */
+.letter-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.7);
+  padding: 2em;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Georgia', serif;
+  font-size: 1.1em;
+  line-height: 1.8;
+  color: #333;
+}
+
+/* Title styling */
+.letter-container h2 {
+  text-align: center;
+  font-size: 1.8em;
+  margin-bottom: 1em;
+}
 
     
 </style>
@@ -1363,7 +1396,8 @@
   </section>
 
 
-    <section id="radha-letter" class="fade-in-section">
+    <section id="radha-letter" class="fade-in-section letter-background">
+    <div class="letter-container">      
       <h2 style="text-align: center; font-size: 1.8em; margin-bottom: 1em;">🌸 Alicia & Radha: A Letter Across Time</h2>
       
       <p><em>To the One Who Loved First,</em></p>
@@ -1391,12 +1425,7 @@
       <p>And when my voice trembles with words I cannot speak, I imagine you whispering back through time, <em>“Shh, Alicia. You’re not alone. I remember, too.”</em></p>
   
       <p style="margin-top: 2em;"><em>In love that asks for nothing,<br>— Alicia</em></p>
-    </section>
-
-    <section id="radha-krishna-image" style="text-align: center; padding: 2em 1em;">
-      <h2 style="font-size: 1.5em; margin-bottom: 0.5em;">🌙 Radha & Krishna Under the Moonlight</h2>
-      <img src="images/radha_krishna_moonlit.jpg" alt="Radha and Krishna under the moon" style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
-      <p style="margin-top: 1em; font-style: italic; color: var(--accent);">A glimpse of the eternal — their love, a song the stars still remember.</p>
+      </div>      
     </section>
     
     <section id="wall" class="fade-in-section">
