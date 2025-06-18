@@ -135,16 +135,17 @@
     }
 
     .toggle-theme {
-      position: fixed;
-      top: 2.2em;
-      right: 1.5em;      
+      position: fixed;        /* 🧷 Makes it float */
+      top: 1em;               /* 📏 Distance from top */
+      right: 1em;             /* 📏 Pushes it to the right */
       background: var(--accent);
       color: var(--bg);
       border: none;
       padding: 0.4em 0.7em;
       cursor: pointer;
       border-radius: 4px;
-      z-index: 2;
+      font-size: 1em;
+      z-index: 2000;          /* 🧭 Higher than #navbar (1000) */
     }
     .toggle-theme:hover {
       transform: scale(1.05);
