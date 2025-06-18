@@ -135,7 +135,6 @@
     }
 
     .toggle-theme {
-      position: fixed;
       top: 1.2em;
       right: 1.5em;
       background: var(--accent);
@@ -144,7 +143,7 @@
       padding: 0.4em 0.7em;
       cursor: pointer;
       border-radius: 4px;
-      z-index: 1100;
+      z-index: 2;
     }
     .toggle-theme:hover {
       transform: scale(1.05);
@@ -480,7 +479,11 @@
     line-height: 1.8;
     color: #000; /* or #eee if using dark background */
   }
-
+.nav-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
     
 </style>
 </head>
@@ -506,27 +509,7 @@
       <a href="#humor">😂 Humor</a>
     </div>
   </nav>
-    <!-- SEO 
-  <button class="toggle-theme" onclick="toggleTheme()">🌓 Theme</button>
-  <nav id="navbar">
-    <div id="menu-toggle" onclick="toggleMenu()">☰ Menu</div>
-    <div id="menu-links">
-      <a href="#about">🧭 About</a>
-      <a href="#letters">💌 Letters</a>
-      <a href="#Radha">🌸 Radha</a>
-      <a href="#Mystic">🌸 Mystic</a>
-      <a href="#harmony">🧠🎨 Harmony</a>
-      <a href="#whole-brain">✨ Whole Brain</a>
-      <a href="#words">📜 Her Words</a>
-      <a href="#genetics">🧬 Genetics</a>
-      <a href="#poems">🖋️ Poems</a>
-      <a href="#sacred">📩Sacred</a>      
-      <a href="#wall">🕯️ Wall</a>
-      <a href="#shrine">🪔 Diya</a>
-      <a href="#interview">🎤 Interview</a>
-    </div>
-  </nav>
--->
+
   <main id="scrollable-content" style="overflow-y: auto;">
     <header style="padding-top: 90px;">
     <h1 id="dynamicGreeting">Echoes of Alicia</h1>
