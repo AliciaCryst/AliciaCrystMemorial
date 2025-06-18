@@ -463,47 +463,31 @@
   }
     
 .letter-background {
-  display: flex;
-  justify-content: center;
-  margin-top: 3em;
-  padding: 1em;
+  background-image: url('images/radha_krishna_bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 4em 1em;
 }
 
-.letter-box {
-  position: relative;
-  width: 100%;
+.letter-container {
   max-width: 800px;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
-}
-
-.letter-box .letter-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-.letter-box .letter-background img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.15; /* adjust for more/less mood */
-  border-radius: 20px;
-}
-
-.letter-content {
-  position: relative;
-  z-index: 1;
-  background-color: rgba(255, 255, 255, 0.85); /* soft frosted overlay */
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.9); /* Less transparent for visibility */
   padding: 2em;
-  border-radius: 20px;
-  font-family: Georgia, serif;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  font-family: 'Georgia', serif;
+  font-size: 1.1em;
   line-height: 1.8;
-  color: #000; /* readable on soft background */
+  color: #222;
+}
+
+.letter-container h2 {
+  text-align: center;
+  font-size: 2em;
+  margin-bottom: 1em;
 }
 
     
