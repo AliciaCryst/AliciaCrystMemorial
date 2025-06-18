@@ -551,32 +551,6 @@
   cursor: pointer;
 }
 
-/* Animation for fade-in */
-@keyframes fadeInBox {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-    box-shadow: 0 0 0 transparent;
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    box-shadow: 0 0 16px rgba(255, 255, 255, 0.15);
-  }
-}
-
-.sacred-box {
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 1s ease-out, transform 1s ease-out, box-shadow 1s ease-out;
-}
-
-.sacred-box.visible {
-  opacity: 1;
-  transform: translateY(0);
-  box-shadow: 0 0 16px rgba(255, 255, 255, 0.15);
-}
-
  
 </style>
 </head>
@@ -750,7 +724,7 @@
     </p>
 
 
-    <div class="sacred-box visible" style="
+    <div style="
       border: 1px solid var(--accent);
       border-radius: 12px;
       padding: 1.2em;
@@ -2130,23 +2104,5 @@ function rotateSample() {
   gtag('config', 'G-NQZ441QWE5');
 </script>
   
-<script>
-  function revealOnScroll() {
-    const boxes = document.querySelectorAll('.sacred-box');
-    const triggerBottom = window.innerHeight * 0.9;
-
-    boxes.forEach(box => {
-      const boxTop = box.getBoundingClientRect().top;
-
-      if (boxTop < triggerBottom) {
-        box.classList.add('visible');
-      }
-    });
-  }
-
-  window.addEventListener('scroll', revealOnScroll);
-  window.addEventListener('load', revealOnScroll);
-</script>
-
 </body>
 </html>
