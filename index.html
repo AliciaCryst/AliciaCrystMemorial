@@ -461,35 +461,36 @@
     font-size: 1.1em;
     line-height: 1.7;
   }
-/* Full-section background with Radha & Krishna image */
-.letter-background {
-  background-image: url('images/radha_krishna_moonlit.jpg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
-  padding: 4em 1em;
-}
-
-/* Letter container with soft white backdrop */
-.letter-container {
+    
+.letter-box {
+  position: relative;
+  width: 80%;
   max-width: 800px;
-  margin: 0 auto;
-  background-color: rgba(255, 255, 255, 0.75); /* translucent white */
-  padding: 2em;
-  border-radius: 1em;
-  font-family: 'Georgia', serif;
-  font-size: 1.1em;
-  line-height: 1.8;
-  color: #222;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  margin: 3em auto;
+  overflow: hidden;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
-/* Title inside the letter */
-.letter-container h2 {
-  text-align: center;
-  font-size: 2em;
-  margin-bottom: 1em;
+.letter-background img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  opacity: 0.2; /* adjustable for mood */
+}
+
+.letter-content {
+  position: relative;
+  padding: 2em;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.8); /* or rgba(0,0,0,0.6) for dark mode */
+  font-family: serif;
+  line-height: 1.8;
+  color: #000; /* or #eee if using dark background */
 }
 
     
@@ -1394,7 +1395,10 @@
 
 
   <section class="letter-background">
-  <div class="letter-container">
+ <div class="letter-background">
+    <img src="images/radha_krishna_moonlit.jpg" alt="Background" />
+  </div>    
+  <div class="letter-content">
       <h2 style="text-align: center; font-size: 1.8em; margin-bottom: 1em;">🌸 Alicia & Radha: A Letter Across Time</h2>
       
       <p><em>To the One Who Loved First,</em></p>
