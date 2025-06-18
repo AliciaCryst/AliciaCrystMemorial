@@ -425,6 +425,9 @@
     #menu-links.active {
       display: flex;
     }
+   .sticky-sidebar {
+    display: none;
+    }
   }
 
   @keyframes fadeIn {
@@ -483,10 +486,69 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.sticky-sidebar {
+  position: fixed;
+  top: 100px; /* adjust as needed */
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 1em;
+  border-right: 1px solid var(--accent);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  z-index: 900;
+  max-width: 180px;
+  font-size: 0.9em;
+  backdrop-filter: blur(6px);
+}
+
+.sticky-sidebar h3 {
+  font-size: 1em;
+  margin-bottom: 0.5em;
+  color: var(--accent);
+}
+
+.sticky-sidebar ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.sticky-sidebar li {
+  margin-bottom: 0.6em;
+}
+
+.sticky-sidebar a {
+  text-decoration: none;
+  color: var(--text);
+  transition: color 0.3s ease;
+}
+
+.sticky-sidebar a:hover {
+  color: var(--accent);
+}
     
 </style>
 </head>
 <body data-theme="dark">
+  
+  <div class="sticky-sidebar">
+    <h3>🔗 Jump to</h3>
+    <ul>
+      <li><a href="#about">🧭 About</a></li>
+      <li><a href="#letters">💌 Letters</a></li>
+      <li><a href="#radha-letter">🪷 Radha</a></li>
+      <li><a href="#sacred">📩 Sacred</a></li>
+      <li><a href="#tweets">🐦 Tweets</a></li>
+      <li><a href="#harmony">🧠🎨 Harmony</a></li>
+      <li><a href="#genetics">🧬 Genetics</a></li>
+      <li><a href="#poems">🖋️ Poems</a></li>
+      <li><a href="#wall">🕯️ Wall</a></li>
+      <li><a href="#shrine">🪔 Diya</a></li>
+    </ul>
+  </div>
+
+  
   <nav id="navbar">
     <div class="nav-top">
       <div id="menu-toggle" onclick="toggleMenu()">☰ Menu</div>
