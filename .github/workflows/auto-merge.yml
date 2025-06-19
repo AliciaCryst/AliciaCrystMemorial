@@ -1,0 +1,32 @@
+name: 🔀 Auto PR: dev → main
+
+on:
+  push:
+    branches:
+      - dev
+    paths:
+      - index.html
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Create PR from dev to main
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: dev
+          base: main
+          title: "🔁 Sync dev → main"
+          body: "Automated pull request triggered by index.html change."
+
+  auto-merge:
+    needs: create-pr
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ahmadnassri/action-dependabot-auto-merge@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: squash
