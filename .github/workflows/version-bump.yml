@@ -5,7 +5,7 @@ on:
     paths:
       - index.html
     branches:
-      - dev
+      - main
 
 jobs:
   bump-version:
