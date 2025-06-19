@@ -1,0 +1,42 @@
+name: Auto Version Bump
+
+on:
+  push:
+    paths:
+      - 'index.html'
+
+jobs:
+  bump-version:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Bump version in index.html
+        run: |
+          FILE="index.html"
+          VERSION_LINE=$(grep -Eo '<!-- version: [0-9]+\.[0-9]+\.[0-9]+ -->' "$FILE")
+          echo "Found: $VERSION_LINE"
+
+          if [[ $VERSION_LINE =~ ([0-9]+)\.([0-9]+)\.([0-9]+) ]]; then
+            MAJOR=${BASH_REMATCH[1]}
+            MINOR=${BASH_REMATCH[2]}
+            PATCH=${BASH_REMATCH[3]}
+            NEW_PATCH=$((PATCH + 1))
+            NEW_VERSION="<!-- version: $MAJOR.$MINOR.$NEW_PATCH -->"
+            echo "New version: $NEW_VERSION"
+
+            sed -i "s|$VERSION_LINE|$NEW_VERSION|" "$FILE"
+          else
+            echo "❌ No valid version line found. Add <!-- version: 1.0.0 --> in index.html"
+            exit 1
+          fi
+
+      - name: Commit and push new version
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git commit -m "🔁 Auto-increment version [skip ci]" || echo "No changes to commit"
+          git push
