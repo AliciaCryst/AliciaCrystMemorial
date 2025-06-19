@@ -2115,10 +2115,12 @@
   let currentQuote = 0;
   const quoteElement = document.getElementById("rotating-quote");
 
+
   function rotateQuote() {
     quoteElement.style.opacity = 0;
     setTimeout(() => {
-      quoteElement.innerText = quotes[currentQuote];
+      const quote = quotes[currentQuote];
+      quoteElement.innerHTML = `&ldquo;<em>${quote}</em>&rdquo;`;
       quoteElement.style.opacity = 1;
       currentQuote = (currentQuote + 1) % quotes.length;
     }, 500);
