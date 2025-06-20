@@ -1792,7 +1792,14 @@
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
      
-    <div id="diyaContainer" style="position: relative; width: 100%; max-width: 600px; height: 300px; margin: 0 auto;">
+      <div id="diyaContainer" style="
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+        height: 330px; /* <-- 🔧 fix: increased from 300 */
+        margin: 0 auto;
+        overflow: visible; /* <-- ✅ important to allow glow overflow */
+      ">
       <!-- Background glowing canvas -->
       <canvas id="diyaGlowCanvas" width="600" height="300"
               style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></canvas>
