@@ -601,6 +601,39 @@
     transform: scale(1.3);
   }
  
+  .animated-diya {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: gold;
+    box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.6);
+    animation: diyaFlicker 1.5s infinite alternate;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  @keyframes diyaFlicker {
+    0%   { opacity: 0.8; transform: scale(1); }
+    50%  { opacity: 0.5; transform: scale(1.1); }
+    100% { opacity: 0.9; transform: scale(1); }
+  }
+
+  #diyaOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 600px;
+    height: 300px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  #diyaCanvas {
+    position: relative;
+    z-index: 1;
+  }
+
 </style>
 </head>
 <body data-theme="dark">
@@ -1741,6 +1774,7 @@
     <button onclick="lightDiya()">🪔 Light Diya</button>
     <div style="overflow-x: auto; max-width: 100%;">
       <canvas id="diyaCanvas" width="600" height="300"></canvas>
+      <div id="diyaOverlay"></div>
     </div>
   </section>
   
@@ -2086,24 +2120,35 @@
     function drawDiya(name, x, y) {
       const canvas = document.getElementById("diyaCanvas");
       const ctx = canvas.getContext("2d");
-    
+
+      // Draw static diya dot
       ctx.fillStyle = "gold";
       ctx.beginPath();
       ctx.arc(x, y, 5, 0, 2 * Math.PI);
       ctx.fill();
-    
+
+      // Draw name
       const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
       ctx.fillStyle = textColor;
       ctx.font = "10px serif";
       ctx.fillText(name, x + 8, y);
+
+      // Create animated glow
+      const overlay = document.getElementById("diyaOverlay");
+      const flicker = document.createElement("div");
+      flicker.className = "animated-diya";
+      flicker.style.left = `${x - 6}px`;  // center adjust
+      flicker.style.top = `${y - 6}px`;
+      overlay.appendChild(flicker);
     }
     function redrawDiyas() {
       const canvas = document.getElementById("diyaCanvas");
       const ctx = canvas.getContext("2d");
-    
       // Clear canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     
+
+
       // Redraw all diyas from memory
       diyas.forEach(({ name, x, y }) => {
         drawDiya(name, x, y);
