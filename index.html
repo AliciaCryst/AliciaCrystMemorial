@@ -1834,11 +1834,35 @@
       }
     }
 
+    const badWords = [
+  "fuck", "fucker", "fucking", "fuk", "fuker",
+  "cunt", "bitch", "bitches",
+  "ass", "asshole", "arse", "jackass",
+  "shit", "shitty",
+  "dick", "dickhead", "penis",
+  "pussy", "vagina", "slut", "whore",
+  "fag", "faggot", "faggots",
+  "nigga", "nigger", "niggas", "niggers",
+  "chink", "gook", "kike", "spic", "tranny",
+  "hell", "bastard", "retard", "rape", "rapist"
+];
+
+
+    function containsProfanity(name) {
+      const lower = name.toLowerCase();
+      return badWords.some(word => lower.includes(word));
+    }
+
     function submitStory() {
       const text = document.getElementById("storyInput").value.trim();
       const dedication = document.getElementById("dedication").value.trim();
     
       if (!text) return;
+
+      if (containsProfanity(text)) {
+        alert("Please use respectful language.");
+        return;
+      }
     
       if (!firebase.auth().currentUser) {
         document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
@@ -1856,6 +1880,10 @@
     }
 
     function updateStory(id, newText) {
+      if (containsProfanity(newText)) {
+        alert("Please use respectful language.");
+        return;
+      }
       db.collection("stories").doc(id).update({ text: newText });
     }
 
@@ -1951,10 +1979,20 @@
       });
     }
 
+    let lastClickTime = 0;
     function lightDiya() {
       const name = document.getElementById("diyaName").value.trim();
       if (!name) return;
-    
+      if (containsProfanity(name)) {
+        alert("Please use respectful language.");
+        return;
+      }
+      const now = Date.now();
+      if (now - lastClickTime < 5000) {
+        alert("Please wait a few seconds before lighting another diya.");
+        return;
+      }
+      lastClickTime = now;
       const canvas = document.getElementById("diyaCanvas");
       const ctx = canvas.getContext("2d");
     
