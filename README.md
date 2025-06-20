@@ -53,6 +53,16 @@ We welcome all forms of contribution — technical, poetic, or philosophical.
 
 ---
 
+### 📚 Project Documentation
+
+Explore how this project is built, how to contribute, and how to preserve Alicia’s voice:
+
+- 📌 [How to Contribute](docs/CONTRIBUTING.md)
+- 📝 [Alicia’s Voice & Style Guide](docs/STYLE_GUIDE.md)
+- 🧠 [Technical Overview](docs/TECH_OVERVIEW.md)
+
+---
+
 ## 🧠 Technologies Used
 
 - HTML/CSS/JavaScript
