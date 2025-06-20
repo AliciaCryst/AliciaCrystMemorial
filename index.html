@@ -2179,7 +2179,7 @@
   
     // Position directly in canvas logical space (because parent is 600x300 too)
     flicker.style.left = `${x - 6}px`;
-    flicker.style.top = `${y - 6}px`;
+    flicker.style.top = `${y - 6+32}px`;
   
     container.appendChild(flicker); // <== THIS is the real fix
   }
