@@ -612,34 +612,42 @@
     position: relative;
   }
 
-  /* Canvas container */
   #diyaContainer {
-    position: relative;
-    width: 100%;
-    padding-top: 50%; /* 600/300 = 2 → 50% gives 600x300 ratio */
-  }
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  margin: 0 auto;
+  overflow: hidden;
+}
 
-  /* Absolute positioning of canvas and overlay */
-  #diyaCanvas,
-  #diyaOverlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
+#diyaCanvas {
+  display: block;
+  width: 100%;
+  height: auto;
+}
 
-/* Glowing diya */
-.animated-diya {
+#diyaOverlay {
   position: absolute;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: gold;
-  box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.6);
-  animation: flicker 1.5s infinite ease-in-out alternate;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
   z-index: 2;
+  overflow: hidden;
+}
+
+
+
+.animated-diya {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle, gold 30%, transparent 70%);
+  animation: flicker 1.5s infinite ease-in-out alternate;
+  pointer-events: none;
 }
 
 @keyframes flicker {
@@ -2138,36 +2146,33 @@
       });
     }
 
-  function drawDiya(name, x, y) {
-    const canvas = document.getElementById("diyaCanvas");
-    const ctx = canvas.getContext("2d");
 
-    // Draw static dot
-    ctx.fillStyle = "gold";
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.fill();
+function drawDiya(name, x, y) {
+  const canvas = document.getElementById("diyaCanvas");
+  const ctx = canvas.getContext("2d");
 
-    // Draw text label
-    const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-    ctx.fillStyle = textColor;
-    ctx.font = "10px serif";
-    ctx.fillText(name, x + 8, y);
+  // Draw static dot
+  ctx.fillStyle = "gold";
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  ctx.fill();
 
-    // 🎯 Get canvas position on page
-    const rect = canvas.getBoundingClientRect();
+  // Draw text label
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  ctx.fillStyle = textColor;
+  ctx.font = "10px serif";
+  ctx.fillText(name, x + 8, y);
 
-    // Create glowing diya at same coordinates
-    const overlay = document.getElementById("diyaOverlay");
-    const flicker = document.createElement("div");
-    flicker.className = "animated-diya";
+  // Create glow relative to container
+  const overlay = document.getElementById("diyaOverlay");
+  const flicker = document.createElement("div");
+  flicker.className = "animated-diya";
 
-    // Correct for canvas offset relative to viewport
-    flicker.style.left = `${rect.left + x - 5}px`;
-    flicker.style.top = `${rect.top + y - 5}px`;
+  flicker.style.left = `${x - 5}px`;  // adjust for center
+  flicker.style.top = `${y - 5}px`;   // adjust for center
 
-    overlay.appendChild(flicker);
-  }
+  overlay.appendChild(flicker);
+}
 
 
     function redrawDiyas() {
