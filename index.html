@@ -2146,7 +2146,6 @@
     
       // Draw diya
       drawDiya(name, x, y);
-      animateDiyaGlow(x, y);
       // Save to Firestore
       db.collection("diyas").add({
         name,
@@ -2156,32 +2155,32 @@
       });
     }
 
-    function animateDiyaGlow(x, y) {
-      const canvas = document.getElementById("diyaGlowCanvas");
-      if (!canvas) return;
-    
-      const ctx = canvas.getContext("2d");
-    
-      function animate() {
-        const t = Date.now() / 300;
-        const pulse = 40 + 5 * Math.sin(t);
-    
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-        const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
-        gradient.addColorStop(0, "rgba(255, 140, 0, 0.9)");
-        gradient.addColorStop(0.4, "rgba(255, 200, 0, 0.5)");
-        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-    
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-        requestAnimationFrame(animate);
-      }
-    
-      animate();
+  function animateDiyaGlow(x, y) {
+    const canvas = document.getElementById("diyaCanvas");
+    const ctx = canvas.getContext("2d");
+  
+    let start = Date.now();
+  
+    function animate() {
+      const elapsed = Date.now() - start;
+      const pulse = 40 + 5 * Math.sin(elapsed / 300);
+  
+      redrawDiyas(); // Redraw all diyas
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
+      gradient.addColorStop(0, "rgba(255, 140, 0, 0.9)");
+      gradient.addColorStop(0.4, "rgba(255, 200, 0, 0.5)");
+      gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+  
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(x, y, pulse, 0, 2 * Math.PI);
+      ctx.fill();
+  
+      requestAnimationFrame(animate);
     }
-
+  
+    requestAnimationFrame(animate);
+  }
   function drawDiya(name, x, y) {
     const canvas = document.getElementById("diyaCanvas");
     const ctx = canvas.getContext("2d");
@@ -2207,7 +2206,6 @@
       // Redraw all diyas from memory
       diyas.forEach(({ name, x, y }) => {
         drawDiya(name, x, y);
-        animateDiyaGlow(x, y);        
       });
     }
 
@@ -2220,8 +2218,9 @@
           const diya = doc.data();
           diyas.push({ name: diya.name, x: diya.x, y: diya.y }); // <== the fix
           drawDiya(diya.name, diya.x, diya.y);
-          animateDiyaGlow(x, y);          
         });
+        const last = diyas[diyas.length - 1];
+        if (last) animateDiyaGlow(last.x, last.y);        
       });
     }
 
@@ -2229,7 +2228,6 @@
       loadStories();
       loadDiyas();
     });
-  window.addEventListener("DOMContentLoaded", animateDiyaGlow);    
   </script>
   <script>
   document.addEventListener("DOMContentLoaded", () => {
