@@ -1847,41 +1847,78 @@
   "hell", "bastard", "retard", "rape", "rapist"
 ];
 
+async function getPublicIP() {
+  try {
+    const res = await fetch("https://api.ipify.org?format=json");
+    const data = await res.json();
+    return data.ip;
+  } catch (e) {
+    console.error("Failed to fetch IP:", e);
+    return "unknown";
+  }
+}
+
 
     function containsProfanity(name) {
       const lower = name.toLowerCase();
       return badWords.some(word => lower.includes(word));
     }
+    let lastStorySubmitTime = 0;
 
-    function submitStory() {
-      const text = document.getElementById("storyInput").value.trim();
-      const dedication = document.getElementById("dedication").value.trim();
-    
-      if (!text) return;
+    async function submitStory() {
+  const text = document.getElementById("storyInput").value.trim();
+  const dedication = document.getElementById("dedication").value.trim();
 
-      if (containsProfanity(text)) {
-        alert("Please use respectful language.");
-        return;
-      }
-    
-      if (!firebase.auth().currentUser) {
-        document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
-        return;
-      }
-    
-      db.collection("stories").add({
-        text, dedication,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        document.getElementById("confirmation").innerText = "✅ Shared.";
-        document.getElementById("storyInput").value = "";
-        document.getElementById("dedication").value = "";
-      });
-    }
+  if (!text) return;
 
+  if (containsProfanity(text) || containsProfanity(dedication)) {
+    alert("⚠️ Please use respectful language.");
+    return;
+  }
+
+  const now = Date.now();
+  if (now - lastStorySubmitTime < 5000) {
+    alert("⏳ Please wait a few seconds before submitting another story.");
+    return;
+  }
+
+  // Optional login requirement – remove if stories are public
+  if (firebase.auth().currentUser === null) {
+    document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
+    return;
+  }
+
+  // Get IP address using external API
+  let ipAddress = "unknown";
+  try {
+    const res = await fetch("https://api.ipify.org?format=json");
+    const data = await res.json();
+    ipAddress = data.ip;
+  } catch (error) {
+    console.warn("IP fetch failed:", error);
+  }
+
+  try {
+    await db.collection("stories").add({
+      text: text,
+      dedication: dedication,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      ip: ipAddress
+    });
+
+    lastStorySubmitTime = now;
+    alert("✅ Your story has been submitted. Thank you.");
+    document.getElementById("storyInput").value = "";
+    document.getElementById("dedication").value = "";
+    loadStories(); // Refresh the list
+  } catch (error) {
+    console.error("❌ Error adding story:", error);
+    alert("⚠️ Failed to submit your story. Please try again.");
+  }
+}
     function updateStory(id, newText) {
       if (containsProfanity(newText)) {
-        alert("Please use respectful language.");
+        alert("⚠️ Please use respectful language.");
         return;
       }
       db.collection("stories").doc(id).update({ text: newText });
@@ -1984,12 +2021,12 @@
       const name = document.getElementById("diyaName").value.trim();
       if (!name) return;
       if (containsProfanity(name)) {
-        alert("Please use respectful language.");
+        alert("⚠️ Please use respectful language.");
         return;
       }
       const now = Date.now();
       if (now - lastClickTime < 5000) {
-        alert("Please wait a few seconds before lighting another diya.");
+        alert("⏳ Please wait a few seconds before lighting another diya.");
         return;
       }
       lastClickTime = now;
