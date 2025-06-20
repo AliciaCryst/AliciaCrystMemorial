@@ -2200,14 +2200,14 @@
           ctx.font = "20px serif";
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          ctx.fillText("🪔", x, y);
+          ctx.fillText("🪔", x-8, y-8);
 
           // Name label
           ctx.font = "12px sans-serif";
           ctx.fillStyle = "#fff";
           ctx.textAlign = "left";
           ctx.textBaseline = "bottom";
-          ctx.fillText(name, x + 10, y - 8);
+          ctx.fillText(name, x + 16, y - 8);
         });
   
         requestAnimationFrame(animate);
