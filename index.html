@@ -602,6 +602,7 @@
   }
  
   .animated-diya {
+    position: absolute;
     width: 12px;
     height: 12px;
     border-radius: 50%;
@@ -609,7 +610,6 @@
     box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.6);
     animation: flicker 1.5s infinite ease-in-out alternate;
     pointer-events: none;
-    z-index: 2;
   }
 
   @keyframes flicker {
@@ -617,7 +617,6 @@
     50%  { opacity: 0.5; transform: scale(1.2); }
     100% { opacity: 1; transform: scale(1); }
   }
-
   #diyaOverlay {
     position: absolute;
     top: 0;
@@ -1771,6 +1770,7 @@
     <h2 style="text-align: center;">🪔Virtual Diya Shrine</h2>
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
+   
     <div style="overflow-x: auto; max-width: 100%;">
       <div id="diyaContainer" style="position: relative; width: 600px; height: 300px;">
         <canvas id="diyaCanvas" width="600" height="300"></canvas>
@@ -1780,11 +1780,13 @@
           left: 0;
           width: 600px;
           height: 300px;
+          overflow: hidden;
           pointer-events: none;
           z-index: 2;
         "></div>
       </div>
     </div>
+    
     
   </section>
   
@@ -2127,30 +2129,32 @@
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
     }
-    function drawDiya(name, x, y) {
-      const canvas = document.getElementById("diyaCanvas");
-      const ctx = canvas.getContext("2d");
 
-      // Draw static diya dot
-      ctx.fillStyle = "gold";
-      ctx.beginPath();
-      ctx.arc(x, y, 5, 0, 2 * Math.PI);
-      ctx.fill();
+function drawDiya(name, x, y) {
+  const canvas = document.getElementById("diyaCanvas");
+  const ctx = canvas.getContext("2d");
 
-      // Draw name
-      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-      ctx.fillStyle = textColor;
-      ctx.font = "10px serif";
-      ctx.fillText(name, x + 8, y);
+  // Static canvas dot
+  ctx.fillStyle = "gold";
+  ctx.beginPath();
+  ctx.arc(x, y, 5, 0, 2 * Math.PI);
+  ctx.fill();
 
-      // Create animated glow
-      const overlay = document.getElementById("diyaOverlay");
-      const flicker = document.createElement("div");
-      flicker.className = "animated-diya";
-      flicker.style.left = `${x - 6}px`;  // center adjust
-      flicker.style.top = `${y - 6}px`;
-      overlay.appendChild(flicker);
-    }
+  // Label
+  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+  ctx.fillStyle = textColor;
+  ctx.font = "10px serif";
+  ctx.fillText(name, x + 8, y);
+
+  // Glowing animated diya
+  const overlay = document.getElementById("diyaOverlay");
+  const glow = document.createElement("div");
+  glow.className = "animated-diya";
+  glow.style.left = `${x - 6}px`;
+  glow.style.top = `${y - 6}px`;
+  overlay.appendChild(glow);
+}
+
     function redrawDiyas() {
       const canvas = document.getElementById("diyaCanvas");
       const ctx = canvas.getContext("2d");
