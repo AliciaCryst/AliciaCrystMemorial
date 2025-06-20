@@ -2165,7 +2165,8 @@ function drawDiya(name, x, y) {
   const glow = document.createElement("div");
   glow.className = "animated-diya";
   glow.style.left = `${x - 6}px`;
-  glow.style.top = `${y - 6}px`;
+  glow.style.top = `${y - 3.5}px`;  // ultra-fine tune
+
   overlay.appendChild(glow);
 }
 
