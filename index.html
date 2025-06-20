@@ -1797,10 +1797,19 @@
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
    
-    <div id="diyaContainer" style="position: relative; width: 600px; height: 300px; margin: 0 auto;">
-      <canvas id="diyaCanvas" width="600" height="300" style="display: block;"></canvas>
-      <div id="diyaOverlay"
-           style="position: absolute; top: 0; left: 0; width: 600px; height: 300px; pointer-events: none; overflow: hidden;">
+    <div id="diyaBox" style="max-width: 600px; margin: auto;">
+      <div id="diyaContainer" style="position: relative;">
+        <canvas id="diyaCanvas" width="600" height="300" style="width: 100%; height: auto;"></canvas>
+        <div id="diyaOverlay" style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          pointer-events: none;
+          overflow: hidden;
+          z-index: 2;
+        "></div>
       </div>
     </div>
     
@@ -2151,28 +2160,33 @@ function drawDiya(name, x, y) {
   const canvas = document.getElementById("diyaCanvas");
   const ctx = canvas.getContext("2d");
 
-  // Draw static dot
+  // Draw the dot on the canvas
   ctx.fillStyle = "gold";
   ctx.beginPath();
   ctx.arc(x, y, 5, 0, 2 * Math.PI);
   ctx.fill();
 
-  // Draw text label
+  // Draw text
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   ctx.fillStyle = textColor;
   ctx.font = "10px serif";
   ctx.fillText(name, x + 8, y);
 
-  // Create glow relative to container
+  // 🔁 Adjust for scaling ratio (actual canvas size vs displayed size)
+  const scaleX = canvas.offsetWidth / canvas.width;
+  const scaleY = canvas.offsetHeight / canvas.height;
+
   const overlay = document.getElementById("diyaOverlay");
   const flicker = document.createElement("div");
   flicker.className = "animated-diya";
 
-  flicker.style.left = `${x - 5}px`;  // adjust for center
-  flicker.style.top = `${y - 5}px`;   // adjust for center
+  // Convert canvas coordinates to screen-relative overlay coordinates
+  flicker.style.left = `${x * scaleX - 5}px`;
+  flicker.style.top = `${y * scaleY - 5}px`;
 
   overlay.appendChild(flicker);
 }
+
 
 
     function redrawDiyas() {
