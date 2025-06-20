@@ -2238,11 +2238,15 @@
             ctx.drawImage(diyaImage, x - 32, y - 32, 64, 64);
 
             // Name label
-            ctx.font = "12px sans-serif";
+            ctx.font = "13px 'Segoe UI', sans-serif";
+            ctx.shadowColor = "#DAA520";
+            ctx.shadowBlur = 6;
+            ctx.shadowBlur = 6;
+
             ctx.fillStyle = "#DAA520";  // White in dark mode, dark gray in light
             ctx.textAlign = "left";
             ctx.textBaseline = "bottom";
-            ctx.fillText(name, x + 16, y - 8);
+            ctx.fillText(name, x + 16, y - 12);
           });
 
           requestAnimationFrame(animate);
