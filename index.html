@@ -614,6 +614,7 @@
   width: 100%;
   margin: 0 auto;
   overflow: hidden;
+  aspect-ratio: 2 / 1;   
 }
 
 #diyaCanvas {
@@ -2181,17 +2182,26 @@ function startDiyaAnimation() {
   const canvas = document.getElementById("diyaCanvas");
   const ctx = canvas.getContext("2d");
 
+  // 📐 Fix for high-DPI and mobile scaling issues
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.getBoundingClientRect(); // Get CSS display size
+
+  // Set actual pixel dimensions of the canvas
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  ctx.scale(dpr, dpr); // Normalize drawing units
+
   const diyaImage = new Image();
-  diyaImage.src = "images/diya_128x128.png"; // Keep same path
+  diyaImage.src = "images/diya_128x128.png";
 
   diyaImage.onload = () => {
     function animate() {
       const t = Date.now() / 300;
       const pulse = 30 + 5 * Math.sin(t);
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, rect.width, rect.height); // Use CSS size for clearRect
 
       diyas.forEach(({ name, x, y }) => {
-        // 🔥 Adjust glow center to flame position
+        // 🔥 Glow centered slightly above diya (near flame)
         const glowY = y - 12;
 
         const gradient = ctx.createRadialGradient(x, glowY, 0, x, glowY, pulse);
@@ -2203,10 +2213,10 @@ function startDiyaAnimation() {
         ctx.arc(x, glowY, pulse, 0, 2 * Math.PI);
         ctx.fill();
 
-        // Diya image (centered)
+        // 🪔 Diya image (64x64, centered at x, y)
         ctx.drawImage(diyaImage, x - 32, y - 32, 64, 64);
 
-        // Name label
+        // 🏷️ Name label
         ctx.font = "12px sans-serif";
         ctx.fillStyle = "#fff";
         ctx.textAlign = "left";
