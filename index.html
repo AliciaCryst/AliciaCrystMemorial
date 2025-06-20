@@ -609,7 +609,7 @@
     position: relative;
   }
 
-  #diyaContainer {
+#diyaContainer {
   position: relative;
   width: 100%;
   margin: 0 auto;
@@ -2196,12 +2196,18 @@
           ctx.arc(x, y, pulse, 0, 2 * Math.PI);
           ctx.fill();
   
-          // Diya + name
+          // Diya emoji
           ctx.font = "20px serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
           ctx.fillText("🪔", x, y);
+
+          // Name label
           ctx.font = "12px sans-serif";
           ctx.fillStyle = "#fff";
-          ctx.fillText(name, x + 12, y - 5);
+          ctx.textAlign = "left";
+          ctx.textBaseline = "bottom";
+          ctx.fillText(name, x + 10, y - 8);
         });
   
         requestAnimationFrame(animate);
