@@ -2175,46 +2175,50 @@
         });
     }
   
-    function startDiyaAnimation() {
-      animationStarted = true;
-      const canvas = document.getElementById("diyaCanvas");
-      const ctx = canvas.getContext("2d");
-  
-      function animate() {
-        const t = Date.now() / 300;
-        const pulse = 30 + 5 * Math.sin(t);
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-        diyas.forEach(({ name, x, y }) => {
-          // Glow
-          const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
-          gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
-          gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
-          gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-          ctx.fillStyle = gradient;
-          ctx.beginPath();
-          ctx.arc(x, y, pulse, 0, 2 * Math.PI);
-          ctx.fill();
-  
-          // Diya emoji
-          ctx.font = "20px serif";
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText("🪔", x-8, y);
 
-          // Name label
-          ctx.font = "12px sans-serif";
-          ctx.fillStyle = "#fff";
-          ctx.textAlign = "left";
-          ctx.textBaseline = "bottom";
-          ctx.fillText(name, x + 16, y-8);
-        });
-  
-        requestAnimationFrame(animate);
-      }
-  
-      animate();
+function startDiyaAnimation() {
+  animationStarted = true;
+  const canvas = document.getElementById("diyaCanvas");
+  const ctx = canvas.getContext("2d");
+
+  const diyaImage = new Image();
+  diyaImage.src = "images/diya_128x128.png"; // Ensure this file is in the correct public path
+
+  diyaImage.onload = () => {
+    function animate() {
+      const t = Date.now() / 300;
+      const pulse = 30 + 5 * Math.sin(t);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      diyas.forEach(({ name, x, y }) => {
+        // Glow
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
+        gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
+        gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
+        gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
+        ctx.arc(x, y, pulse, 0, 2 * Math.PI);
+        ctx.fill();
+
+        // Draw diya PNG centered at (x, y)
+        ctx.drawImage(diyaImage, x - 64, y - 64, 128, 128);
+
+        // Name label
+        ctx.font = "12px sans-serif";
+        ctx.fillStyle = "#fff";
+        ctx.textAlign = "left";
+        ctx.textBaseline = "bottom";
+        ctx.fillText(name, x + 16, y - 8);
+      });
+
+      requestAnimationFrame(animate);
     }
+
+    animate();
+  };
+}
+    
   
     document.addEventListener("DOMContentLoaded", () => {
       const observer = new IntersectionObserver(entries => {
