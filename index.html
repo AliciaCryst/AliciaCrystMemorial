@@ -648,6 +648,7 @@
   background: radial-gradient(circle, gold 30%, transparent 70%);
   animation: flicker 1.5s infinite ease-in-out alternate;
   pointer-events: none;
+  z-index: 10;
 }
 
 @keyframes flicker {
@@ -1797,21 +1798,19 @@
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
    
-    <div id="diyaBox" style="max-width: 600px; margin: auto;">
-      <div id="diyaContainer" style="position: relative;">
-        <canvas id="diyaCanvas" width="600" height="300" style="width: 100%; height: auto;"></canvas>
-        <div id="diyaOverlay" style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          pointer-events: none;
-          overflow: hidden;
-          z-index: 2;
-        "></div>
-      </div>
+    <div id="diyaContainer" style="position: relative; width: 100%; max-width: 600px; margin: auto;">
+      <canvas id="diyaCanvas" width="600" height="300" style="width: 100%; height: auto;"></canvas>
+      <div id="diyaOverlay" style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+      "></div>
     </div>
+    
     
   </section>
   
@@ -2160,27 +2159,26 @@ function drawDiya(name, x, y) {
   const canvas = document.getElementById("diyaCanvas");
   const ctx = canvas.getContext("2d");
 
-  // Draw the dot on the canvas
+  // Draw the canvas dot
   ctx.fillStyle = "gold";
   ctx.beginPath();
   ctx.arc(x, y, 5, 0, 2 * Math.PI);
   ctx.fill();
 
-  // Draw text
+  // Draw the label
   const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
   ctx.fillStyle = textColor;
   ctx.font = "10px serif";
   ctx.fillText(name, x + 8, y);
 
-  // 🔁 Adjust for scaling ratio (actual canvas size vs displayed size)
+  // Calculate scaling ratio
   const scaleX = canvas.offsetWidth / canvas.width;
   const scaleY = canvas.offsetHeight / canvas.height;
 
+  // Add the glow
   const overlay = document.getElementById("diyaOverlay");
   const flicker = document.createElement("div");
   flicker.className = "animated-diya";
-
-  // Convert canvas coordinates to screen-relative overlay coordinates
   flicker.style.left = `${x * scaleX - 5}px`;
   flicker.style.top = `${y * scaleY - 5}px`;
 
