@@ -2149,7 +2149,42 @@
       });
     }
 
-
+  function animateDiyaGlow() {
+    const canvas = document.getElementById("diyaCanvas");
+    if (!canvas) return;
+  
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  
+    const ctx = canvas.getContext("2d");
+    if (!ctx) {
+      console.error("❌ Could not get 2D context for diyaCanvas");
+      return;
+    }
+  
+    const x = canvas.width / 2;
+    const y = canvas.height / 2;
+    const baseRadius = 40;
+  
+    function animate() {
+      const t = Date.now() / 300;
+      const pulse = baseRadius + 5 * Math.sin(t);
+  
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+      const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
+      gradient.addColorStop(0, "rgba(255, 140, 0, 0.9)");
+      gradient.addColorStop(0.4, "rgba(255, 200, 0, 0.5)");
+      gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+  
+      ctx.fillStyle = gradient;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+      requestAnimationFrame(animate);
+    }
+  
+    animate();
+  }
 
   function drawDiya(name, x, y) {
     const canvas = document.getElementById("diyaCanvas");
@@ -2214,6 +2249,7 @@
       loadStories();
       loadDiyas();
     });
+  window.addEventListener("DOMContentLoaded", animateDiyaGlow);    
   </script>
   <script>
   document.addEventListener("DOMContentLoaded", () => {
@@ -2474,7 +2510,7 @@ function rotateSample() {
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-NQZ441QWE5');
+  gtag('config', 'G-NQZ441QWE5'); 
 </script>
   
 </body>
