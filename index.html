@@ -2155,35 +2155,38 @@
     }
 
 
-function drawDiya(name, x, y) {
-  const canvas = document.getElementById("diyaCanvas");
-  const ctx = canvas.getContext("2d");
 
-  // Draw the canvas dot
-  ctx.fillStyle = "gold";
-  ctx.beginPath();
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  ctx.fill();
+  function drawDiya(name, x, y) {
+      const canvas = document.getElementById("diyaCanvas");
+      const ctx = canvas.getContext("2d");
 
-  // Draw the label
-  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-  ctx.fillStyle = textColor;
-  ctx.font = "10px serif";
-  ctx.fillText(name, x + 8, y);
+      // 1. Draw static dot
+      ctx.fillStyle = "gold";
+      ctx.beginPath();
+      ctx.arc(x, y, 5, 0, 2 * Math.PI);
+      ctx.fill();
 
-  // Calculate scaling ratio
-  const scaleX = canvas.offsetWidth / canvas.width;
-  const scaleY = canvas.offsetHeight / canvas.height;
+      // 2. Draw label
+      const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+      ctx.fillStyle = textColor;
+      ctx.font = "10px serif";
+      ctx.fillText(name, x + 8, y);
 
-  // Add the glow
-  const overlay = document.getElementById("diyaOverlay");
-  const flicker = document.createElement("div");
-  flicker.className = "animated-diya";
-  flicker.style.left = `${x * scaleX - 5}px`;
-  flicker.style.top = `${y * scaleY - 5}px`;
+      // 3. Determine scale for pixel-perfect glow alignment
+      const scaleX = canvas.offsetWidth / canvas.width;
+      const scaleY = canvas.offsetHeight / canvas.height;
 
-  overlay.appendChild(flicker);
-}
+      const adjustedX = x * scaleX;
+      const adjustedY = y * scaleY;
+
+      // 4. Create glow
+      const overlay = document.getElementById("diyaOverlay");
+      const flicker = document.createElement("div");
+      flicker.className = "animated-diya";
+      flicker.style.left = `${adjustedX - 5}px`;
+      flicker.style.top  = `${adjustedY - 5}px`;
+      overlay.appendChild(flicker);
+    }
 
 
 
