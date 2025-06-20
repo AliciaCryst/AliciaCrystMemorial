@@ -2172,64 +2172,63 @@
             const { name, x, y } = doc.data();
             diyas.push({ name, x, y });
           });
-          if (!animationStarted) startDiyaAnimation();
+          if (!animationStarted) {
+            requestAnimationFrame(() => startDiyaAnimation());
+          }
+
         });
     }
   
 
-function startDiyaAnimation() {
-  animationStarted = true;
-  const canvas = document.getElementById("diyaCanvas");
-  const ctx = canvas.getContext("2d");
+    function startDiyaAnimation() {
+      const canvas = document.getElementById("diyaCanvas");
+      const ctx = canvas.getContext("2d");
 
-  // 📐 Fix for high-DPI and mobile scaling issues
-  const dpr = window.devicePixelRatio || 1;
-  const rect = canvas.getBoundingClientRect(); // Get CSS display size
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const safeWidth = rect.width || 600;
+      const safeHeight = rect.height || 300;
 
-  // Set actual pixel dimensions of the canvas
-  canvas.width = rect.width * dpr;
-  canvas.height = rect.height * dpr;
-  ctx.scale(dpr, dpr); // Normalize drawing units
+      canvas.width = safeWidth * dpr;
+      canvas.height = safeHeight * dpr;
+      ctx.scale(dpr, dpr);
 
-  const diyaImage = new Image();
-  diyaImage.src = "images/diya_128x128.png";
+      const diyaImage = new Image();
+      diyaImage.src = "images/diya_128x128.png";
 
-  diyaImage.onload = () => {
-    function animate() {
-      const t = Date.now() / 300;
-      const pulse = 30 + 5 * Math.sin(t);
-      ctx.clearRect(0, 0, rect.width, rect.height); // Use CSS size for clearRect
+      diyaImage.onload = () => {
+        function animate() {
+          const t = Date.now() / 300;
+          const pulse = 30 + 5 * Math.sin(t);
+          ctx.clearRect(0, 0, safeWidth, safeHeight);
 
-      diyas.forEach(({ name, x, y }) => {
-        // 🔥 Glow centered slightly above diya (near flame)
-        const glowY = y - 12;
+          diyas.forEach(({ name, x, y }) => {
+            const glowY = y - 12;
 
-        const gradient = ctx.createRadialGradient(x, glowY, 0, x, glowY, pulse);
-        gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
-        gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
-        gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-        ctx.fillStyle = gradient;
-        ctx.beginPath();
-        ctx.arc(x, glowY, pulse, 0, 2 * Math.PI);
-        ctx.fill();
+            const gradient = ctx.createRadialGradient(x, glowY, 0, x, glowY, pulse);
+            gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
+            gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
+            gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.arc(x, glowY, pulse, 0, 2 * Math.PI);
+            ctx.fill();
 
-        // 🪔 Diya image (64x64, centered at x, y)
-        ctx.drawImage(diyaImage, x - 32, y - 32, 64, 64);
+            ctx.drawImage(diyaImage, x - 32, y - 32, 64, 64);
 
-        // 🏷️ Name label
-        ctx.font = "12px sans-serif";
-        ctx.fillStyle = "#fff";
-        ctx.textAlign = "left";
-        ctx.textBaseline = "bottom";
-        ctx.fillText(name, x + 16, y - 8);
-      });
+            ctx.font = "12px sans-serif";
+            ctx.fillStyle = "#fff";
+            ctx.textAlign = "left";
+            ctx.textBaseline = "bottom";
+            ctx.fillText(name, x + 16, y - 8);
+          });
 
-      requestAnimationFrame(animate);
+          requestAnimationFrame(animate);
+        }
+
+        animate();
+      };
     }
-
-    animate();
-  };
-}
 
   
     document.addEventListener("DOMContentLoaded", () => {
