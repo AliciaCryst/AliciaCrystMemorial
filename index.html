@@ -2239,7 +2239,8 @@
 
             // Name label
             ctx.font = "12px sans-serif";
-            ctx.fillStyle = "#fff";
+            const isDark = document.documentElement.getAttribute("data-theme") === "dark";
+            ctx.fillStyle = isDark ? "#fff" : "#333";  // White in dark mode, dark gray in light
             ctx.textAlign = "left";
             ctx.textBaseline = "bottom";
             ctx.fillText(name, x + 16, y - 8);
