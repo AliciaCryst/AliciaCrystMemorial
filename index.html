@@ -2138,30 +2138,36 @@
       });
     }
 
-function drawDiya(name, x, y) {
-  const canvas = document.getElementById("diyaCanvas");
-  const ctx = canvas.getContext("2d");
+  function drawDiya(name, x, y) {
+    const canvas = document.getElementById("diyaCanvas");
+    const ctx = canvas.getContext("2d");
 
-  // Draw diya dot
-  ctx.fillStyle = "gold";
-  ctx.beginPath();
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  ctx.fill();
+    // Draw static dot
+    ctx.fillStyle = "gold";
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fill();
 
-  // Draw name
-  ctx.fillStyle = "#fff";
-  ctx.font = "10px serif";
-  ctx.fillText(name, x + 8, y);
+    // Draw text label
+    const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+    ctx.fillStyle = textColor;
+    ctx.font = "10px serif";
+    ctx.fillText(name, x + 8, y);
 
-  // Glow overlay
-  const overlay = document.getElementById("diyaOverlay");
-  const glow = document.createElement("div");
-  glow.className = "animated-diya";
-  glow.style.left = `${x - 6}px`;
-  glow.style.top = `${y - 3.5}px`;  // ultra-fine tune
+    // 🎯 Get canvas position on page
+    const rect = canvas.getBoundingClientRect();
 
-  overlay.appendChild(glow);
-}
+    // Create glowing diya at same coordinates
+    const overlay = document.getElementById("diyaOverlay");
+    const flicker = document.createElement("div");
+    flicker.className = "animated-diya";
+
+    // Correct for canvas offset relative to viewport
+    flicker.style.left = `${rect.left + x - 5}px`;
+    flicker.style.top = `${rect.top + y - 5}px`;
+
+    overlay.appendChild(flicker);
+  }
 
 
     function redrawDiyas() {
