@@ -1883,10 +1883,10 @@ async function getPublicIP() {
   }
 
   // Optional login requirement – remove if stories are public
-  if (firebase.auth().currentUser === null) {
-    document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
-    return;
-  }
+  // if (firebase.auth().currentUser === null) {
+  //   document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
+  //   return;
+  // }
 
   // Get IP address using external API
   let ipAddress = "unknown";
