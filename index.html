@@ -667,14 +667,15 @@
         width: 800px;
         margin: 1.5em auto;
         line-height: 1.7;
-        min-height: 5.1em; /* 3 lines × 1.7 line-height × 1.2em font size */
+        min-height: 5.1em; /* Ensures visual stability (3 lines) */
         display: flex;
         align-items: center;
         justify-content: center;
+        word-break: break-word;
+        overflow-wrap: anywhere;
       ">
         <!-- First quote will go here via JavaScript -->
       </p>
-
     </section>
   </header>
 
