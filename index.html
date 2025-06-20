@@ -1792,20 +1792,27 @@
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
      
-  <div id="diyaContainer" style="position: relative; width: 100%; max-width: 600px; height: 300px; margin: 0 auto;">
-    <canvas id="diyaCanvas" width="600" height="300" style="width: 100%; height: 300px;"></canvas>
-    <div id="diyaOverlay" style="
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      pointer-events: none;
-      z-index: 2;
-    "></div>
-  </div>
-
+    <div id="diyaContainer" style="position: relative; width: 100%; max-width: 600px; height: 300px; margin: 0 auto;">
+      <!-- Background glowing canvas -->
+      <canvas id="diyaGlowCanvas" width="600" height="300"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0;"></canvas>
+    
+      <!-- Named diya canvas -->
+      <canvas id="diyaCanvas" width="600" height="300"
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></canvas>
+    
+      <!-- HTML overlay (if you use divs for diyas) -->
+      <div id="diyaOverlay" style="
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        pointer-events: none;
+        z-index: 2;
+      "></div>
+    </div>
     
   </section>
   
@@ -2150,7 +2157,7 @@
     }
 
   function animateDiyaGlow() {
-    const canvas = document.getElementById("diyaCanvas");
+    const canvas = document.getElementById("diyaGlowCanvas");
     if (!canvas) return;
   
     canvas.width = canvas.offsetWidth;
@@ -2158,7 +2165,7 @@
   
     const ctx = canvas.getContext("2d");
     if (!ctx) {
-      console.error("❌ Could not get 2D context for diyaCanvas");
+      console.error("❌ Could not get 2D context for diyaGlowCanvas");
       return;
     }
   
@@ -2190,32 +2197,14 @@
     const canvas = document.getElementById("diyaCanvas");
     const ctx = canvas.getContext("2d");
   
-    // Draw static diya
-    ctx.fillStyle = "gold";
-    ctx.beginPath();
-    ctx.arc(x, y, 5, 0, 2 * Math.PI);
-    ctx.fill();
+    ctx.font = "20px serif";
+    ctx.fillText("🪔", x, y);
   
-    // Label
-    const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-    ctx.fillStyle = textColor;
-    ctx.font = "10px serif";
-    ctx.fillText(name, x + 8, y);
-  
-    // Add glow inside diyaContainer, not overlay!
-    const container = document.getElementById("diyaContainer");
-    const flicker = document.createElement("div");
-    flicker.className = "animated-diya";
-  
-    const rect = canvas.getBoundingClientRect();
-    const scrollY = window.scrollY || document.documentElement.scrollTop;
-    
-    flicker.style.left = `${rect.left + x - 6}px`;
-    flicker.style.top  = `${rect.top + scrollY + y - 6}px`;
-  
-    container.appendChild(flicker); // <== THIS is the real fix
+    // Optional: show name as tooltip or near diya
+    ctx.font = "12px sans-serif";
+    ctx.fillStyle = "#fff";
+    ctx.fillText(name, x + 10, y - 5);
   }
-
 
 
     function redrawDiyas() {
