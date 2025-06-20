@@ -83,6 +83,8 @@
     
     body {
       padding-top: 60px; /* adjust to match nav height */
+      margin: 0;
+      overflow-x: hidden;
     }
     
     section {
@@ -601,38 +603,52 @@
     transform: scale(1.3);
   }
  
-  .animated-diya {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: gold;
-    box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.6);
-    animation: flicker 1.5s infinite ease-in-out alternate;
-    pointer-events: none;
+  /* Wrapper allows responsive scaling */
+  .diya-wrapper {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
   }
 
-  @keyframes flicker {
-    0%   { opacity: 0.8; transform: scale(1); }
-    50%  { opacity: 0.5; transform: scale(1.2); }
-    100% { opacity: 1; transform: scale(1); }
+  /* Canvas container */
+  #diyaContainer {
+    position: relative;
+    width: 100%;
+    padding-top: 50%; /* 600/300 = 2 → 50% gives 600x300 ratio */
   }
+
+  /* Absolute positioning of canvas and overlay */
+  #diyaCanvas,
   #diyaOverlay {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    pointer-events: none;
-    z-index: 2;
   }
 
-  #diyaCanvas {
-    position: relative;
-    z-index: 1;
-  }
+/* Glowing diya */
+.animated-diya {
+  position: absolute;
+  width: 2%;
+  height: 2%;
+  border-radius: 50%;
+  background: gold;
+  box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.6);
+  animation: flicker 1.5s infinite ease-in-out alternate;
+  pointer-events: none;
+}
+@keyframes flicker {
+  0%   { opacity: 0.8; transform: scale(1); }
+  50%  { opacity: 0.5; transform: scale(1.2); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
 
 </style>
+
 </head>
 <body data-theme="dark">
   
@@ -1771,19 +1787,10 @@
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
    
-    <div style="overflow-x: auto; max-width: 100%;">
-      <div id="diyaContainer" style="position: relative; width: 600px; height: 300px;">
+    <div class="diya-wrapper">
+      <div id="diyaContainer">
         <canvas id="diyaCanvas" width="600" height="300"></canvas>
-        <div id="diyaOverlay" style="
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 600px;
-          height: 300px;
-          overflow: hidden;
-          pointer-events: none;
-          z-index: 2;
-        "></div>
+        <div id="diyaOverlay"></div>
       </div>
     </div>
     
@@ -2130,30 +2137,32 @@
       });
     }
 
-function drawDiya(name, x, y) {
-  const canvas = document.getElementById("diyaCanvas");
-  const ctx = canvas.getContext("2d");
+  function drawDiya(name, x, y) {
+    const canvas = document.getElementById("diyaCanvas");
+    const ctx = canvas.getContext("2d");
 
-  // Static canvas dot
-  ctx.fillStyle = "gold";
-  ctx.beginPath();
-  ctx.arc(x, y, 5, 0, 2 * Math.PI);
-  ctx.fill();
+    // Canvas drawing at fixed 600x300 resolution
+    ctx.fillStyle = "gold";
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, 2 * Math.PI);
+    ctx.fill();
 
-  // Label
-  const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
-  ctx.fillStyle = textColor;
-  ctx.font = "10px serif";
-  ctx.fillText(name, x + 8, y);
+    const textColor = getComputedStyle(document.body).getPropertyValue('--text').trim();
+    ctx.fillStyle = textColor;
+    ctx.font = "10px serif";
+    ctx.fillText(name, x + 8, y);
 
-  // Glowing animated diya
-  const overlay = document.getElementById("diyaOverlay");
-  const glow = document.createElement("div");
-  glow.className = "animated-diya";
-  glow.style.left = `${x - 6}px`;
-  glow.style.top = `${y - 6}px`;
-  overlay.appendChild(glow);
-}
+    // Overlay glow (relative to canvas width/height)
+    const overlay = document.getElementById("diyaOverlay");
+    const glow = document.createElement("div");
+    glow.className = "animated-diya";
+
+    // Convert 600x300 coords to % for responsive overlay
+    glow.style.left = `${(x / 600) * 100}%`;
+    glow.style.top = `${(y / 300) * 100}%`;
+
+    overlay.appendChild(glow);
+  }
 
     function redrawDiyas() {
       const canvas = document.getElementById("diyaCanvas");
