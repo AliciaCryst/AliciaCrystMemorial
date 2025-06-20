@@ -2175,14 +2175,13 @@
         });
     }
   
-
 function startDiyaAnimation() {
   animationStarted = true;
   const canvas = document.getElementById("diyaCanvas");
   const ctx = canvas.getContext("2d");
 
   const diyaImage = new Image();
-  diyaImage.src = "images/diya_128x128.png"; // Ensure this file is in the correct public path
+  diyaImage.src = "images/diya_128x128.png"; // Keep same file; just scale in canvas
 
   diyaImage.onload = () => {
     function animate() {
@@ -2191,7 +2190,7 @@ function startDiyaAnimation() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       diyas.forEach(({ name, x, y }) => {
-        // Glow
+        // Glow animation (unchanged)
         const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
         gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
         gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
@@ -2201,10 +2200,10 @@ function startDiyaAnimation() {
         ctx.arc(x, y, pulse, 0, 2 * Math.PI);
         ctx.fill();
 
-        // Draw diya PNG centered at (x, y)
-        ctx.drawImage(diyaImage, x - 64, y - 64, 128, 128);
+        // 🔧 Diya image scaled to 64x64, centered at (x, y)
+        ctx.drawImage(diyaImage, x - 32, y - 32, 64, 64);
 
-        // Name label
+        // Label
         ctx.font = "12px sans-serif";
         ctx.fillStyle = "#fff";
         ctx.textAlign = "left";
@@ -2218,7 +2217,7 @@ function startDiyaAnimation() {
     animate();
   };
 }
-    
+
   
     document.addEventListener("DOMContentLoaded", () => {
       const observer = new IntersectionObserver(entries => {
