@@ -2141,7 +2141,14 @@
         alert("⚠️ Please use respectful language.");
         return;
       }
-  
+    function getRandomDiyaCoord() {
+      const min = 16;
+      const max = 344;
+      const x = Math.floor(Math.random() * (max - min + 1)) + min;
+      const y = Math.floor(Math.random() * (max - min + 1)) + min;
+      return { x, y };
+    }
+
       const now = Date.now();
       if (now - lastClickTime < 5000) {
         alert("⏳ Please wait a few seconds before lighting another diya.");
@@ -2150,8 +2157,8 @@
   
       lastClickTime = now;
   
-      const x = Math.floor(Math.random() * 580) + 10;
-      const y = Math.floor(Math.random() * 280) + 10;
+      const { x, y } = getRandomDiyaCoord();
+
       diyas.push({ name, x, y });
   
       db.collection("diyas").add({
