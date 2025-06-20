@@ -2177,9 +2177,11 @@
     const flicker = document.createElement("div");
     flicker.className = "animated-diya";
   
-    // Position directly in canvas logical space (because parent is 600x300 too)
-    flicker.style.left = `${x - 6}px`;
-    flicker.style.top = `${y - 6+32}px`;
+    const rect = canvas.getBoundingClientRect();
+    const scrollY = window.scrollY || document.documentElement.scrollTop;
+    
+    flicker.style.left = `${rect.left + x - 6}px`;
+    flicker.style.top  = `${rect.top + scrollY + y - 6}px`;
   
     container.appendChild(flicker); // <== THIS is the real fix
   }
