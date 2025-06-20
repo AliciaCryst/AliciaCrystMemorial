@@ -1858,11 +1858,11 @@ async function getPublicIP() {
   }
 }
 
+function containsProfanity(text) {
+  const lower = text.toLowerCase();
+  return badWords.some(word => new RegExp(`\\b${word}\\b`).test(lower));
+}
 
-    function containsProfanity(name) {
-      const lower = name.toLowerCase();
-      return badWords.some(word => lower.includes(word));
-    }
     let lastStorySubmitTime = 0;
 
     async function submitStory() {
@@ -1882,11 +1882,6 @@ async function getPublicIP() {
     return;
   }
 
-  // Optional login requirement – remove if stories are public
-  // if (firebase.auth().currentUser === null) {
-  //   document.getElementById("confirmation").innerText = "⚠️ Please log in to submit.";
-  //   return;
-  // }
 
   // Get IP address using external API
   let ipAddress = "unknown";
