@@ -2146,7 +2146,7 @@
     
       // Draw diya
       drawDiya(name, x, y);
-    
+      animateDiyaGlow(x, y);
       // Save to Firestore
       db.collection("diyas").add({
         name,
@@ -2156,42 +2156,31 @@
       });
     }
 
-  function animateDiyaGlow() {
-    const canvas = document.getElementById("diyaGlowCanvas");
-    if (!canvas) return;
-  
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  
-    const ctx = canvas.getContext("2d");
-    if (!ctx) {
-      console.error("❌ Could not get 2D context for diyaGlowCanvas");
-      return;
+    function animateDiyaGlow(x, y) {
+      const canvas = document.getElementById("diyaGlowCanvas");
+      if (!canvas) return;
+    
+      const ctx = canvas.getContext("2d");
+    
+      function animate() {
+        const t = Date.now() / 300;
+        const pulse = 40 + 5 * Math.sin(t);
+    
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    
+        const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
+        gradient.addColorStop(0, "rgba(255, 140, 0, 0.9)");
+        gradient.addColorStop(0.4, "rgba(255, 200, 0, 0.5)");
+        gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
+    
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+    
+        requestAnimationFrame(animate);
+      }
+    
+      animate();
     }
-  
-    const x = canvas.width / 2;
-    const y = canvas.height / 2;
-    const baseRadius = 40;
-  
-    function animate() {
-      const t = Date.now() / 300;
-      const pulse = baseRadius + 5 * Math.sin(t);
-  
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-  
-      const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
-      gradient.addColorStop(0, "rgba(255, 140, 0, 0.9)");
-      gradient.addColorStop(0.4, "rgba(255, 200, 0, 0.5)");
-      gradient.addColorStop(1, "rgba(255, 255, 255, 0)");
-  
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-  
-      requestAnimationFrame(animate);
-    }
-  
-    animate();
-  }
 
   function drawDiya(name, x, y) {
     const canvas = document.getElementById("diyaCanvas");
@@ -2218,6 +2207,7 @@
       // Redraw all diyas from memory
       diyas.forEach(({ name, x, y }) => {
         drawDiya(name, x, y);
+        animateDiyaGlow(x, y);        
       });
     }
 
@@ -2230,6 +2220,7 @@
           const diya = doc.data();
           diyas.push({ name: diya.name, x: diya.x, y: diya.y }); // <== the fix
           drawDiya(diya.name, diya.x, diya.y);
+          animateDiyaGlow(x, y);          
         });
       });
     }
