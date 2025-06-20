@@ -1903,7 +1903,8 @@ async function getPublicIP() {
       text: text,
       dedication: dedication,
       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      ip: ipAddress
+      ip: ipAddress,
+      likes: 0 // 🔧 This was missing!
     });
 
     lastStorySubmitTime = now;
