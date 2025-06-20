@@ -1849,7 +1849,6 @@
   <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 
   <script>
-    const diyas = []; // Global array to track all lit diyas    
     const firebaseConfig = {
       apiKey: "AIzaSyBy6Il_3UJsCkyR7TFwGcVn12eONTy7v_g",
       authDomain: "aliciacrystmemorial.firebaseapp.com",
@@ -1905,12 +1904,7 @@
     const db = firebase.firestore();
     let adminMode = false;
 
-    function toggleTheme() {
-      const body = document.body;
-      const current = body.getAttribute("data-theme");
-      body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
-      redrawDiyas(); // re-render with updated --text 
-    }
+
 
     function activateAdmin() {
       const pass = prompt("Admin passphrase:");
@@ -2120,8 +2114,19 @@
         });
       });
     }
-
+  </script>
+  
+  <script>
+    const diyas = [];
     let lastClickTime = 0;
+    let animationStarted = false;
+  
+    function toggleTheme() {
+      const body = document.body;
+      const current = body.getAttribute("data-theme");
+      body.setAttribute("data-theme", current === "dark" ? "light" : "dark");
+    }
+  
     function lightDiya() {
       const name = document.getElementById("diyaName").value.trim();
       if (!name) return;
@@ -2129,24 +2134,19 @@
         alert("⚠️ Please use respectful language.");
         return;
       }
+  
       const now = Date.now();
       if (now - lastClickTime < 5000) {
         alert("⏳ Please wait a few seconds before lighting another diya.");
         return;
       }
+  
       lastClickTime = now;
-      const canvas = document.getElementById("diyaCanvas");
-      const ctx = canvas.getContext("2d");
-    
+  
       const x = Math.floor(Math.random() * 580) + 10;
       const y = Math.floor(Math.random() * 280) + 10;
-    
-      // Store diya in memory
       diyas.push({ name, x, y });
-    
-      // Draw diya
-      drawDiya(name, x, y);
-      // Save to Firestore
+  
       db.collection("diyas").add({
         name,
         x,
@@ -2154,82 +2154,70 @@
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       });
     }
-
-  function drawDiya(name, x, y) {
-    const canvas = document.getElementById("diyaCanvas");
-    const ctx = canvas.getContext("2d");
   
-    // 🔥 Glowing circle (radial gradient)
-    const gradient = ctx.createRadialGradient(x, y, 0, x, y, 30);
-    gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
-    gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
-    gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
-  
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
-    ctx.arc(x, y, 30, 0, 2 * Math.PI);
-    ctx.fill();
-  
-    // 🪔 Diya emoji
-    ctx.font = "20px serif";
-    ctx.fillText("🪔", x, y);
-  
-    // 👤 Name
-    ctx.font = "12px sans-serif";
-    ctx.fillStyle = "#fff";
-    ctx.fillText(name, x + 12, y - 5);
-  }
-
-
-    function redrawDiyas() {
-      const canvas = document.getElementById("diyaCanvas");
-      const ctx = canvas.getContext("2d");
-      // Clear canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    
-
-
-      // Redraw all diyas from memory
-      diyas.forEach(({ name, x, y }) => {
-        drawDiya(name, x, y);
-      });
-    }
-
     function loadDiyas() {
+      db.collection("diyas")
+        .orderBy("timestamp")
+        .get()
+        .then(snapshot => {
+          snapshot.forEach(doc => {
+            const { name, x, y } = doc.data();
+            diyas.push({ name, x, y });
+          });
+          if (!animationStarted) startDiyaAnimation();
+        });
+    }
+  
+    function startDiyaAnimation() {
+      animationStarted = true;
       const canvas = document.getElementById("diyaCanvas");
       const ctx = canvas.getContext("2d");
-    
-      db.collection("diyas").orderBy("timestamp").get().then(snapshot => {
-        snapshot.forEach(doc => {
-          const diya = doc.data();
-          diyas.push({ name: diya.name, x: diya.x, y: diya.y }); // <== the fix
-          drawDiya(diya.name, diya.x, diya.y);
+  
+      function animate() {
+        const t = Date.now() / 300;
+        const pulse = 30 + 5 * Math.sin(t);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+        diyas.forEach(({ name, x, y }) => {
+          // Glow
+          const gradient = ctx.createRadialGradient(x, y, 0, x, y, pulse);
+          gradient.addColorStop(0, "rgba(255, 200, 0, 0.9)");
+          gradient.addColorStop(0.4, "rgba(255, 140, 0, 0.4)");
+          gradient.addColorStop(1, "rgba(0, 0, 0, 0)");
+          ctx.fillStyle = gradient;
+          ctx.beginPath();
+          ctx.arc(x, y, pulse, 0, 2 * Math.PI);
+          ctx.fill();
+  
+          // Diya + name
+          ctx.font = "20px serif";
+          ctx.fillText("🪔", x, y);
+          ctx.font = "12px sans-serif";
+          ctx.fillStyle = "#fff";
+          ctx.fillText(name, x + 12, y - 5);
         });
-      });
+  
+        requestAnimationFrame(animate);
+      }
+  
+      animate();
     }
-
-    window.addEventListener("DOMContentLoaded", () => {
+  
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+          }
+        });
+      }, { threshold: 0.1 });
+  
+      document.querySelectorAll(".fade-in-image, .fade-in-section").forEach(el => observer.observe(el));
+  
       loadStories();
-      loadDiyas();
+      loadDiyas();  // animation starts after data loads
     });
   </script>
-  <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll(".fade-in-image, .fade-in-section").forEach(el => observer.observe(el));
-
-    // already included
-    loadStories();
-    loadDiyas();
-  });
-</script>
 <script>
   const counterRef = firebase.firestore().collection("stats").doc("visits");
 
