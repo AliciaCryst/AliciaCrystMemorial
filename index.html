@@ -587,6 +587,17 @@
   cursor: pointer;
 }
 
+.reaction-button {
+    background: none;
+    border: none;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  .reaction-button:hover {
+    transform: scale(1.3);
+  }
  
 </style>
 </head>
@@ -1895,12 +1906,17 @@ function containsProfanity(text) {
 
   try {
     await db.collection("stories").add({
-      text: text,
-      dedication: dedication,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      ip: ipAddress,
-      likes: 0 // 🔧 This was missing!
-    });
+    text: text,
+    dedication: dedication,
+    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+    ip: ipAddress,
+    likes: 0,
+    reactions: {
+      heart: 0,
+      flower: 0,
+      tear: 0
+    }
+  });
 
     lastStorySubmitTime = now;
     alert("✅ Your story has been submitted. Thank you.");
@@ -1951,35 +1967,53 @@ function containsProfanity(text) {
             stamp.textContent = "🕓 Shared on " + ts;
             div.appendChild(stamp);
           }
-                    // ❤️ Like Button
+          // ❤️ Like Button
           const likeWrapper = document.createElement("div");
           likeWrapper.style.marginTop = "6px";
-          
-          const likeBtn = document.createElement("button");
-          likeBtn.textContent = "❤️";
-          likeBtn.className = "like-button";
-          likeBtn.style.marginRight = "5px";
-          
-          const likeCount = document.createElement("span");
-          likeCount.id = `like-count-${doc.id}`;
-          likeCount.textContent = data.likes || 0;
-          
-          likeBtn.onclick = () => {
-            const countEl = document.getElementById(`like-count-${doc.id}`);
-            const current = parseInt(countEl.textContent || "0");
-            countEl.textContent = current + 1; // Optimistic update
-          
-            db.collection("stories").doc(doc.id).update({
-              likes: firebase.firestore.FieldValue.increment(1)
-            }).catch((err) => {
-              console.error("Failed to like:", err);
-              countEl.textContent = current; // Revert
-            });
+
+          const reactions = ['heart', 'flower', 'tear'];
+          const emojis = {
+            heart: '❤️',
+            flower: '🌸',
+            tear: '😢'
           };
-          
-          likeWrapper.appendChild(likeBtn);
-          likeWrapper.appendChild(likeCount);
+
+          reactions.forEach(reaction => {
+            const btn = document.createElement("button");
+            btn.textContent = emojis[reaction];
+            btn.className = "reaction-button";
+            btn.style.marginRight = "8px";
+
+            // Dynamic count display
+            const countSpan = document.createElement("span");
+            countSpan.id = `reaction-${reaction}-${doc.id}`;
+            const count = (data.reactions && data.reactions[reaction]) || 0;
+            countSpan.textContent = ` ${count}`;
+            countSpan.style.marginRight = "12px";
+
+            btn.onclick = () => {
+              // Optimistic UI update
+              const current = parseInt(countSpan.textContent.trim()) || 0;
+              countSpan.textContent = ` ${current + 1}`;
+              btn.disabled = true;
+              setTimeout(() => (btn.disabled = false), 3000); // Cooldown
+
+              // Firestore update
+              const fieldPath = `reactions.${reaction}`;
+              db.collection("stories").doc(doc.id).update({
+                [fieldPath]: firebase.firestore.FieldValue.increment(1)
+              }).catch(err => {
+                console.error("❌ Failed to react:", err.message);
+                countSpan.textContent = ` ${current}`; // Revert
+              });
+            };
+
+            likeWrapper.appendChild(btn);
+            likeWrapper.appendChild(countSpan);
+          });
+
           div.appendChild(likeWrapper);
+
 
           if (adminMode) {
             const editBtn = document.createElement("button");
