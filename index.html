@@ -602,21 +602,20 @@
   }
  
   .animated-diya {
-    position: absolute;
     width: 12px;
     height: 12px;
     border-radius: 50%;
     background: gold;
-    box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.6);
-    animation: diyaFlicker 1.5s infinite alternate;
+    box-shadow: 0 0 10px 4px rgba(255, 215, 0, 0.6);
+    animation: flicker 1.5s infinite ease-in-out alternate;
     pointer-events: none;
     z-index: 2;
   }
 
-  @keyframes diyaFlicker {
+  @keyframes flicker {
     0%   { opacity: 0.8; transform: scale(1); }
-    50%  { opacity: 0.5; transform: scale(1.1); }
-    100% { opacity: 0.9; transform: scale(1); }
+    50%  { opacity: 0.5; transform: scale(1.2); }
+    100% { opacity: 1; transform: scale(1); }
   }
 
   #diyaOverlay {
@@ -1773,9 +1772,20 @@
     <input type="text" id="diyaName" placeholder="Name for diya">
     <button onclick="lightDiya()">🪔 Light Diya</button>
     <div style="overflow-x: auto; max-width: 100%;">
-      <canvas id="diyaCanvas" width="600" height="300"></canvas>
-      <div id="diyaOverlay"></div>
+      <div id="diyaContainer" style="position: relative; width: 600px; height: 300px;">
+        <canvas id="diyaCanvas" width="600" height="300"></canvas>
+        <div id="diyaOverlay" style="
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 600px;
+          height: 300px;
+          pointer-events: none;
+          z-index: 2;
+        "></div>
+      </div>
     </div>
+    
   </section>
   
   <section id="login" style="text-align:center; margin-top:2em;">
