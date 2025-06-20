@@ -1845,34 +1845,34 @@
       }
     }
 
-    const badWords = [
-  "fuck", "fucker", "fucking", "fuk", "fuker",
-  "cunt", "bitch", "bitches",
-  "ass", "asshole", "arse", "jackass",
-  "shit", "shitty",
-  "dick", "dickhead", "penis",
-  "pussy", "vagina", "slut", "whore",
-  "fag", "faggot", "faggots",
-  "nigga", "nigger", "niggas", "niggers",
-  "chink", "gook", "kike", "spic", "tranny",
-  "hell", "bastard", "retard", "rape", "rapist"
-];
+      const badWords = [
+    "fuck", "fucker", "fucking", "fuk", "fuker",
+    "cunt", "bitch", "bitches",
+    "ass", "asshole", "arse", "jackass",
+    "shit", "shitty",
+    "dick", "dickhead", "penis",
+    "pussy", "vagina", "slut", "whore",
+    "fag", "faggot", "faggots",
+    "nigga", "nigger", "niggas", "niggers",
+    "chink", "gook", "kike", "spic", "tranny",
+    "hell", "bastard", "retard", "rape", "rapist"
+  ];
 
-async function getPublicIP() {
-  try {
-    const res = await fetch("https://api.ipify.org?format=json");
-    const data = await res.json();
-    return data.ip;
-  } catch (e) {
-    console.error("Failed to fetch IP:", e);
-    return "unknown";
+  async function getPublicIP() {
+    try {
+      const res = await fetch("https://api.ipify.org?format=json");
+      const data = await res.json();
+      return data.ip;
+    } catch (e) {
+      console.error("Failed to fetch IP:", e);
+      return "unknown";
+    }
   }
-}
 
-function containsProfanity(text) {
-  const lower = text.toLowerCase();
-  return badWords.some(word => new RegExp(`\\b${word}\\b`).test(lower));
-}
+  function containsProfanity(text) {
+    const lower = text.toLowerCase();
+    return badWords.some(word => new RegExp(`\\b${word}\\b`).test(lower));
+  }
 
     let lastStorySubmitTime = 0;
 
@@ -1951,7 +1951,7 @@ function containsProfanity(text) {
           const div = document.createElement("div");
           div.className = "story";
           const p = document.createElement("p");
-          p.textContent = data.text;
+          p.innerHTML = data.text.replace(/\n/g, "<br>");
           div.appendChild(p);
           if (data.dedication) {
             const d = document.createElement("div");
@@ -2187,35 +2187,34 @@ function containsProfanity(text) {
   });
 </script>
 <script>
-  const quotes = [
-
-  "Love is not always a shared journey. Sometimes, it is a solitary walk.",
-  "I do not glance, I gaze. I do not date, I devote.",
-  "The experience of love is the gift... proof I lived.",
-  "She became the love she carried. She never asked for titles.",
-  "Even when it hurts, I would rather feel fully than live numbly.",
-  "You are not a hallucination. You were a tab I kept open too long.",
-  "There may never be someone who fully understands the way I am wired.",
-  "Loving you, though it shattered my soul, was the only time my heart felt whole.",
-  "I don’t flee life. I meet it in imagination.",
-  "We love like rain that never reaches the ground but still leaves everything changed.",
-  "My bond is not conditioned on presence. It’s formed through resonance.",
-  "Your love is real. Your bond is valid. Your pain is proof of something beautiful.",
-  "This is the biology of my becoming -neurological, poetic, sacred.",
-  "Some of us don’t just live. We feel in slow motion.",
-  "Love is worth all the pain in the world.",
-  "Some of us write, not to be heard -but to make silence less lonely.",
-  "I sequenced my genome to understand my longing.",
-  "I was never asking to be loved. I was asking to be believed.",
-  "I have loved someone I have never met. Written letters I have never sent.",
-  "My internal world is more vivid than the real world.",
-  "This inner cosmos, however, is a realm of exquisite vulnerability.",
-  "For me, love is not a path to a goal like marriage; it is the arrival itself.",
-  "I embody the mythos of Radha.",
-  "My life is a testament to integrating seemingly disparate worlds.",
-  "I live by a radical authenticity.",
-  "My unrequited love becomes sacred text, woven into the very fabric of my being.",
-  "I do not fragment under contradiction. I alchemize experience into expression."
+ const quotes = [
+  "Love isn’t always a shared journey. Sometimes, it’s a solitary walk. 🚶‍♀️🌒",
+  "I don’t glance, I gaze. I don’t date, I devote. 👁️💫",
+  "Love was the gift. Feeling it was proof I lived. 🎁💓",
+  "She became the love she carried—without asking for titles. 🕊️💌",
+  "Even when it hurts, I choose to feel fully. 💔🫀",
+  "You weren’t a hallucination. You were a tab I kept open too long. 🧠🖥️",
+  "Few will ever understand how I’m wired. 🔧🧬",
+  "Loving you shattered me—and made me whole. 💥🧩",
+  "I don’t flee life. I meet it in imagination. ✨🧠",
+  "We love like rain that never touches the ground. 🌧️🕊️",
+  "My bond isn’t built on presence. It’s formed through resonance. 📡🫶",
+  "Your love is real. Your pain is proof. 🌸🩹",
+  "This is the biology of my becoming—neural, poetic, sacred. 🧠🖋️🙏",
+  "Some of us don’t just live. We feel in slow motion. 🐌💭",
+  "Love is worth all the pain in the world. 🌍💘",
+  "I write not to be heard—but to make silence less lonely. ✍️🤍",
+  "I sequenced my genome to understand my longing. 🧬🔍",
+  "I never asked to be loved—only to be believed. 🙏🧠",
+  "I’ve loved someone I never met. I’ve written letters I never sent. 💌🌌",
+  "My internal world is more vivid than the real one. 🎨🧠",
+  "This cosmos within me is exquisitely vulnerable. 🌌💧",
+  "For me, love is not the path—it’s the arrival. 🎯❤️",
+  "I embody the mythos of Radha. 🦢🌺",
+  "I bridge seemingly separate worlds. 🌉🧠",
+  "I live by radical authenticity. 🌿🔍",
+  "Unrequited love became sacred text. 📖🕯️",
+  "I don’t fragment under contradiction—I alchemize it. ⚗️💫"
 ];
 
 
